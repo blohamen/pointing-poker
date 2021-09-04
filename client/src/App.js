@@ -1,6 +1,10 @@
 import { useEffect } from "react"
+import Card from './components/card/card';
 
 import "./App.sass"
+
+const Example = () => <div>example</div>
+
 
 function App() {
   useEffect(() => {
@@ -17,6 +21,13 @@ function App() {
       <header className="App-header">
         <span>Hello world</span>
       </header>
+      <main>
+        <Card 
+          title="Ihar Usmanau" 
+          subtitle="React Dev"  
+          right={<Example />}
+        /> 
+      </main>
     </div>
   )
 }
