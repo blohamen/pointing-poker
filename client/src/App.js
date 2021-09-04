@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import Card from './components/card/card';
 import IssueCard from './components/issue-card/issue-card';
-
+import MemberCard from './components/member-card/member-card';
 import "./App.sass"
 
 const Example = () => <div>example</div>
@@ -31,6 +31,21 @@ function App() {
         <IssueCard 
           title="Issue 543" 
           subtitle="low priority" 
+      />
+      <MemberCard 
+        title="Ihar Usmanau" 
+        subtitle="React Dev"
+      />
+      <MemberCard 
+        title="David Blane" 
+        subtitle="React Dev"
+        isPhoto
+        isCancel
+      />
+      <MemberCard 
+      isCurrentPlayer
+      title="Ihar Usmanau" 
+      subtitle="React Dev"
       />
       </main>
     </div>
