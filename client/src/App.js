@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import Card from './components/card/card';
+import IssueCard from './components/issue-card/issue-card';
 
 import "./App.sass"
 
@@ -27,6 +28,10 @@ function App() {
           subtitle="React Dev"  
           right={<Example />}
         /> 
+        <IssueCard 
+          title="Issue 543" 
+          subtitle="low priority" 
+      />
       </main>
     </div>
   )
