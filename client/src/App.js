@@ -47,6 +47,24 @@ function App() {
       title="Ihar Usmanau" 
       subtitle="React Dev"
       />
+      <Card 
+        isCurrentPlayer
+        isSmall
+        title="Chat" 
+        subtitle="card"  
+      />
+      <MemberCard 
+        title="Ihar Usmanau" 
+        subtitle="React Dev"
+        isSmall
+      />
+      <MemberCard 
+        title="David Blane" 
+        subtitle="React Dev"
+        isPhoto
+        isCancel
+        isSmall
+      />
       </main>
     </div>
   )
