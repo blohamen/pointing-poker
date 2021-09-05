@@ -1,0 +1,56 @@
+$gray2: #4F4F4F
+$gray6: #F2F2F2
+.switcher
+    padding-top: 15px
+    width: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    column-gap: 5%
+    &__name-active
+        transition-duration: .5s
+        font-weight: bold
+        color: brown
+.toggle
+    display: flex
+    align-items: center
+
+    &__switch
+        width: 54px
+        height: 30px
+        position: relative
+        display: block
+
+    &__checkbox
+        display: none
+
+    &__slider
+        position: absolute
+        cursor: pointer
+        background-color: $gray6
+        border-radius: 190px
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        transition: .6s
+
+        &::before
+            content: ""
+            width: 20px
+            height: 20px
+            border-radius: 50%
+            position: absolute
+            left: 6px
+            top: 5px
+            background: brown
+            box-shadow: 2px 4px 15px rgba(6, 12, 70, 0.15)
+            transition: .6s
+
+    &__checkbox:checked + &__slider
+        background-color: brown
+    &__checkbox:focus + &__slider
+        outline: none
+    &__checkbox:checked + &__slider::before
+        background: #FFFFFF
+        transform: translateX(20px)
