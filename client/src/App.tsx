@@ -1,24 +1,6 @@
-import { useEffect } from "react"
-
-import "./App.sass"
-
-function App() {
-  useEffect(() => {
-    async function testFetch() {
-      const rawRes = await fetch('/api/test');
-      const res = await rawRes.json();
-      console.log(res);
-    };
-
-    testFetch();
-  }, []);
+export default function App(): JSX.Element {
   return (
-    <div className="App">
-      <header className="App-header">
-        <span>Hello world</span>
-      </header>
-    </div>
+    <div className="App" />
   )
 }
 
-export default App
