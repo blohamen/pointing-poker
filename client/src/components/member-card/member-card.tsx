@@ -10,8 +10,7 @@ interface IAva {
   isPhoto?: boolean
 }
 
-const Ava: React.FC<IAva> = (props: IAva) => {
-  const {isPhoto, photoURL, title, isSmall} = props
+const Ava: React.FC<IAva> = ({isPhoto, photoURL, title, isSmall}: IAva) => {
   console.log(photoURL)
   let classNameNoPhoto = "card__no-photo"
   let classNamePhoto = "card__photo"
@@ -43,13 +42,12 @@ interface IStatus {
   isCancel?: boolean,
 }
 
-const Status: React.FC<IStatus> = (props: IStatus) => {
-  const { isCancel } = props
-  return (<i className="card__status">
-  {isCancel === true ? 
-  <FcCancel size={30} /> : ''}
-</i>)
-}
+const Status: React.FC<IStatus> = ({ isCancel }: IStatus) => 
+  <i className="card__status">
+    {isCancel === true ? 
+    <FcCancel size={30} /> : ''}
+  </i>
+
 Status.defaultProps = {
   isCancel: false,
 }
@@ -63,9 +61,7 @@ interface IMemberCard {
   isPhoto?: boolean,
   isCancel?: boolean | undefined
 }
-const MemberCard: React.FC<IMemberCard> = (props: IMemberCard) => {
-  const { isCurrentPlayer, isSmall, title, subtitle, photoURL, isPhoto, isCancel } = props
-  return (
+const MemberCard: React.FC<IMemberCard> = ({ isCurrentPlayer, isSmall, title, subtitle, photoURL, isPhoto, isCancel }: IMemberCard) =>
     <div>
       <Card 
         isCurrentPlayer={isCurrentPlayer}
@@ -82,8 +78,6 @@ const MemberCard: React.FC<IMemberCard> = (props: IMemberCard) => {
           isCancel={isCancel} 
           />} />
     </div>
-  )
-}
 
 MemberCard.defaultProps = {
   isCurrentPlayer: false,

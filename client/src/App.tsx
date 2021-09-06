@@ -4,7 +4,7 @@ import MemberCard from "./components/member-card/member-card";
 
 export default function App(): JSX.Element {
   return (
-    <div className="App" > 
+    <div className="App"> 
       <Card 
         title="Ihar Usmanau" 
         subtitle="React Dev"  

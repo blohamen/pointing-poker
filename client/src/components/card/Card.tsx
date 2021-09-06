@@ -11,8 +11,7 @@ interface ICard {
   isCurrentPlayer?: boolean,
 }
 
-export const Card: React.FC<ICard> = (props: ICard ) => {
-  const { isSmall, left, right, isCurrentPlayer, title, subtitle } = props
+export const Card: React.FC<ICard> = ( { isSmall, left, right, isCurrentPlayer, title, subtitle }: ICard ) => {
 
   let classNameCard = "card"
   const classNameInfo = "card__info"

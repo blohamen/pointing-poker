@@ -30,15 +30,10 @@ interface IIssueCard {
   subtitle: string
 }
 
-export const IssueCard: React.FC<IIssueCard> = (props: IIssueCard) => {
-  const { title, subtitle } = props
-
-  return (
+export const IssueCard: React.FC<IIssueCard> = ({ title, subtitle }: IIssueCard) => 
     <div>
       <Card 
         title={title} 
         subtitle={subtitle} 
         right={<PropertyCard />} />
     </div>
-  )
-}
