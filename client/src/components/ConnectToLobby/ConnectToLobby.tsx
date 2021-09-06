@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Avatar from '../Avatar/Avatar'
 import AvatarInput from '../AvatarInput/AvatarInput'
+import Button from '../Button/Button'
 import FormInputText from '../FormInputText/FormInputText'
 import Switcher from '../Switcher/Switcher'
 import './connect-to-lobby.sass'
@@ -10,6 +11,7 @@ export default function ConnectToLobby(): JSX.Element {
     const [firstName, setFirstName] = useState<string>('')
     const [lastName, setLastName] = useState<string>('')
     const [jobPosition, setJobPosition] = useState<string>('')
+    const [srcAva, setSrcAva] = useState<string>('')
 
     const handleSwitchChange = (flag: boolean): void => {
         setSwitchValue(flag)
@@ -25,6 +27,10 @@ export default function ConnectToLobby(): JSX.Element {
 
     const handleChangeJobPosition = (job: string) => {
         setJobPosition(job)
+    }
+
+    const handleChangeAva = (src: string) => {
+        setSrcAva(src)
     }
 
     return (
@@ -65,9 +71,21 @@ export default function ConnectToLobby(): JSX.Element {
                 <AvatarInput 
                     title="Image"
                     name="addAvatar"
+                    onAvaChange={handleChangeAva}
                 />
 
-                <Avatar name={firstName} lastName={lastName}/>
+                <Avatar 
+                    name={firstName} 
+                    lastName={lastName}
+                    src={srcAva}
+                />
+
+                <Button 
+                    value="send"
+                    size="small"
+                    theme="dark"
+
+                />
             </div>
         </div>
     )

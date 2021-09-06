@@ -4,7 +4,7 @@ import './avatar-input.sass'
 interface IAvatarInputProps {
     title: string
     name: string    
-    // onValueChange(value: string): void
+    onAvaChange(value: string): void
 }
 
 export default function AvatarInput(props: IAvatarInputProps): JSX.Element {
@@ -17,6 +17,8 @@ export default function AvatarInput(props: IAvatarInputProps): JSX.Element {
                 const {name} = files[0]
                 const formatedName = name.length > 20 ? name.slice(name.length - 20) : name
                 setFilename(formatedName)
+                const src =URL.createObjectURL(files[0]);
+                props.onAvaChange(src)
             } else {
                 setFilename(filename)
             }
