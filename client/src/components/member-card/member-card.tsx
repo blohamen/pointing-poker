@@ -1,6 +1,6 @@
 import { FcCancel } from 'react-icons/fc';
 import './member-card.sass'
-import db from '../../images/db.png'
+import db from '../../assets/images/db.png'
 import { Card } from '../card/Card';
 
 interface IAva {
