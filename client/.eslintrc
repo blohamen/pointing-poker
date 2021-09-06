@@ -1,7 +1,14 @@
 {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
     "extends": [
       "react-app",
       "airbnb",
+      "airbnb-typescript",
       "plugin:jsx-a11y/recommended",
       "prettier"
     ],
@@ -10,8 +17,9 @@
       "prettier"
     ],
     "rules": {
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
       "react/jsx-uses-react": "off",
-      "react/react-in-jsx-scope": "off"
+      "react/react-in-jsx-scope": "off",
+      "no-console": "off"
     }
   }
