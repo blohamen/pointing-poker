@@ -5,12 +5,20 @@ interface IButtonProps {
     size: 'large' | 'medium' | 'small'
     theme: 'dark' | 'light'
     form?: string
-    onSubmit?():void
+    onSubmit?(event: React.SyntheticEvent):void
 }
 
 export default function Button(props: IButtonProps): JSX.Element {
     const clasName = `button button__${props.size} button__${props.theme}`
-    const handleClick = () => {console.log('test');
+    const handleClick = (event: React.SyntheticEvent) => {
+        event.preventDefault()
+        if(props.onSubmit){
+            props.onSubmit(event)  
+        } else {
+            event.preventDefault()
+        }
+        
+        
     } 
     return(
         <input 
