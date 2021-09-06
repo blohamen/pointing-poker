@@ -81,10 +81,15 @@ export default function ConnectToLobby(): JSX.Element {
                 />
 
                 <Button 
-                    value="send"
-                    size="small"
+                    value="Confirm"
+                    size="medium"
                     theme="dark"
+                />
 
+                <Button 
+                    value="Cancel"
+                    size="medium"
+                    theme="light"
                 />
             </div>
         </div>
