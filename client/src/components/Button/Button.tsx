@@ -5,6 +5,7 @@ interface IButtonProps {
     size: 'large' | 'medium' | 'small'
     theme: 'dark' | 'light'
     form?: string
+    onSubmit?():void
 }
 
 export default function Button(props: IButtonProps): JSX.Element {
