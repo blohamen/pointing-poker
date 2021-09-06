@@ -1,10 +1,16 @@
-import PropTypes from 'prop-types';
 import { FcCancel } from 'react-icons/fc';
 import './member-card.sass'
 import db from '../../images/db.png'
-import Card from '../card/card';
+import { Card } from '../card/Card';
 
-const Ava = (props) => {
+interface IAva {
+  title: string,
+  isSmall?: boolean,
+  photoURL: string,
+  isPhoto?: boolean
+}
+
+const Ava: React.FC<IAva> = (props: IAva) => {
   const {isPhoto, photoURL, title, isSmall} = props
   console.log(photoURL)
   let classNameNoPhoto = "card__no-photo"
@@ -28,27 +34,36 @@ const Ava = (props) => {
 </div>)
 } 
 
-Ava.propTypes = { 
-  isPhoto: PropTypes.bool.isRequired,
-  photoURL: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  isSmall: PropTypes.bool.isRequired
+Ava.defaultProps = {
+  isSmall: false,
+  isPhoto: false
 }
 
-const Status = (props) => {
+interface IStatus {
+  isCancel?: boolean,
+}
+
+const Status: React.FC<IStatus> = (props: IStatus) => {
   const { isCancel } = props
   return (<i className="card__status">
   {isCancel === true ? 
   <FcCancel size={30} /> : ''}
 </i>)
 }
-
-Status.propTypes = {
-  isCancel: PropTypes.bool.isRequired
+Status.defaultProps = {
+  isCancel: false,
 }
  
-
-const MemberCard = (props) => {
+interface IMemberCard {
+  isCurrentPlayer?: boolean,
+  isSmall?: boolean,
+  title: string,
+  subtitle: string,
+  photoURL: string,
+  isPhoto?: boolean,
+  isCancel?: boolean | undefined
+}
+const MemberCard: React.FC<IMemberCard> = (props: IMemberCard) => {
   const { isCurrentPlayer, isSmall, title, subtitle, photoURL, isPhoto, isCancel } = props
   return (
     <div>
@@ -65,20 +80,15 @@ const MemberCard = (props) => {
           />} 
         right={<Status 
           isCancel={isCancel} 
-          isSmall={isSmall} 
           />} />
     </div>
   )
 }
 
-MemberCard.propTypes = {
-  isCurrentPlayer: PropTypes.bool.isRequired,
-  isSmall: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
-  photoURL: PropTypes.string.isRequired,
-  isPhoto: PropTypes.bool.isRequired,
-  isCancel: PropTypes.bool.isRequired
+MemberCard.defaultProps = {
+  isCurrentPlayer: false,
+  isSmall: false,
+  isPhoto: false,
+  isCancel: false
 }
-
 export default MemberCard

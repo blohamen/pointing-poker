@@ -1,9 +1,17 @@
-import PropTypes from 'prop-types';
 import './card.sass'
 
 const ItsYou = () => <div className="card__its-you">It&apos;s you</div>
 
-const Card = (props) => {
+interface ICard {
+  title: string,
+  subtitle: string,
+  isSmall?: boolean,
+  left?: JSX.Element | null, 
+  right?: JSX.Element | null, 
+  isCurrentPlayer?: boolean,
+}
+
+export const Card: React.FC<ICard> = (props: ICard ) => {
   const { isSmall, left, right, isCurrentPlayer, title, subtitle } = props
 
   let classNameCard = "card"
@@ -30,13 +38,9 @@ const Card = (props) => {
   )
 }
 
-Card.propTypes = {
-  isSmall: PropTypes.bool.isRequired,
-  left: PropTypes.string.isRequired,
-  right: PropTypes.string.isRequired,
-  isCurrentPlayer: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
+Card.defaultProps = {
+  isSmall: false,
+  left: null,
+  right: null,
+  isCurrentPlayer: false
 };
-
-export default Card

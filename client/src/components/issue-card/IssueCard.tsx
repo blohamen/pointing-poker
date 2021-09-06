@@ -1,9 +1,7 @@
-import PropTypes from 'prop-types';
-
 import { IconContext } from 'react-icons/lib';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 
-import Card from '../card/card'
+import { Card } from '../card/Card'
 
 import './issue-card.sass'
 
@@ -27,7 +25,12 @@ const PropertyCard = () =>
       <Delete />
     </div>
 
-const IssueCard = (props) => {
+interface IIssueCard {
+  title: string,
+  subtitle: string
+}
+
+export const IssueCard: React.FC<IIssueCard> = (props: IIssueCard) => {
   const { title, subtitle } = props
 
   return (
@@ -39,10 +42,3 @@ const IssueCard = (props) => {
     </div>
   )
 }
-
-IssueCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired
-}
-
-export default IssueCard
