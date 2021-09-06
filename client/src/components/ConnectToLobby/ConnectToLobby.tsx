@@ -1,12 +1,30 @@
 import { useState } from 'react'
+import Avatar from '../Avatar/Avatar'
+import AvatarInput from '../AvatarInput/AvatarInput'
+import FormInputText from '../FormInputText/FormInputText'
 import Switcher from '../Switcher/Switcher'
 import './connect-to-lobby.sass'
 
 export default function ConnectToLobby(): JSX.Element {
     const [switchValue, setSwitchValue] = useState<boolean>(false)
+    const [firstName, setFirstName] = useState<string>('')
+    const [lastName, setLastName] = useState<string>('')
+    const [jobPosition, setJobPosition] = useState<string>('')
 
     const handleSwitchChange = (flag: boolean): void => {
         setSwitchValue(flag)
+    }
+
+    const handleChangeFirstName = (name: string) => {
+        setFirstName(name)
+    }
+
+    const handleChangeLastName = (name: string) => {
+        setLastName(name)
+    }
+
+    const handleChangeJobPosition = (job: string) => {
+        setJobPosition(job)
     }
 
     return (
@@ -17,7 +35,39 @@ export default function ConnectToLobby(): JSX.Element {
                     title='Connect as Observer' 
                     defaultValue={switchValue} 
                     onChangeToogle={handleSwitchChange}
+                    className="switcher-observer"
                 />
+
+                <FormInputText 
+                    title="Your first name:"
+                    name="firstName"
+                    initialValue={firstName}
+                    validate
+                    onValueChange={handleChangeFirstName}
+                />
+
+                <FormInputText 
+                    title="Your last name (optional):"
+                    name="lastName"
+                    initialValue={lastName}
+                    validate={false}
+                    onValueChange={handleChangeLastName}
+                />
+
+                <FormInputText 
+                    title="Your job position (optional):"
+                    name="jobPosition"
+                    initialValue={jobPosition}
+                    validate={false}
+                    onValueChange={handleChangeJobPosition}
+                />
+
+                <AvatarInput 
+                    title="Image"
+                    name="addAvatar"
+                />
+
+                <Avatar name={firstName} lastName={lastName}/>
             </div>
         </div>
     )

@@ -37,9 +37,11 @@
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
+    "react/require-default-props": "off",
     "jsx-a11y/no-onchange": "off",
     "react/self-closing-comp": "off",
     "react/destructuring-assignment": "off",
+    "jsx-a11y/label-has-associated-control": "off",
 
     "@typescript-eslint/no-unused-vars": [
       2,
