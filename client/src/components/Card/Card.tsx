@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import './card.sass'
 
+
 const ItsYou = () => <div className="card__its-you">It&apos;s you</div>
 
 interface ICard {
@@ -16,7 +17,7 @@ export const Card: React.FC<ICard> = ( { isSmall, left, right, isCurrentPlayer, 
   <div className = {classNames("card", isSmall && 'small')}>
     {left}
     <div>
-      {isCurrentPlayer === true ? <ItsYou /> : ""}
+      {isCurrentPlayer && <ItsYou />}
       <span className={classNames('card__title', isSmall && 'small-title')}>{title}</span>
       <div className={classNames('card_subtitle', isSmall && 'small__subtitle')}>{subtitle}</div>
     </div>

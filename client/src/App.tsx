@@ -1,6 +1,6 @@
-import { Card } from "./components/card/Card";
-import { IssueCard } from './components/issue-card/IssueCard';
-import MemberCard from "./components/member-card/member-card";
+import { Card } from "./components/Card/Card";
+import IssueCard from "./components/Issue-card"
+import MemberCard from "./components/Member-card";
 
 export default function App(): JSX.Element {
   return (

@@ -2,7 +2,7 @@ import { FcCancel } from 'react-icons/fc';
 import classNames from 'classnames';
 import './member-card.sass'
 import db from '../../assets/images/db.png'
-import { Card } from '../card/Card';
+import { Card } from '../Card/Card';
 
 interface IAva {
   title: string,
@@ -34,11 +34,13 @@ interface IStatus {
   isCancel?: boolean,
 }
 
-const Status: React.FC<IStatus> = ({ isCancel }: IStatus) => 
+const Status: React.FC<IStatus> = ({ isCancel }: IStatus) => (
   <i className="card__status">
     {isCancel === true ? 
     <FcCancel size={30} /> : ''}
   </i>
+)
+  
 
 Status.defaultProps = {
   isCancel: false,
@@ -53,8 +55,8 @@ interface IMemberCard {
   isPhoto?: boolean,
   isCancel?: boolean | undefined
 }
-const MemberCard: React.FC<IMemberCard> = ({ isCurrentPlayer, isSmall, title, subtitle, photoURL, isPhoto, isCancel }: IMemberCard) =>
-    <div>
+const MemberCard: React.FC<IMemberCard> = ({ isCurrentPlayer, isSmall, title, subtitle, photoURL, isPhoto, isCancel }: IMemberCard) => (
+  <div>
       <Card 
         isCurrentPlayer={isCurrentPlayer}
         isSmall={isSmall}
@@ -70,6 +72,8 @@ const MemberCard: React.FC<IMemberCard> = ({ isCurrentPlayer, isSmall, title, su
           isCancel={isCancel} 
           />} />
     </div>
+)
+    
 
 MemberCard.defaultProps = {
   isCurrentPlayer: false,

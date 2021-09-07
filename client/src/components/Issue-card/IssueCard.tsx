@@ -1,29 +1,33 @@
 import { IconContext } from 'react-icons/lib';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 
-import { Card } from '../card/Card'
+import Card from "../Card"
 
 import './issue-card.sass'
 
 const Edit = () => <div className="edit"><AiOutlineEdit size={30}/></div>
 
-const Delete = () => 
+const Delete = () => (
     <div className="delete">
-      <IconContext.Provider
-        value={{ color: 'red', size: '30px' }}
-      >
-        <div>
-          <AiOutlineDelete />
-        </div>
-      </IconContext.Provider>
+    <IconContext.Provider
+      value={{ color: 'red', size: '30px' }}
+    >
+      <div>
+        <AiOutlineDelete />
+      </div>
+    </IconContext.Provider>
     </div>
+  )
+    
 
 
-const PropertyCard = () => 
+const PropertyCard = () => ( 
     <div className="property">
       <Edit />
       <Delete />
     </div>
+    )
+   
 
 interface IIssueCard {
   title: string,
