@@ -1,9 +1,14 @@
 import { useState } from "react";
 import "./timer.sass";
 
-export default function Timer(): JSX.Element {
+interface ITimerProps {
+  mode: "setting" | "game";
+}
+
+export default function Timer(props: ITimerProps): JSX.Element {
   const [minutesValue, setMinutesValue] = useState(0);
   const [secondsValue, setSecondsValue] = useState(0);
+  const mode = props.mode !== "setting";
   return (
     <div className="timer">
       <label htmlFor="minutes" className="timer__minutes">
@@ -16,6 +21,7 @@ export default function Timer(): JSX.Element {
           min={0}
           max={59}
           step={1}
+          readOnly={mode}
           onKeyDown={(e) => !/^[А-Яа-яA-Za-z ]$/.test(e.key)}
           onChange={(e) => {
             if (+e.target.value > +e.target.max) {
@@ -41,6 +47,7 @@ export default function Timer(): JSX.Element {
           min={0}
           max={59}
           step={1}
+          readOnly={mode}
           onKeyDown={(e) => !/^[А-Яа-яA-Za-z ]$/.test(e.key)}
           onChange={(e) => {
             if (+e.target.value > +e.target.max) {
