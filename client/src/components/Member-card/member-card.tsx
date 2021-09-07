@@ -3,14 +3,14 @@ import classNames from 'classnames';
 import './member-card.sass'
 import { Card } from '../Card/Card';
 
-interface IAva {
+interface IAvatar {
   title: string,
   isSmall?: boolean,
   photoURL: string,
   isPhoto?: boolean
 }
 
-const Ava: React.FC<IAva> = ({isPhoto, photoURL, title, isSmall}: IAva) => 
+const Avatar: React.FC<IAvatar> = ({isPhoto, photoURL, title, isSmall}: IAvatar) => 
   (<div className={classNames("classNameNoPhoto", isSmall && "small__no-photo")}>
   {isPhoto === true ? 
     <img className={classNames("classNamePhoto", isSmall && 'small__photo')} alt="ava" src={photoURL}/> :
@@ -22,7 +22,7 @@ const Ava: React.FC<IAva> = ({isPhoto, photoURL, title, isSmall}: IAva) =>
 </div>)
 
 
-Ava.defaultProps = {
+Avatar.defaultProps = {
   isSmall: false,
   isPhoto: false
 }
@@ -59,7 +59,7 @@ const MemberCard: React.FC<IMemberCard> = ({ isCurrentPlayer, isSmall, title, su
         isSmall={isSmall}
         title={title} 
         subtitle={subtitle} 
-        left={<Ava 
+        left={<Avatar 
           isPhoto={isPhoto}
           photoURL={photoURL}
           title={title}
