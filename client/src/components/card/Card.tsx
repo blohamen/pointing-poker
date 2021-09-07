@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import './card.sass'
 
 const ItsYou = () => <div className="card__its-you">It&apos;s you</div>
@@ -11,31 +12,16 @@ interface ICard {
   isCurrentPlayer?: boolean,
 }
 
-export const Card: React.FC<ICard> = ( { isSmall, left, right, isCurrentPlayer, title, subtitle }: ICard ) => {
-
-  let classNameCard = "card"
-  const classNameInfo = "card__info"
-  let classNameTitle = "card__title"
-  let classNameSubtitle = "card__subtitle"
-
-  if(isSmall){
-    classNameCard = "small-card"
-    classNameTitle = "small-card__title"
-    classNameSubtitle = "small-card__subtitle"
-  }
-
-  return (
-  <div className = {classNameCard}>
+export const Card: React.FC<ICard> = ( { isSmall, left, right, isCurrentPlayer, title, subtitle }: ICard ) =>
+  <div className = {classNames("card", isSmall && 'small')}>
     {left}
-    <div className={classNameInfo}>
+    <div>
       {isCurrentPlayer === true ? <ItsYou /> : ""}
-      <span className={classNameTitle}>{title}</span>
-      <div className={classNameSubtitle}>{subtitle}</div>
+      <span className={classNames('card__title', isSmall && 'small-title')}>{title}</span>
+      <div className={classNames('card_subtitle', isSmall && 'small__subtitle')}>{subtitle}</div>
     </div>
     {right}
   </div>
-  )
-}
 
 Card.defaultProps = {
   isSmall: false,

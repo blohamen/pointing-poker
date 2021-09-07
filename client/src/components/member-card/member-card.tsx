@@ -1,4 +1,5 @@
 import { FcCancel } from 'react-icons/fc';
+import classNames from 'classnames';
 import './member-card.sass'
 import db from '../../assets/images/db.png'
 import { Card } from '../card/Card';
@@ -12,20 +13,11 @@ interface IAva {
 
 const Ava: React.FC<IAva> = ({isPhoto, photoURL, title, isSmall}: IAva) => {
   console.log(photoURL)
-  let classNameNoPhoto = "card__no-photo"
-  let classNamePhoto = "card__photo"
-  let classNameInitials = "card__initials"
 
-  if(isSmall){
-    classNameNoPhoto = "small-card__no-photo"
-    classNamePhoto = "small-card__photo"
-    classNameInitials = "small-card__initials"
-  }
-
-  return(<div className={classNameNoPhoto}>
+  return(<div className={classNames("classNameNoPhoto", isSmall && "small__no-photo")}>
   {isPhoto === true ? 
-    <img className={classNamePhoto} alt="ava" src={db}/> :
-    <span className={classNameInitials}>
+    <img className={classNames("classNamePhoto", isSmall && 'small__photo')} alt="ava" src={db}/> :
+    <span className={classNames("classNameInitials", isSmall && "small__initials")}>
       {title[0]}
       {title.substr(title.indexOf(' ')+1)[0]}
     </span>

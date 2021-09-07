@@ -42,7 +42,7 @@ $k-small: 1.66
   width: calc(480px / #{$k-small})
   height: calc(120px / #{$k-small})
   
-.small-card
+.small
   @include small-card-width-height-margin
   display: flex
   align-items: center
@@ -50,7 +50,9 @@ $k-small: 1.66
   padding-left: calc(20px / #{$k-small})
   border-radius: 5px
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25)
-  &__title
+
+
+.small-title
     @include small-card-large-text
-  &__subtitle
+.small__subtitle
     @include small-card-small-text
