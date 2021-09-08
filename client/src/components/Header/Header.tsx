@@ -7,10 +7,10 @@ export default function Header(): JSX.Element {
     <header>
       <div className="header-container">
         <div className="header-container__logo">
-          <img src={logo} alt="Poking Poker Logo" width="70px" height="70px" />
+          <img src={logo} alt="Poking Poker Logo" />
         </div>
         <div className="header-container__menu">
-          <img src={menu} alt="Menu" width="19px" height="14px" />
+          <img src={menu} alt="Menu" />
         </div>
       </div>
     </header>

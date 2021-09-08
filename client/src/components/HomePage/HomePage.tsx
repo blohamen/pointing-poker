@@ -1,4 +1,3 @@
-import './HomePage.sass'
 import PageLogo from '../PokerPlanning/PokerPlanning'
 import Session from '../Session/Session'
 
