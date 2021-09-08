@@ -1,4 +1,4 @@
-import page_logo from "../../../assets/img/page-logo.png";
+import page_logo from "../../assets/img/page-logo.png";
 import "./PageLogo.sass";
 
 interface IPageLogo {

@@ -1,6 +1,6 @@
-import "./PageLobbyHome.sass";
-import PageLogo from "../../common/PageLogo/PageLogo";
-import Session from "./components/Session/Session";
+import "./HomePage.sass";
+import PageLogo from "../PageLogo/PageLogo";
+import Session from "../Session/Session";
 
 
 export default function PageProducts(): JSX.Element {

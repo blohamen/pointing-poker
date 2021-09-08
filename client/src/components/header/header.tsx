@@ -1,6 +1,6 @@
 import "./header.sass";
-import logo from "../../../../assets/img/logo.png";
-import menu from "../../../../assets/img/menu.png";
+import logo from "../../assets/img/logo.png";
+import menu from "../../assets/img/menu.png";
 
 export default function Header() {
     return (
