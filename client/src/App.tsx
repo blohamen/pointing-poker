@@ -1,10 +1,10 @@
 import './App.sass'
-import ScramMaster from './components/ScramMaster/scram-master'
+import GameCard from './components/Game-card/GameCard'
 
 export default function App(): JSX.Element {
   return (
     <div className="App" > 
-      <ScramMaster linkLobby="google.com" />
+      <GameCard cardValue="10" />
     </div>
   )
 } 
