@@ -1,8 +1,5 @@
-import "./Footer.sass"
+import './Footer.sass'
 
-export default function Footer() {
-    return (
-      <footer/>
-    )
-  }
-  
+export default function Footer(): JSX.Element {
+  return <footer />
+}
