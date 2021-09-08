@@ -17,7 +17,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "react-icons": "^4.2.0"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",
