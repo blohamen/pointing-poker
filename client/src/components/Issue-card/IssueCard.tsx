@@ -8,7 +8,7 @@ import './issue-card.sass'
 const Edit = () => <div className="edit"><AiOutlineEdit size={30}/></div>
 
 const Delete = () => (
-    <div className="delete">
+  <div className="delete">
     <IconContext.Provider
       value={{ color: 'red', size: '30px' }}
     >
@@ -16,17 +16,17 @@ const Delete = () => (
         <AiOutlineDelete />
       </div>
     </IconContext.Provider>
-    </div>
-  )
+  </div>
+)
     
 
 
 const PropertyCard = () => ( 
-    <div className="property">
-      <Edit />
-      <Delete />
-    </div>
-    )
+  <div className="property">
+    <Edit />
+    <Delete />
+  </div>
+)
    
 
 interface IIssueCard {
@@ -34,10 +34,12 @@ interface IIssueCard {
   subtitle: string
 }
 
-export const IssueCard: React.FC<IIssueCard> = ({ title, subtitle }: IIssueCard) => 
-    <div>
-      <Card 
-        title={title} 
-        subtitle={subtitle} 
-        right={<PropertyCard />} />
-    </div>
+export const IssueCard: React.FC<IIssueCard> = ({ title, subtitle }: IIssueCard) => (
+  <div>
+    <Card 
+      title={title} 
+      subtitle={subtitle} 
+      right={<PropertyCard />} />
+  </div>
+
+)

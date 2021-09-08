@@ -10,16 +10,17 @@ interface IAvatar {
   isPhoto?: boolean
 }
 
-const Avatar: React.FC<IAvatar> = ({isPhoto, photoURL, title, isSmall}: IAvatar) => 
-  (<div className={classNames("classNameNoPhoto", isSmall && "small__no-photo")}>
-  {isPhoto === true ? 
-    <img className={classNames("classNamePhoto", isSmall && 'small__photo')} alt="ava" src={photoURL}/> :
-    <span className={classNames("classNameInitials", isSmall && "small__initials")}>
-      {title[0]}
-      {title.substr(title.indexOf(' ')+1)[0]}
-    </span>
-   }
-</div>)
+const Avatar: React.FC<IAvatar> = ({isPhoto, photoURL, title, isSmall}: IAvatar) => (
+  <div className={classNames("classNameNoPhoto", isSmall && "small__no-photo")}>
+    {isPhoto === true ? 
+      <img className={classNames("classNamePhoto", isSmall && 'small__photo')} alt="ava" src={photoURL}/> :
+      <span className={classNames("classNameInitials", isSmall && "small__initials")}>
+        {title[0]}
+        {title.substr(title.indexOf(' ')+1)[0]}
+      </span>
+    }
+  </div>
+)
 
 
 Avatar.defaultProps = {
@@ -34,7 +35,7 @@ interface IStatus {
 const Status: React.FC<IStatus> = ({ isCancel }: IStatus) => (
   <i className="card__status">
     {isCancel === true ? 
-    <FcCancel size={30} /> : ''}
+      <FcCancel size={30} /> : ''}
   </i>
 )
   
@@ -54,21 +55,26 @@ interface IMemberCard {
 }
 const MemberCard: React.FC<IMemberCard> = ({ isCurrentPlayer, isSmall, title, subtitle, photoURL, isPhoto, isCancel }: IMemberCard) => (
   <div>
-      <Card 
-        isCurrentPlayer={isCurrentPlayer}
-        isSmall={isSmall}
-        title={title} 
-        subtitle={subtitle} 
-        left={<Avatar 
+    <Card 
+      isCurrentPlayer={isCurrentPlayer}
+      isSmall={isSmall}
+      title={title} 
+      subtitle={subtitle} 
+      left={
+        <Avatar 
           isPhoto={isPhoto}
           photoURL={photoURL}
           title={title}
           isSmall={isSmall} 
-          />} 
-        right={<Status 
+        />
+      } 
+      right={
+        <Status 
           isCancel={isCancel} 
-          />} />
-    </div>
+        />
+      } 
+    />
+  </div>
 )
     
 
