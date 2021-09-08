@@ -7,6 +7,6 @@ export default function PageLogo(): JSX.Element {
       <div className="page-logo__img">
         <img src={page_logo} alt="Game Logo" />
       </div>
-     </div> 
+    </div>
   )
 }

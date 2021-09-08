@@ -10,8 +10,8 @@ interface ITextItemProps {
 }
 
 export default function FormInputText(props: ITextItemProps): JSX.Element {
-  const { title, name, initialValue, validate, onValueChange } = props;
-  
+  const { title, name, initialValue, validate, onValueChange } = props
+
   const error = validate ? formValidate(initialValue) : ''
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,5 +36,5 @@ export default function FormInputText(props: ITextItemProps): JSX.Element {
 }
 
 FormInputText.defaultProps = {
-    title: ''
+  title: '',
 }
