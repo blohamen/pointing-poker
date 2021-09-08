@@ -1,4 +1,4 @@
-import "./footer.sass"
+import "./Footer.sass"
 
 export default function Footer() {
     return (

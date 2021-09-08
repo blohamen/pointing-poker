@@ -1,4 +1,4 @@
-import Button from "../button/button";
+import Button from "../Button/Button";
 
 export default function Session(): JSX.Element {
     return(

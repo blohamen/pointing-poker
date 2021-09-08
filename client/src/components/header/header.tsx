@@ -1,4 +1,4 @@
-import "./header.sass";
+import "./Header.sass";
 import logo from "../../assets/img/logo.png";
 import menu from "../../assets/img/menu.png";
 
