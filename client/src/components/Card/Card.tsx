@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 import classNames from 'classnames'
 import './card.sass'
 
 
+=======
+import './card.sass'
+
+>>>>>>> origin/scram-master
 const ItsYou = () => <div className="card__its-you">It&apos;s you</div>
 
 interface ICard {
@@ -13,6 +18,7 @@ interface ICard {
   isCurrentPlayer?: boolean,
 }
 
+<<<<<<< HEAD
 export const Card: React.FC<ICard> = ( { isSmall, left, right, isCurrentPlayer, title, subtitle }: ICard ) =>
   <div className = {classNames("card", isSmall && 'small')}>
     {left}
@@ -23,6 +29,34 @@ export const Card: React.FC<ICard> = ( { isSmall, left, right, isCurrentPlayer, 
     </div>
     {right}
   </div>
+=======
+export const Card: React.FC<ICard> = (props: ICard ) => {
+  const { isSmall, left, right, isCurrentPlayer, title, subtitle } = props
+
+  let classNameCard = "card"
+  const classNameInfo = "card__info"
+  let classNameTitle = "card__title"
+  let classNameSubtitle = "card__subtitle"
+
+  if(isSmall){
+    classNameCard = "small-card"
+    classNameTitle = "small-card__title"
+    classNameSubtitle = "small-card__subtitle"
+  }
+
+  return (
+  <div className = {classNameCard}>
+    {left}
+    <div className={classNameInfo}>
+      {isCurrentPlayer === true ? <ItsYou /> : ""}
+      <span className={classNameTitle}>{title}</span>
+      <div className={classNameSubtitle}>{subtitle}</div>
+    </div>
+    {right}
+  </div>
+  )
+}
+>>>>>>> origin/scram-master
 
 Card.defaultProps = {
   isSmall: false,

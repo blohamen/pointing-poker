@@ -1,0 +1,39 @@
+$k-small: 1.66
+
+.card
+  &__initials
+    display: flex
+    align-items: center
+    justify-content: center
+    text-transform: uppercase
+    font-size: 30px
+    font-weight: bold
+    color: #FFFFFF
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.25)
+    box-shadow: inset 1px 1px 4px 1px rgba(0,0,0,0.25)
+    background: #60DABF
+    padding: 10px
+    border-radius: 50%
+  &__photo
+    width: 50px
+    height: auto
+
+.small-card
+  &__photo
+    width: calc(50px / #{$k-small})
+  &__initials
+    display: flex
+    align-items: center
+    justify-content: center
+    text-transform: uppercase
+    font-size: calc(30px / #{$k-small})
+    font-weight: bold
+    color: #FFFFFF
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.25)
+    box-shadow: inset 1px 1px 4px 1px rgba(0,0,0,0.25)
+    background: #60DABF
+    padding: calc(10px / #{$k-small})
+    border-radius: 50%
+  &__no-photo
+    width: calc(50px / #{$k-small})
+    height: auto
