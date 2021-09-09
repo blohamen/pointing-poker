@@ -6,7 +6,7 @@ const ItsYou = () => <div className="card__its-you">It&apos;s you</div>
 
 interface ICard {
   title: string,
-  subtitle: string,
+  subtitle?: string,
   isSmall?: boolean,
   left?: JSX.Element | null, 
   right?: JSX.Element | null, 
@@ -25,6 +25,7 @@ export const Card: React.FC<ICard> = ( { isSmall, left, right, isCurrentPlayer, 
   </div>
 
 Card.defaultProps = {
+  subtitle: '',
   isSmall: false,
   left: null,
   right: null,

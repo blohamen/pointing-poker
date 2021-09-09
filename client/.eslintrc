@@ -63,6 +63,5 @@
     "import/prefer-default-export": "off",
     "react/prop-types": "off",
     "indent": ["error", 2]
-    "react/prop-types": "off"
   }
 }
