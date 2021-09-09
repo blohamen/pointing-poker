@@ -1,8 +1,8 @@
-import validate from '../../utils/formValidate'
+import formValidate from '../../utils/formValidate'
 import './form-item-text.sass'
 
 interface ITextItemProps {
-  title: string
+  title?: string
   name: string
   initialValue: string
   validate: boolean
@@ -10,25 +10,31 @@ interface ITextItemProps {
 }
 
 export default function FormInputText(props: ITextItemProps): JSX.Element {
-  const error = props.validate ? validate(props.initialValue) : ''
+  const { title, name, initialValue, validate, onValueChange } = props
+
+  const error = validate ? formValidate(initialValue) : ''
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.onValueChange(event.target.value)
+    onValueChange(event.target.value)
   }
 
   return (
     <div className="fit__wrapper">
-      <label htmlFor={props.name} className="fit__label">
-        <p className="fit__title">{props.title}</p>
+      <label htmlFor={name} className="fit__label">
+        <p className="fit__title">{title}</p>
         <input
           className="fit__input"
           type="text"
-          name={props.name}
-          value={props.initialValue}
+          name={name}
+          value={initialValue}
           onChange={handleChange}
         />
       </label>
-      {props.initialValue === '' && error}
+      {initialValue === '' && error}
     </div>
   )
+}
+
+FormInputText.defaultProps = {
+  title: '',
 }
