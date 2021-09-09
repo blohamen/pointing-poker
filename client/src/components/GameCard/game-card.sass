@@ -1,11 +1,14 @@
-.game-card
+@mixin width140-height226
   width: 140px
   height: 226px
-  border: 1px solid #cccccc
-  border-radius: 5px
+  border-radius: 10px
+
+.game-card
+  @include width140-height226
   background-color: transparent
-  border: 1px solid #f1f1f1
+  transition: transform 0.6s
   perspective: 1000px
+  margin: 5px
   &__inner
     position: relative
     width: 100%
@@ -13,29 +16,40 @@
     text-align: center
     transition: transform 0.8s
     transform-style: preserve-3d
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
   &__back
-    background-color: dodgerblue
-    color: white
-    transform: rotateY(180deg)
+    transform: rotateY(0deg)
+  &__back-image
+    @include width140-height226
   &__front 
-    background-color: #bbb
+    background-color: #e6e6e6
     color: black
     display: flex
     flex-direction: column
-    justify-content: space-around
+    justify-content: space-between
+    box-shadow: 0px 0px 10px 0 rgba(0,0,0,0.6)
+    border-radius: 10px
   &__value
     align-self: flex-start
-  &__sp
+    padding: 10px
+  &__value-big
     align-self: center
     text-transform: uppercase
+    padding: 0 20px
     font-size: 64px
   &__value-upside-down
     align-self: flex-end
+    padding: 10px
+  &__cup
+    @include width140-height226
+    display: flex
+    align-items: center
+    justify-content: center
 
-.game-card:hover .game-card__inner
+// .game-card:hover .game-card__inner
+//   transform: rotateY(180deg)
+.flip 
   transform: rotateY(180deg)
-  
+
 .game-card__front, .game-card__back 
   position: absolute
   width: 100%
