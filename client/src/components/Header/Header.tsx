@@ -7,7 +7,7 @@ export default function Header(): JSX.Element {
     <header>
       <div className="header-container">
         <div className="header-container__logo">
-          <img src={logo} alt="Poking Poker Logo" />
+          <a href="/"><img src={logo} alt="Poking Poker Logo" /></a>
         </div>
         <div className="header-container__menu">
           <img src={menu} alt="Menu" />
