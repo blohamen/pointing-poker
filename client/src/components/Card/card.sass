@@ -1,0 +1,58 @@
+$k: 1
+$k-small: 1.66
+
+// Card
+@mixin card-large-text 
+ font-size: calc(48px / #{$k})
+ font-weight: 300
+@mixin card-small-text 
+ font-size: calc(10px / #{$k})
+ font-weight: 300
+
+@mixin card-width-height-margin
+  margin: calc(5px / #{$k})
+  width: calc(480px / #{$k})
+  height: calc(120px / #{$k})
+  
+.card
+  @include card-width-height-margin
+  display: flex
+  align-items: center
+  justify-content: space-around
+  padding-left: calc(20px / #{$k})
+  border-radius: 5px
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25)
+  &__title
+    @include card-large-text
+  &__subtitle
+    @include card-small-text
+  &__its-you
+    @include card-small-text
+    font-weight: bold
+// Small card
+@mixin small-card-large-text 
+ font-size: calc(48px / #{$k-small})
+ font-weight: 300
+@mixin small-card-small-text 
+ font-size: calc(16px / #{$k-small})
+ font-weight: 300
+
+@mixin small-card-width-height-margin
+  margin: calc(5px / #{$k-small})
+  width: calc(480px / #{$k-small})
+  height: calc(120px / #{$k-small})
+  
+.small
+  @include small-card-width-height-margin
+  display: flex
+  align-items: center
+  justify-content: space-around
+  padding-left: calc(20px / #{$k-small})
+  border-radius: 5px
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25)
+
+
+.small-title
+    @include small-card-large-text
+.small__subtitle
+    @include small-card-small-text
