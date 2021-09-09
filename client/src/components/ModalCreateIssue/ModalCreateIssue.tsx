@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import './modal-create-issue.sass'
+import { withRouter } from 'react-router-dom'
 
-export default function ModalCreateIssue(): JSX.Element {
+function ModalCreateIssue(): JSX.Element {
   const [selectValue, setSelectValue] = useState<string>('Low')
   const [titleValue, setTitleValue] = useState<string>('')
   const [linkValue, setLinkValue] = useState<string>('')
@@ -48,7 +49,10 @@ export default function ModalCreateIssue(): JSX.Element {
             </select>
           </label>
         </form>
+        <button type="button">Cancel</button>
       </div>
     </div>
   )
 }
+
+export default withRouter(ModalCreateIssue)
