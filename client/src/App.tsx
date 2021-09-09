@@ -1,3 +1,13 @@
+import './app.sass'
+import MainLayout from './components/MainLayout/MainLayout'
+import HomePage from './components/HomePage/HomePage'
+
 export default function App(): JSX.Element {
-  return <div className="App" />
+  return (
+    <>
+      <MainLayout>
+        <HomePage />
+      </MainLayout>
+    </>
+  )
 }
