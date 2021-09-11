@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
+import Button from '../Button/Button'
 import './modal-create-issue.sass'
-import { withRouter } from 'react-router-dom'
 
-function ModalCreateIssue(): JSX.Element {
+export default function ModalCreateIssue(): JSX.Element {
   const [selectValue, setSelectValue] = useState<string>('Low')
   const [titleValue, setTitleValue] = useState<string>('')
   const [linkValue, setLinkValue] = useState<string>('')
@@ -49,10 +49,11 @@ function ModalCreateIssue(): JSX.Element {
             </select>
           </label>
         </form>
-        <button type="button">Cancel</button>
+        <div className="mci__button-wrapper">
+          <Button value="Yes" size="small" theme="dark" />
+          <Button value="No" size="small" theme="light" />
+        </div>
       </div>
     </div>
   )
 }
-
-export default withRouter(ModalCreateIssue)
