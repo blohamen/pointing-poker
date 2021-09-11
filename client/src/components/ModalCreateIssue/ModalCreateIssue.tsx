@@ -50,8 +50,8 @@ export default function ModalCreateIssue(): JSX.Element {
           </label>
         </form>
         <div className="mci__button-wrapper">
-          <Button value="Yes" size="small" theme="dark" />
-          <Button value="No" size="small" theme="light" />
+          <Button value="Yes" size="small" theme="dark" form="mci-form" />
+          <Button value="No" size="small" theme="light" form="mci-form" />
         </div>
       </div>
     </div>
