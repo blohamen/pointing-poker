@@ -22,13 +22,7 @@ export default function FormInputText(props: ITextItemProps): JSX.Element {
     <div className="fit__wrapper">
       <label htmlFor={name} className="fit__label">
         <p className="fit__title">{title}</p>
-        <input
-          className="fit__input"
-          type="text"
-          name={name}
-          value={initialValue}
-          onChange={handleChange}
-        />
+        <input className="fit__input" type="text" name={name} value={initialValue} onChange={handleChange} />
       </label>
       {initialValue === '' && error}
     </div>
