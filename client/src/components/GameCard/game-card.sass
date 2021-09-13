@@ -1,58 +1,93 @@
-@mixin width140-height226
-  width: 140px
-  height: 226px
-  border-radius: 10px
+.game
+  &__setting-mode
+    width: 100px
+    height: 161px
+  &__play-mode
+    width: 80px
+    height: 127px
+  &__playerСhoice-mode
+    width: 130px
+    height: 215px
+  &__result-mode
+    width: 140px
+    height: 226px
 
 .game-card
-  @include width140-height226
-  background-color: transparent
-  transition: transform 0.6s
-  perspective: 1000px
-  margin: 5px
-  &__inner
+  &__container
+    background-color: transparent
+    transition: transform 0.6s
+    // padding: 10px 0
+    margin: 1%
+    // flex: 0 0 20%
+    display: flex
+    align-items: center
+    justify-content: space-around
+    perspective: 25rem
+    &.flip > .game-card__card
+      transform-origin: left
+      transform: rotateY(180deg) translateX(-100%)
+  &__card
+    margin: 2%
     position: relative
-    width: 100%
-    height: 100%
-    text-align: center
+    border-radius: .5rem
     transition: transform 0.8s
     transform-style: preserve-3d
+    transform-origin: right
+    transition: all .5s
+    box-shadow: 0 0 .25rem black
+  &__front,
   &__back
-    transform: rotateY(0deg)
-  &__back-image
-    @include width140-height226
-  &__front 
-    background-color: #e6e6e6
-    color: black
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    backface-visibility: hidden
+    border-radius: inherit
+    overflow: hidden
+    background-position: center
+    background-size: contain
+    background-repeat: no-repeat
+    background: #FFFFFF
+    border: 3px solid #EEEEEE
+    box-sizing: border-box
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
     display: flex
     flex-direction: column
     justify-content: space-between
-    box-shadow: 0px 0px 10px 0 rgba(0,0,0,0.6)
-    border-radius: 10px
-  &__value
+  &__back
+    transform: rotateY(180deg)
+  &__back-image
+    width: 100%
+    height: 100%
+  &__value-center,
+  &__value-down,
+  &__value-up
+    font-size: 18px
+    line-height: 18px
+    font-family: Ruda
+    font-style: normal
+    font-weight: bold
+    color: #000000
+  &__value-up
     align-self: flex-start
-    padding: 10px
-  &__value-big
+    padding: 5px
+  &__value-down
+    align-self: flex-end
+    padding: 5px
+    transform: rotate(180deg)
+  &__value-center
+    width: 100%
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
     align-self: center
     text-transform: uppercase
-    padding: 0 20px
-    font-size: 64px
-  &__value-upside-down
-    align-self: flex-end
-    padding: 10px
+    font-size: 56px
+    line-height: 56px
+  &__question,
   &__cup
-    @include width140-height226
-    display: flex
-    align-items: center
-    justify-content: center
-
-// .game-card:hover .game-card__inner
-//   transform: rotateY(180deg)
-.flip 
-  transform: rotateY(180deg)
-
-.game-card__front, .game-card__back 
-  position: absolute
-  width: 100%
-  height: 100%
-  -webkit-backface-visibility: hidden
-  backface-visibility: hidden
+    margin: 0 auto
+    width: 50px
+    height: 60px

@@ -1,65 +1,88 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 import './game-card.sass'
-import cupURL from '../../images/cup.png'
+import cupURL from '../../assets/img/cup.png'
+import questionURL from '../../assets/img/question.png'
 
-const Cup = () => (
+interface IImageCardsProps {
+  url: string
+}
+
+const Cup = (props: IImageCardsProps) => (
   <div className="game-card__cup">
-    <img src={cupURL} alt="cup" />
+    <img src={props.url} alt="cup" className="game-card__back-image" />
   </div>
 )
 
-interface ICardWithValue {
-  cardValue: string
-}
-
-const CardWithValue: React.FC<ICardWithValue> = ({ cardValue }: ICardWithValue) => (
-  <>
-    <span className="game-card__value">{cardValue}</span>
-    <span className="game-card__value-big">{cardValue}</span>
-    <span className="game-card__value-upside-down">{cardValue}</span>
-  </>
+const Question = (props: IImageCardsProps) => (
+  <div className="game-card__question">
+    <img src={props.url} alt="unknow" className="game-card__back-image" />
+  </div>
 )
 
 interface ICard {
-  cardValue: string
-  cardShirtURL?: string
+  mode: 'setting' | 'play' | 'playerСhoice' | 'result'
+  cardType?: 'value' | 'unknow' | 'coffee break'
+  cardValue: string | number
+  cardShirtURL: string
+  storyPointShort: string
+  finsishVoiting: boolean
 }
 
-const GameCard: React.FC<ICard> = ({ cardValue, cardShirtURL }: ICard) => {
-  const [isFlip, setFlip] = useState(true)
+const GameCard: React.FC<ICard> = (props: ICard) => {
+  const [isFlip, setFlip] = useState(props.finsishVoiting)
 
-  const gameCardClick = () => {
+  useEffect(() => {
     setFlip(!isFlip)
-  }
+  }, [props.finsishVoiting])
 
-  const onKeyPressHandler = () => {
-    console.log('click')
+  let cardSize = ''
+
+  if (props.mode === 'setting') {
+    cardSize = 'game__setting-mode'
+  } else if (props.mode === 'play') {
+    cardSize = 'game__play-mode'
+  } else if (props.mode === 'playerСhoice') {
+    cardSize = 'game__playerСhoice-mode'
+  } else {
+    cardSize = 'game__result-mode'
   }
 
   return (
-    <div
-      className={classNames('game-card', isFlip && 'flip')}
-      onClick={gameCardClick}
-      onKeyPress={onKeyPressHandler}
-      role="button"
-      tabIndex={0}
-    >
-      <div className={classNames('game-card__inner', isFlip && 'flip')}>
+    <div className={classNames('game-card__container', !isFlip && 'flip')}>
+      <div className={classNames('game-card__card', cardSize)}>
         <div className="game-card__front">
-          {cardValue === 'cup' ? <Cup /> : <CardWithValue cardValue={cardValue} />}
+          <span className="game-card__value-up">{props.cardValue}</span>
+          {(() => {
+            if (props.cardType === 'value') {
+              return <p className="game-card__value-center">{props.storyPointShort}</p>
+            }
+            if (props.cardType === 'unknow') {
+              return <Question url={questionURL} />
+            }
+            if (props.cardType === 'coffee break') return <Cup url={cupURL} />
+          })()}
+          <span className="game-card__value-down">{props.cardValue}</span>
         </div>
+
         <div className="game-card__back">
-          <img className="game-card__back-image" src={cardShirtURL} alt=" " />
+          <img className="game-card__back-image" src={props.cardShirtURL} alt="shirt" />
         </div>
       </div>
     </div>
   )
 }
 
-GameCard.defaultProps = {
-  cardShirtURL: 'https://i.pinimg.com/originals/0e/32/a4/0e32a458fb8158720b1d5fc3ffc42c05.jpg',
-}
-
 export default GameCard
+
+// props.cardType === 'value' ? (
+//   <p className="game-card__value-center">{props.storyPointShort}</p>
+// ) : (
+//   <p className="game-card__value-center">Fuck</p>
+// )
+
+// isFlip && 'flip'
+// {
+//   /* <div className={classNames('game-card__card', isFlip && 'flip')}> */
+// }
