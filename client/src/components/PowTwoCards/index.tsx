@@ -1,3 +1,3 @@
-import PowTwoCards from "./PowTwoCards";
+import PowTwoCards from './PowTwoCards'
 
 export default PowTwoCards
