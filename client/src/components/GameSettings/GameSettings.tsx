@@ -1,21 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AddGameCard from '../AddGameCard/AddGameCard'
 import GameCard from '../GameCard/GameCard'
-
 import Switcher from '../Switcher/Switcher'
 import Timer from '../Timer/Timer'
 import './game-settings.sass'
-import ShirtGameCard from './ShirtGameCard/ShirtGameCard'
+
 import sh1URL from '../../assets/img/shirts/shirt1.jpg'
 import sh2URL from '../../assets/img/shirts/shirt2.jpg'
 import sh3URL from '../../assets/img/shirts/shirt3.jpg'
 import sh4URL from '../../assets/img/shirts/shirt4.jpg'
 import sh5URL from '../../assets/img/shirts/shirt5.jpg'
+import ShirtGameCard from '../ShirtGameCard/ShirtGameCard'
+
+const cardsSetCollection: { [key: string]: string[] } = {
+  fibonacci: ['0', '1', '2', '3', '5', '8', '13', '21', '34', '55', '89', 'unknow', 'coffee break'],
+  powers2: ['0', '1', '2', '4', '8', '16', '32', '64', 'unknow', 'coffee break'],
+  custom: ['unknow', 'coffee break'],
+}
 
 export default function GameSettings(): JSX.Element {
   const shirtsURLs = [sh1URL, sh2URL, sh3URL, sh4URL, sh5URL]
-  console.log('sh1URL: ', sh1URL)
-
   const [masterAsPlayer, setMasterAsPlayer] = useState<boolean>(true)
   const [changingCard, setChangingCard] = useState<boolean>(false)
   const [isTimerNeeded, setIsTimerNeeded] = useState<boolean>(true)
@@ -24,30 +28,30 @@ export default function GameSettings(): JSX.Element {
   const [automaticallyAdmitNewMember, setAutomaticallyAdmitNewMember] = useState<boolean>(true)
   const [automaticallyFlipCards, setAutomaticallyFlipCards] = useState<boolean>(false)
   const [currentShirtCards, setcurrentShirtCards] = useState<string>(sh1URL)
-  const [cardSet, setCardSet] = useState<string>('fibonacci')
   const [finishVoiting, setFinishVoiting] = useState<boolean>(false)
-
-  const cardsSetCollection: { [key: string]: (number | string)[] } = {
-    fibonacci: [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 'unknow', 'coffee break'],
-    powers2: [0, 1, 2, 4, 8, 16, 32, 64, 'unknow', 'coffee break'],
-    custom: ['unknow', 'coffee break'],
+  const [cardSetName, setCardSetName] = useState<string>('fibonacci')
+  const [newCardVaule, setNewCardVaule] = useState<string>('')
+  const [currentCardSet, setCurrentCardSet] = useState<string[]>(cardsSetCollection[cardSetName])
+  console.log(currentCardSet)
+  const handleChangeCardSet = (value: string) => {
+    setCardSetName(value)
+    setCurrentCardSet(cardsSetCollection[value])
   }
 
-  const cards = cardsSetCollection[cardSet].map((item: number | string) => {
-    if (typeof item === 'number') {
-      return (
-        <GameCard
-          mode="setting"
-          cardType="value"
-          cardValue={item}
-          cardShirtURL={currentShirtCards}
-          storyPointShort={scoreTypeShort}
-          finsishVoiting={finishVoiting}
-          key={item}
-        />
-      )
+  const handleAddNewValue = (value: string) => {
+    setNewCardVaule(value)
+  }
+
+  useEffect(() => {
+    if (newCardVaule !== '') {
+      cardsSetCollection.custom.push(newCardVaule)
+      setCurrentCardSet(cardsSetCollection.custom)
+      setNewCardVaule('')
     }
-    if (typeof item === 'string' && item === 'unknow') {
+  }, [newCardVaule])
+
+  const cards = cardsSetCollection[cardSetName].map((item: number | string) => {
+    if (item === 'unknow') {
       return (
         <GameCard
           mode="setting"
@@ -60,7 +64,7 @@ export default function GameSettings(): JSX.Element {
         />
       )
     }
-    if (typeof item === 'string' && item === 'coffee break') {
+    if (item === 'coffee break') {
       return (
         <GameCard
           mode="setting"
@@ -116,10 +120,6 @@ export default function GameSettings(): JSX.Element {
 
   const handleChangeShirt = (value: string) => {
     setcurrentShirtCards(value)
-  }
-
-  const handleChangeCardSet = (value: string) => {
-    setCardSet(value)
   }
 
   const shirtCards = shirtsURLs.map((url: string) => (
@@ -205,7 +205,7 @@ export default function GameSettings(): JSX.Element {
                 className="game-settings__card-set__input"
                 type="radio"
                 value="fibonacci"
-                checked={cardSet === 'fibonacci'}
+                checked={cardSetName === 'fibonacci'}
                 onChange={() => handleChangeCardSet('fibonacci')}
               />
               Fibonacci ( 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ?, Pass )
@@ -216,7 +216,7 @@ export default function GameSettings(): JSX.Element {
                 className="game-settings__card-set__input"
                 type="radio"
                 value="powers2"
-                checked={cardSet === 'powers2'}
+                checked={cardSetName === 'powers2'}
                 onChange={() => handleChangeCardSet('powers2')}
               />
               Powers of 2 ( 0, 1, 2, 4, 8, 16, 32, 64, ?, Pass )
@@ -227,7 +227,7 @@ export default function GameSettings(): JSX.Element {
                 className="game-settings__card-set__input"
                 type="radio"
                 value="custom"
-                checked={cardSet === 'custom'}
+                checked={cardSetName === 'custom'}
                 onChange={() => handleChangeCardSet('custom')}
               />
               Custom card set
@@ -235,13 +235,12 @@ export default function GameSettings(): JSX.Element {
           </div>
           <div className="game-settings__game-cards-wrapper">
             {cards}
-            {cardSet === 'custom' ? <AddGameCard mode="value" /> : ''}
+            {cardSetName === 'custom' ? <AddGameCard onClick={handleAddNewValue} /> : ''}
 
             <button
               type="button"
               onClick={() => {
                 setFinishVoiting(!finishVoiting)
-                console.log('finishVoiting: ', finishVoiting)
               }}
             >
               click
