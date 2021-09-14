@@ -3,7 +3,7 @@ import './issues.sass'
 
 const Issues: React.FC = (): JSX.Element => (
   <div className="issues">
-    <IssueCard title="qwe" subtitle="wer" />
+    <IssueCard mode="addNewIssue" issueName="Issue 255" priority="hight" />
   </div>
 )
 

@@ -1,8 +1,6 @@
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 
-import Card from '../Card'
-
 import './issue-card.sass'
 
 const Edit = () => (
@@ -21,22 +19,36 @@ const Delete = () => (
   </div>
 )
 
-const PropertyCard = () => (
-  <div className="property">
-    <Edit />
-    <Delete />
-  </div>
-)
-
-interface IIssueCard {
-  title: string
-  subtitle: string
+const handleClickAddNewCard = () => {
+  console.log('click add new card!')
 }
 
-const IssueCard: React.FC<IIssueCard> = ({ title, subtitle }: IIssueCard) => (
-  <div>
-    <Card title={title} subtitle={subtitle} isSmall={true} right={<PropertyCard />} />
-  </div>
-)
+interface IIssueCard {
+  mode: 'issueCard' | 'addNewIssue'
+  issueName: string
+  priority: string
+}
 
-export default IssueCard
+export default function IssueCard({ issueName, priority, mode }: IIssueCard): JSX.Element {
+  if (mode === 'issueCard') {
+    return (
+      <div className="issue-card">
+        <div className="issue-card__text-field-wrapper">
+          <p className="issue-card__title">{issueName}</p>
+          <p className="issue-card__subtitle">{priority}</p>
+        </div>
+
+        <div className="issue-card__icon-wrapper">
+          <Edit />
+          <Delete />
+        </div>
+      </div>
+    )
+  }
+  return (
+    <div className="issue-card add-issue-card" role="button" onClick={handleClickAddNewCard}>
+      <p className="issue-card__plus-title">Create new Issue</p>
+      <div className="issue-card__plus"></div>
+    </div>
+  )
+}
