@@ -5,6 +5,7 @@ interface ITimerProps {
   mode: 'setting' | 'game'
   initMinutes: number
   initSeconds: number
+  needTimer: boolean
   timer?: boolean
   onChangeTimerMode?(value: boolean): void
 }
@@ -49,6 +50,7 @@ export default function Timer(props: ITimerProps): JSX.Element {
           max={59}
           step={1}
           readOnly={mode}
+          disabled={!props.needTimer}
           onKeyDown={(e) => !/^[А-Яа-яA-Za-z ]$/.test(e.key)}
           onChange={(e) => {
             if (+e.target.value > +e.target.max) {
@@ -75,6 +77,7 @@ export default function Timer(props: ITimerProps): JSX.Element {
           max={59}
           step={1}
           readOnly={mode}
+          disabled={!props.needTimer}
           onKeyDown={(e) => !/^[А-Яа-яA-Za-z ]$/.test(e.key)}
           onChange={(e) => {
             if (+e.target.value > +e.target.max) {

@@ -1,0 +1,43 @@
+.shirt
+    &__card
+        position: relative
+        width: 100px
+        height: 161px
+        background-color: #e6e6e6
+        color: black
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        box-shadow: 0px 0px 10px 0 rgba(0,0,0,0.6)
+        border-radius: 10px
+        overflow: hidden
+
+    &__img
+        width: 100%
+        height: 100%
+
+    &__label
+        display: flex
+        justify-content: flex-end
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background-color: #ffffff00
+        cursor: pointer
+        & input
+            visibility: hidden
+    &__label-active
+        background: rgba(96, 218, 191, 0.46)
+    &__checked
+        margin-top: 15px
+        width: 30px
+        height: 30px
+        border-radius: 50%
+        background-image: url('../../assets/svg/checked.svg')
+        background-position: center
+        background-repeat: no-repeat
+        background-size: contain
+    &__unchecked
+        display: none
