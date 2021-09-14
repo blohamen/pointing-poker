@@ -79,7 +79,7 @@ export default function ConnectToLobby(): JSX.Element {
           />
 
           <AvatarInput title="Image" name="addAvatar" onAvaChange={handleChangeAvatar} />
-          <Avatar name={firstName} lastName={lastName} src={srcAva} size='large'/>
+          <Avatar name={firstName} lastName={lastName} src={srcAva} size="large" />
         </form>
         <div className="ctl__btns-wrapper">
           <Button value="Confirm" size="medium" theme="dark" form="ctl-form" />

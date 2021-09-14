@@ -1,3 +1,3 @@
-import { IssueCard } from "./IssueCard";
+import { IssueCard } from './IssueCard'
 
-export default  IssueCard 
+export default IssueCard

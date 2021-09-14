@@ -1,3 +1,3 @@
-import MemberCard from "./member-card"
+import MemberCard from './member-card'
 
 export default MemberCard
