@@ -6,7 +6,11 @@ import FormInputText from '../FormInputText/FormInputText'
 import Switcher from '../Switcher/Switcher'
 import './connect-to-lobby.sass'
 
-export default function ConnectToLobby(): JSX.Element {
+interface IConnectToLobbyProps {
+  onCancelForm(value: boolean): void
+}
+
+export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): JSX.Element {
   const [switchValue, setSwitchValue] = useState<boolean>(false)
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
@@ -38,6 +42,10 @@ export default function ConnectToLobby(): JSX.Element {
     const a: HTMLFormElement = event.currentTarget
     const formData = new FormData(a)
     console.log(formData)
+  }
+
+  const handleCancelButton = () => {
+    onCancelForm(false)
   }
 
   return (
@@ -79,12 +87,12 @@ export default function ConnectToLobby(): JSX.Element {
           />
 
           <AvatarInput title="Image" name="addAvatar" onAvaChange={handleChangeAvatar} />
-          <Avatar name={firstName} lastName={lastName} src={srcAva} size='large'/>
+          <Avatar name={firstName} lastName={lastName} src={srcAva} size="large" />
         </form>
         <div className="ctl__btns-wrapper">
           <Button value="Confirm" size="medium" theme="dark" form="ctl-form" />
 
-          <Button value="Cancel" size="medium" theme="light" />
+          <Button value="Cancel" size="medium" theme="light" onSubmit={handleCancelButton} />
         </div>
       </div>
     </div>

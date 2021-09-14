@@ -65,6 +65,8 @@
     "max-len": ["warn", { "code": 120 }],
     "import/prefer-default-export": "off",
     "no-plusplus": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "consistent-return": "off",
+    "react/jsx-curly-brace-presence": "off"
   }
 }
