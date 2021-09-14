@@ -3,14 +3,15 @@ import Button from '../Button/Button'
 import FormInputText from '../FormInputText/FormInputText'
 import './Session.sass'
 
-export default function Session(): JSX.Element {
+interface ISessionProps {
+  onSubmitStartGame(): void
+}
+
+export default function Session(props: ISessionProps): JSX.Element {
   const [connectURI, setConnectURI] = useState<string>('')
+
   const handleChangeConnectURI = (URI: string) => {
     setConnectURI(URI)
-  }
-
-  const handleStartNewGame = () => {
-    console.log('start new game')
   }
 
   return (
@@ -20,7 +21,7 @@ export default function Session(): JSX.Element {
           <h1>Start your planning:</h1>
           <div className="session__create__wrapper">
             <span>Create session:</span>
-            <Button value="Start new game" size="large" theme="dark" onSubmit={handleStartNewGame} />
+            <Button value="Start new game" size="large" theme="dark" onSubmit={props.onSubmitStartGame} />
           </div>
         </div>
 
