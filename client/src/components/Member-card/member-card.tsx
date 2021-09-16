@@ -41,7 +41,6 @@ interface IMemberCard {
   title: string
   subtitle: string
   photoURL: string
-
   isCancel?: boolean | undefined
 }
 const MemberCard: React.FC<IMemberCard> = ({
@@ -76,7 +75,6 @@ const MemberCard: React.FC<IMemberCard> = ({
 MemberCard.defaultProps = {
   isCurrentPlayer: false,
   isSmall: false,
-
   isCancel: false,
 }
 export default MemberCard
