@@ -1,13 +1,6 @@
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
-<<<<<<< HEAD
-
-import Card from '../Card'
-
-=======
->>>>>>> origin/issues-block
 import './issue-card.sass'
-import { useState } from 'react'
 
 const Edit = () => (
   <div className="edit">
@@ -24,26 +17,6 @@ const Delete = () => (
     </IconContext.Provider>
   </div>
 )
-<<<<<<< HEAD
-
-const PropertyCard = () => (
-  <div className="property">
-    <Edit />
-    <Delete />
-  </div>
-)
-
-interface IIssueCard {
-  title: string
-  subtitle: string
-}
-
-export const IssueCard: React.FC<IIssueCard> = ({ title, subtitle }: IIssueCard) => (
-  <div>
-    <Card title={title} subtitle={subtitle} right={<PropertyCard />} />
-  </div>
-)
-=======
 
 interface IIssueCard {
   mode: 'issueCard' | 'addNewIssue'
@@ -52,14 +25,9 @@ interface IIssueCard {
 }
 
 export default function IssueCard({ issueName, priority, mode }: IIssueCard): JSX.Element {
-  // const [isAddNewIssue, setIsAddNewIssue] = useState<Boolean>(false)
-
   const handleClickAddNewCard = () => {
-    // setIsAddNewIssue(true)
     console.log('swdsad')
   }
-
-  // const modal = isAddNewIssue ?
 
   if (mode === 'issueCard') {
     return (
@@ -89,4 +57,3 @@ export default function IssueCard({ issueName, priority, mode }: IIssueCard): JS
     </div>
   )
 }
->>>>>>> origin/issues-block
