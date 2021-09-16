@@ -1,6 +1,5 @@
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
-
 import './issue-card.sass'
 
 const Edit = () => (
@@ -20,7 +19,7 @@ const Delete = () => (
 )
 
 const handleClickAddNewCard = () => {
-  console.log('click add new card!')
+  console.log('dsa')
 }
 
 interface IIssueCard {
@@ -46,7 +45,13 @@ export default function IssueCard({ issueName, priority, mode }: IIssueCard): JS
     )
   }
   return (
-    <div className="issue-card add-issue-card" role="button" onClick={handleClickAddNewCard}>
+    <div
+      className="issue-card add-issue-card"
+      role="button"
+      onClick={handleClickAddNewCard}
+      onKeyDown={handleClickAddNewCard}
+      tabIndex={0}
+    >
       <p className="issue-card__plus-title">Create new Issue</p>
       <div className="issue-card__plus"></div>
     </div>
