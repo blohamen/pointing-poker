@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 // createAsyncThunk
 
 const initialStateAppParameters = {
-  isKick: <boolean>false,
-  kickMember: <string>'',
+  isKick: false as boolean,
+  kickMember: '' as string,
 }
 
 const appParameters = createSlice({
