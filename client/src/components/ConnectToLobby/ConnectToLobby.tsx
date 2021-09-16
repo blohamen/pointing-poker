@@ -1,9 +1,14 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+import uniqid from 'uniqid'
+
 import Avatar from '../Avatar/Avatar'
 import AvatarInput from '../AvatarInput/AvatarInput'
 import Button from '../Button/Button'
 import FormInputText from '../FormInputText/FormInputText'
 import Switcher from '../Switcher/Switcher'
+
 import './connect-to-lobby.sass'
 
 export default function ConnectToLobby(): JSX.Element {
@@ -12,6 +17,7 @@ export default function ConnectToLobby(): JSX.Element {
   const [lastName, setLastName] = useState<string>('')
   const [jobPosition, setJobPosition] = useState<string>('')
   const [srcAva, setSrcAva] = useState<string>('')
+  const roomUniqid = `room-${uniqid()}`
 
   const handleSwitchChange = (flag: boolean): void => {
     setSwitchValue(flag)
@@ -79,11 +85,16 @@ export default function ConnectToLobby(): JSX.Element {
           />
 
           <AvatarInput title="Image" name="addAvatar" onAvaChange={handleChangeAvatar} />
-          <Avatar name={firstName} lastName={lastName} src={srcAva} size='large'/>
+          <Avatar name={firstName} lastName={lastName} src={srcAva} size="large" />
         </form>
         <div className="ctl__btns-wrapper">
+          <Link
+            onClick={(event) => (!firstName ? event.preventDefault() : null)}
+            to={`/lobby?name=${firstName}-${lastName}&room=${roomUniqid}`}
+          >
+            <button type="submit">submit</button>
+          </Link>
           <Button value="Confirm" size="medium" theme="dark" form="ctl-form" />
-
           <Button value="Cancel" size="medium" theme="light" />
         </div>
       </div>
