@@ -12,7 +12,7 @@ interface ICard {
   isCurrentPlayer?: boolean
 }
 
-export const Card: React.FC<ICard> = ({ isSmall, left, right, isCurrentPlayer, title, subtitle }: ICard) => (
+const Card: React.FC<ICard> = ({ isSmall, left, right, isCurrentPlayer, title, subtitle }: ICard) => (
   <div className={classNames('card', isSmall && 'small')}>
     {left}
     <div>
@@ -30,3 +30,5 @@ Card.defaultProps = {
   right: null,
   isCurrentPlayer: false,
 }
+
+export default Card

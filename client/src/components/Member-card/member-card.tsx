@@ -1,41 +1,36 @@
 import { FcCancel } from 'react-icons/fc'
-import classNames from 'classnames'
 import './member-card.sass'
-import { Card } from '../Card/Card'
-
-interface IAvatar {
-  title: string
-  isSmall?: boolean
-  photoURL: string
-  isPhoto?: boolean
-}
-
-const Avatar: React.FC<IAvatar> = ({ isPhoto, photoURL, title, isSmall }: IAvatar) => (
-  <div className={classNames('classNameNoPhoto', isSmall && 'small__no-photo')}>
-    {isPhoto === true ? (
-      <img className={classNames('classNamePhoto', isSmall && 'small__photo')} alt="ava" src={photoURL} />
-    ) : (
-      <span className={classNames('classNameInitials', isSmall && 'small__initials')}>
-        {title[0]}
-        {title.substr(title.indexOf(' ') + 1)[0]}
-      </span>
-    )}
-  </div>
-)
-
-Avatar.defaultProps = {
-  isSmall: false,
-  isPhoto: false,
-}
+import Card from '../Card/Card'
+import Avatar from '../Avatar/Avatar'
+import { useAppDispatch } from '../../store/redux'
+import { isKick, kickMember } from '../../store/reducers'
 
 interface IStatus {
   isCancel?: boolean
+  onClickKickMember(value: boolean): void
 }
 
-const Status: React.FC<IStatus> = ({ isCancel }: IStatus) => (
-  <i className="card__status">{isCancel === true ? <FcCancel size={30} /> : ''}</i>
-)
+const Status: React.FC<IStatus> = ({ isCancel, onClickKickMember }: IStatus) => {
+  const handleClickDeleteMember = () => {
+    onClickKickMember(true)
+  }
 
+  let element: JSX.Element | string = ''
+  if (!isCancel) {
+    element = ''
+  } else {
+    element = (
+      <FcCancel
+        size={30}
+        role="button"
+        onClick={handleClickDeleteMember}
+        onKeyDown={handleClickDeleteMember}
+        tabIndex={0}
+      />
+    )
+  }
+  return <i className="card__status">{element}</i>
+}
 Status.defaultProps = {
   isCancel: false,
 }
@@ -46,7 +41,7 @@ interface IMemberCard {
   title: string
   subtitle: string
   photoURL: string
-  isPhoto?: boolean
+
   isCancel?: boolean | undefined
 }
 const MemberCard: React.FC<IMemberCard> = ({
@@ -55,25 +50,33 @@ const MemberCard: React.FC<IMemberCard> = ({
   title,
   subtitle,
   photoURL,
-  isPhoto,
   isCancel,
-}: IMemberCard) => (
-  <div>
-    <Card
-      isCurrentPlayer={isCurrentPlayer}
-      isSmall={isSmall}
-      title={title}
-      subtitle={subtitle}
-      left={<Avatar isPhoto={isPhoto} photoURL={photoURL} title={title} isSmall={isSmall} />}
-      right={<Status isCancel={isCancel} />}
-    />
-  </div>
-)
+}: IMemberCard) => {
+  const dispath = useAppDispatch()
+
+  const handleKickMember = (value: boolean) => {
+    dispath(isKick(value))
+    dispath(kickMember(title))
+  }
+
+  return (
+    <div>
+      <Card
+        isCurrentPlayer={isCurrentPlayer}
+        isSmall={isSmall}
+        title={title}
+        subtitle={subtitle}
+        left={<Avatar name={title.split(' ')[0]} lastName={title.split(' ')[1]} src={photoURL} size="small" />}
+        right={<Status isCancel={isCancel} onClickKickMember={handleKickMember} />}
+      />
+    </div>
+  )
+}
 
 MemberCard.defaultProps = {
   isCurrentPlayer: false,
   isSmall: false,
-  isPhoto: false,
+
   isCancel: false,
 }
 export default MemberCard
