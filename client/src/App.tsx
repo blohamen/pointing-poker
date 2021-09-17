@@ -3,7 +3,7 @@ import './app.sass'
 import Footer from './components/Footer/Footer'
 import Header from './components/Header/Header'
 import MainPage from './views/MainPage'
-import SettingPage from './views/SettingPage'
+import SettingPage from './views/SettingPage/SettingPage'
 
 export default function App(): JSX.Element {
   const location = useLocation()
@@ -13,12 +13,12 @@ export default function App(): JSX.Element {
       <Header />
       <Switch location={location}>
         <Route exact path="/">
-          <SettingPage />
-          {/* <MainPage /> */}
+          {/* <SettingPage /> */}
+          <MainPage />
         </Route>
         <Route path="/settingScrumMaster">
           <MainPage />
-          {/*  <MainPage /> */}
+          <SettingPage />
         </Route>
       </Switch>
 

@@ -3,7 +3,7 @@ import MemberCard from '../Member-card'
 import './members-block.sass'
 
 const MembersBlock: React.FC = () => {
-  const isKickPlayer = useAppSelector((state) => state.isKick)
+  const isKickPlayer = useAppSelector((state) => state.appParameters.isKick)
   console.log('isKickPlayer: ', isKickPlayer)
 
   return (
