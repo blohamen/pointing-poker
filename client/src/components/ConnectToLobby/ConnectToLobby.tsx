@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { sendPersonData, setIsAdmin, setIsObserver, setIsPlayer } from '../../store/authReducer'
+import { sendPersonData, setInitialUserState, setIsAdmin, setIsObserver } from '../../store/authReducer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import Avatar from '../Avatar/Avatar'
 import AvatarInput from '../AvatarInput/AvatarInput'
@@ -56,9 +56,10 @@ export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): 
 
   const handleCancelButton = () => {
     onCancelForm(false)
+    dispatch(setInitialUserState())
     dispatch(setIsAdmin(false))
-    dispatch(setIsPlayer(false))
-    dispatch(setIsObserver(false))
+    // dispatch(setIsPlayer(false))
+    // dispatch(setIsObserver(false))
   }
 
   return (

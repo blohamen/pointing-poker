@@ -32,6 +32,18 @@ const userParameters = createSlice({
   name: 'userParameters',
   initialState: initialInitialAythPerson,
   reducers: {
+    setInitialUserState(state) {
+      state.firstName = initialInitialAythPerson.firstName
+      state.lastName = initialInitialAythPerson.lastName
+      state.jobPossition = initialInitialAythPerson.jobPossition
+      state.image = initialInitialAythPerson.image
+      state.isAdmin = initialInitialAythPerson.isAdmin
+      state.isObserver = initialInitialAythPerson.isObserver
+      state.isPlayer = initialInitialAythPerson.isPlayer
+      state.roomId = initialInitialAythPerson.roomId
+      state.userId = initialInitialAythPerson.userId
+      state.authentification = initialInitialAythPerson.authentification
+    },
     firstName(state, action: PayloadAction<string>) {
       state.firstName = action.payload
     },
@@ -86,6 +98,7 @@ export const {
   setIsPlayer,
   setUserId,
   setRoomId,
+  setInitialUserState,
 } = userParameters.actions
 
 const userParametersReducer = userParameters.reducer

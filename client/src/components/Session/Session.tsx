@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { setIsAdmin, setIsPlayer } from '../../store/authReducer'
 import { useAppDispatch } from '../../store/redux'
-// import validate from '../../utils/formValidate'
 import Button from '../Button/Button'
 import FormInputText from '../FormInputText/FormInputText'
 import './Session.sass'
@@ -12,7 +11,6 @@ interface ISessionProps {
 
 export default function Session(props: ISessionProps): JSX.Element {
   const [connectURI, setConnectURI] = useState<string>('')
-  // const [isError, setIsError] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const handleChangeConnectURI = (URI: string) => {
     setConnectURI(URI)

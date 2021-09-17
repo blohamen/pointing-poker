@@ -17,6 +17,7 @@ const userApi = {
         isPlayer: false,
         userId: '',
         roomId: '',
+        authentification: false,
       }
     const result = await response.json()
     return result
