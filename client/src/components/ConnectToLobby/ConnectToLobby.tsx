@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { sendPersonData, setInitialUserState, setIsAdmin, setIsObserver } from '../../store/authReducer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import Avatar from '../Avatar/Avatar'
@@ -17,9 +18,11 @@ export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): 
   const [lastName, setLastName] = useState<string>('')
   const [jobPosition, setJobPosition] = useState<string>('')
   const [srcAva, setSrcAva] = useState<string>('')
-
+  const { authentification } = useAppSelector((state) => state.userParameters)
   const { isAdmin, isObserver, isPlayer, userId, roomId } = useAppSelector((state) => state.userParameters)
   const dispatch = useAppDispatch()
+
+  const history = useHistory()
 
   const handleSwitchChange = (flag: boolean): void => {
     dispatch(setIsObserver(flag))
@@ -52,14 +55,17 @@ export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): 
     formData.append('userID', userId.toString())
     formData.append('roomID', roomId.toString())
     dispatch(sendPersonData({ data: formData }))
+    dispatch(setIsAdmin(false))
   }
+
+  useEffect(() => {
+    if (authentification) history.push('/settingScrumMaster')
+  }, [authentification])
 
   const handleCancelButton = () => {
     onCancelForm(false)
     dispatch(setInitialUserState())
     dispatch(setIsAdmin(false))
-    // dispatch(setIsPlayer(false))
-    // dispatch(setIsObserver(false))
   }
 
   return (
