@@ -1,9 +1,16 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import uniqid from 'uniqid'
+
+import { RootState } from '../../redux/store'
+
 import Avatar from '../Avatar/Avatar'
 import AvatarInput from '../AvatarInput/AvatarInput'
 import Button from '../Button/Button'
 import FormInputText from '../FormInputText/FormInputText'
 import Switcher from '../Switcher/Switcher'
+
 import './connect-to-lobby.sass'
 
 interface IConnectToLobbyProps {
@@ -16,6 +23,8 @@ export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): 
   const [lastName, setLastName] = useState<string>('')
   const [jobPosition, setJobPosition] = useState<string>('')
   const [srcAva, setSrcAva] = useState<string>('')
+  const roomid = useSelector((state: RootState) => state.role.roomId)
+  const role = useSelector((state: RootState) => state.role.roleValue)
 
   const handleSwitchChange = (flag: boolean): void => {
     setSwitchValue(flag)
@@ -61,7 +70,8 @@ export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): 
               className="switcher-observer"
             />
           </div>
-
+          {role}
+          {roomid}
           <FormInputText
             title="Your first name:"
             name="firstName"
@@ -90,8 +100,13 @@ export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): 
           <Avatar name={firstName} lastName={lastName} src={srcAva} size="large" />
         </form>
         <div className="ctl__btns-wrapper">
+          <Link
+            onClick={(event) => (!firstName ? event.preventDefault() : null)}
+            to={`/lobby?name=${firstName}&room=${role === 'diller' ? uniqid() : roomid}`}
+          >
+            <button type="submit">submit</button>
+          </Link>
           <Button value="Confirm" size="medium" theme="dark" form="ctl-form" />
-
           <Button value="Cancel" size="medium" theme="light" onSubmit={handleCancelButton} />
         </div>
       </div>

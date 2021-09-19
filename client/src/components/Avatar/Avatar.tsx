@@ -15,8 +15,6 @@ export default function Avatar(props: IAvatarProps): JSX.Element {
     lastNameFirstLetter = props.name[props.name.length - 1]
   } else if (props.lastName === '' && props.name === '') {
     lastNameFirstLetter = 'N'
-  } else {
-    ;[lastNameFirstLetter] = props.lastName.split('')
   }
 
   if (props.src === '') {
