@@ -1,11 +1,7 @@
-import { useAppSelector } from '../../store/redux'
 import MemberCard from '../Member-card'
 import './members-block.sass'
 
 const MembersBlock: React.FC = () => {
-  const isKickPlayer = useAppSelector((state) => state.appParameters.isKick)
-  console.log('isKickPlayer: ', isKickPlayer)
-
   return (
     <div className="members-block">
       <p className="members-block__title">Members</p>

@@ -8,13 +8,13 @@ import MembersBlock from '../../components/MembersBlock/MembersBlock'
 import ModalKickPlayer from '../../components/ModalKickPlayer/ModalKickPlayer'
 import { useAppSelector } from '../../store/redux'
 import LinkToLobby from '../../components/LinkToLobby/LinkToLobby'
-import socketApi from '../../api/socketApi'
+import SocketApi from '../../api/socketApi'
 import Button from '../../components/Button/Button'
 
 const SettingPage: React.FC = () => {
   const isKick = useAppSelector((state) => state.appParameters.isKick)
   const kickMember = useAppSelector((state) => state.appParameters.kickMember)
-
+  const socketApi = new SocketApi()
   useEffect(() => {
     socketApi.onConnection()
     socketApi.createRoom('1234567890')

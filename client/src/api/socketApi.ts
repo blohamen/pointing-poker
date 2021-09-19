@@ -1,24 +1,28 @@
+import { socketAdminUrl } from '../utils/config'
 import createSocket from '../utils/socket'
+import { CREATE_ROOM } from '../utils/socketActions'
 
-const socketApi = {
-  socket: createSocket('http://127.0.0.1:5000/settingScrumMaster'),
+export default class SocketApi {
+  socket: any
+
+  constructor() {
+    this.socket = createSocket(socketAdminUrl)
+  }
 
   onConnection() {
     this.socket.on('connection', () => {
       console.log('connect to socket!!!')
     })
-  },
+  }
 
   createRoom(roomId: string) {
-    this.socket.emit('createRoom', roomId)
-    this.socket.on('message', (data) => {
+    this.socket.emit(CREATE_ROOM, roomId)
+    this.socket.on('message', (data: string) => {
       console.log(data)
     })
-  },
+  }
 
   joinRoom(roomId: string) {
     this.socket.emit('createRoom', roomId)
-  },
+  }
 }
-
-export default socketApi

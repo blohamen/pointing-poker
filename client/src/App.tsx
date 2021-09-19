@@ -10,6 +10,7 @@ import SettingPage from './views/SettingPage/SettingPage'
 export default function App(): JSX.Element {
   const location = useLocation()
   const { authentification, isAdmin } = useAppSelector((state) => state.userParameters)
+  const isAdminUser = authentification && isAdmin
   return (
     <div className="app">
       <Header />
@@ -18,11 +19,7 @@ export default function App(): JSX.Element {
           <MainPage />
         </Route>
         <Route path="/error404" component={Page404} />
-        {authentification === true && isAdmin === true ? (
-          <Route path="/settingScrumMaster" component={SettingPage} />
-        ) : (
-          <Redirect to="/error404" />
-        )}
+        {isAdminUser ? <Route path="/settingScrumMaster" component={SettingPage} /> : <Redirect to="/error404" />}
       </Switch>
 
       <Footer />

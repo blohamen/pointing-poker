@@ -1,12 +1,7 @@
+import limitString from '../../utils/limitString'
 import './issues-string.sass'
 
 const IssuesString: React.FC = () => {
-  const limitString = (str: string, n: number, sym?: string) => {
-    if (!n && !sym) return str
-    const symb = sym || '...'
-    return str.substr(0, n - symb.length) + symb
-  }
-
   return (
     <div className="issues-string">
       <p className="issues-string__text">

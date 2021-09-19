@@ -16,6 +16,14 @@ export default function Session(props: ISessionProps): JSX.Element {
     setConnectURI(URI)
   }
 
+  const handlerOnSubmit = (e: React.SyntheticEvent) => {
+    if (connectURI.length > 0) {
+      props.onSubmitStartGame()
+      dispatch(setIsPlayer(true))
+    }
+    e.preventDefault()
+  }
+
   return (
     <>
       <div className="session">
@@ -46,18 +54,7 @@ export default function Session(props: ISessionProps): JSX.Element {
             validate={false}
             onValueChange={handleChangeConnectURI}
           />
-          <Button
-            value="Connect"
-            size="large"
-            theme="dark"
-            onSubmit={(e: React.SyntheticEvent) => {
-              if (connectURI.length > 0) {
-                props.onSubmitStartGame()
-                dispatch(setIsPlayer(true))
-              }
-              e.preventDefault()
-            }}
-          />
+          <Button value="Connect" size="large" theme="dark" onSubmit={handlerOnSubmit} />
         </div>
       </div>
     </>
