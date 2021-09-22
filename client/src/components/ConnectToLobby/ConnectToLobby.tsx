@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { sendPersonData, setInitialUserState, setIsAdmin, setIsObserver } from '../../store/authReducer'
+import { sendPersonData, setInitialUserState, setIsObserver } from '../../store/authReducer'
+import { modalConnectToLobby } from '../../store/reducers'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import Avatar from '../Avatar/Avatar'
 import AvatarInput from '../AvatarInput/AvatarInput'
@@ -9,17 +10,15 @@ import FormInputText from '../FormInputText/FormInputText'
 import Switcher from '../Switcher/Switcher'
 import './connect-to-lobby.sass'
 
-interface IConnectToLobbyProps {
-  onCancelForm(value: boolean): void
-}
-
-export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): JSX.Element {
+export default function ConnectToLobby(): JSX.Element {
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [jobPosition, setJobPosition] = useState<string>('')
   const [srcAva, setSrcAva] = useState<string>('')
-  const { authentification } = useAppSelector((state) => state.userParameters)
-  const { isAdmin, isObserver, isPlayer, userId, roomId } = useAppSelector((state) => state.userParameters)
+  // const { authentification } = useAppSelector((state) => state.userParameters)
+  const { authentification, isAdmin, isObserver, isPlayer, userId, roomId } = useAppSelector(
+    (state) => state.userParameters
+  )
   const dispatch = useAppDispatch()
 
   const history = useHistory()
@@ -52,20 +51,28 @@ export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): 
     formData.append('isObserver', isObserver.toString())
     formData.append('isAdmin', isAdmin.toString())
     formData.append('isPlayer', isPlayer.toString())
-    formData.append('userID', userId.toString())
-    formData.append('roomID', roomId.toString())
+    formData.append('userId', userId.toString())
+    formData.append('roomId', roomId.toString())
     dispatch(sendPersonData({ data: formData }))
-    dispatch(setIsAdmin(false))
   }
 
   useEffect(() => {
-    if (authentification) history.push('/settingScrumMaster')
+    if (authentification && isAdmin) {
+      dispatch(modalConnectToLobby(false))
+      history.push('/settingScrumMaster')
+    }
+  }, [authentification])
+
+  useEffect(() => {
+    if (authentification && isPlayer) {
+      history.push('/lobby')
+      dispatch(modalConnectToLobby(false))
+    }
   }, [authentification])
 
   const handleCancelButton = () => {
-    onCancelForm(false)
+    dispatch(modalConnectToLobby(false))
     dispatch(setInitialUserState())
-    dispatch(setIsAdmin(false))
   }
 
   return (
@@ -104,7 +111,7 @@ export default function ConnectToLobby({ onCancelForm }: IConnectToLobbyProps): 
 
             <FormInputText
               title="Your job position (optional):"
-              name="jobPosition"
+              name="jobPossition"
               initialValue={jobPosition}
               validate={false}
               onValueChange={handleChangeJobPosition}

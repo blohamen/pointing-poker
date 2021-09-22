@@ -8,21 +8,23 @@ import MembersBlock from '../../components/MembersBlock/MembersBlock'
 import ModalKickPlayer from '../../components/ModalKickPlayer/ModalKickPlayer'
 import { useAppSelector } from '../../store/redux'
 import LinkToLobby from '../../components/LinkToLobby/LinkToLobby'
-import SocketApi from '../../api/socketApi'
 import Button from '../../components/Button/Button'
+import socket from '../../utils/socket'
+import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
 
 const SettingPage: React.FC = () => {
-  const isKick = useAppSelector((state) => state.appParameters.isKick)
-  const kickMember = useAppSelector((state) => state.appParameters.kickMember)
-  const socketApi = new SocketApi()
+  const { isKick, kickMember } = useAppSelector((state) => state.appParameters)
+  const { roomId } = useAppSelector((state) => state.userParameters)
+
   useEffect(() => {
-    socketApi.onConnection()
-    socketApi.createRoom('1234567890')
+    socket.emit('joinRoom', roomId)
+    socket.emit('members', roomId)
   }, [])
 
   return (
     <GameField>
       <IssuesString />
+      <ScramMasterMemberBlock />
       <LinkToLobby linkLobby="testlink" />
       <div className="setting-page__btns-wrapper">
         <Button value="Start Game" size="small" theme="dark" />
