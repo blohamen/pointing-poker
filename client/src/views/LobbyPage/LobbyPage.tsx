@@ -15,7 +15,7 @@ const LobbyPage: React.FC = () => {
   const { roomId, userId } = useAppSelector((state) => state.userParameters)
   const { observerMemebers } = useAppSelector((state) => state.membersParameters)
   useEffect(() => {
-    socket.emit('joinRoom', roomId)
+    socket.emit('joinRoom', roomId, userId)
     socket.emit('members', roomId)
   }, [])
 

@@ -14,10 +14,10 @@ import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/Scra
 
 const SettingPage: React.FC = () => {
   const { isKick, kickMember } = useAppSelector((state) => state.appParameters)
-  const { roomId } = useAppSelector((state) => state.userParameters)
+  const { roomId, userId } = useAppSelector((state) => state.userParameters)
 
   useEffect(() => {
-    socket.emit('joinRoom', roomId)
+    socket.emit('joinRoom', roomId, userId)
     socket.emit('members', roomId)
   }, [])
 
