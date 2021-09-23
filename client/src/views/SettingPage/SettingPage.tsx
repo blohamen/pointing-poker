@@ -14,7 +14,7 @@ import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/Scra
 import { JOIN_ROOM, MEMBERS, MODAL_KICK_PLAYER_CLIENT, MODAL_KICK_PLAYER_SERVER } from '../../utils/socketActions'
 import { setSocketId } from '../../store/authReducer'
 import IOpenModalKickPlayer from '../../interfaces/IOpenModalKickPlayer'
-import { setIsKick, setKickMember, setKickMemberSocketId } from '../../store/reducers'
+import { setIsKick, setKickMember, setKickMemberSocketId } from '../../store/kickMemberReducer'
 
 const SettingPage: React.FC = () => {
   const { isKick, kickMember, kickMemberSocketId } = useAppSelector((state) => state.appParameters)

@@ -13,7 +13,6 @@ const initialStateGameSettingsParameters = {
   currentShirtCards: '/static/media/shirt1.cfc195e1.jpg' as string,
   cardSetName: 'fibonacci' as string,
   currentCardSet: ['0', '1', '2', '3', '5', '8', '13', '21', '34', '55', '89', 'unknow', 'coffee break'] as string[],
-  finishVoiting: false as boolean,
 }
 
 const gameSettingsParameters = createSlice({

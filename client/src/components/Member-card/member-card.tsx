@@ -3,7 +3,7 @@ import './member-card.sass'
 import Card from '../Card/Card'
 import Avatar from '../Avatar/Avatar'
 import { useAppDispatch } from '../../store/redux'
-import { setIsKick, setKickMember, setKickMemberSocketId } from '../../store/reducers'
+import { setIsKick, setKickMember, setKickMemberSocketId } from '../../store/kickMemberReducer'
 
 interface IStatus {
   isCancel?: boolean

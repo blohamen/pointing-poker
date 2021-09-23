@@ -1,5 +1,5 @@
 // import { useEffect } from 'react'
-import { setIsKick, setKickMember, setKickMemberSocketId } from '../../store/reducers'
+import { setInitialStateKickMemberParameters, setIsKick } from '../../store/kickMemberReducer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
 import { DENY_KICK_MEMBER, PERMIT_KICK_MEMBER } from '../../utils/socketActions'
@@ -45,10 +45,8 @@ export default function ModalKickPlayer(props: IModalKickPlayerProps): JSX.Eleme
             size="small"
             theme="light"
             onSubmit={() => {
-              dispatch(setIsKick(false))
-              dispatch(setKickMember(''))
-              dispatch(setKickMemberSocketId(''))
               socket.emit(DENY_KICK_MEMBER, roomId, kickMemberSocketId)
+              dispatch(setInitialStateKickMemberParameters())
             }}
           />
         </div>
