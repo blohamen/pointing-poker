@@ -17,18 +17,18 @@ const initialStateAppParameters = {
 //     data: string
 //   }
 
-// export const recieveMembers = createAsyncThunk<IMembers, IQueryParameters>(
-//     'membersParameters/recieveMembers',
+// export const membersRecieved = createAsyncThunk<IMembers, IQueryParameters>(
+//     'membersParameters/membersRecieved',
 //     async (queryParameters) => {
-//       const {socket} = useAppSelector(state => state.appParameters)
-//       const { data } = queryParameters
-//       let result: IMembers = {members: []}
-//       if (socket) {
-//         const dataRecieved = await socket?.membersRecieved(data)
-//         result  = dataRecieved
-//         return result
-//       }
-//       return result
+// const {socket} = useAppSelector(state => state.appParameters)
+// const { data } = queryParameters
+// let result: IMembers = {members: []}
+// if (socket) {
+//   const dataRecieved = await socket?.membersRecieved(data)
+//   result  = dataRecieved
+//   return result
+// }
+// return result
 //     }
 // )
 

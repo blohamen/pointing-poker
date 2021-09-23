@@ -11,41 +11,52 @@ import sh3URL from '../../assets/img/shirts/shirt3.jpg'
 import sh4URL from '../../assets/img/shirts/shirt4.jpg'
 import sh5URL from '../../assets/img/shirts/shirt5.jpg'
 import ShirtGameCard from '../ShirtGameCard/ShirtGameCard'
+import { useAppDispatch, useAppSelector } from '../../store/redux'
+import {
+  setAutomaticallyAdmitNewMember,
+  setAutomaticallyFlipCards,
+  setCardSetName,
+  setChangingCard,
+  setCurrentCardSet,
+  setCurrentShirtCards,
+  setIsTimerNeeded,
+  setMasterAsPlayer,
+  setScoreType,
+  setScoreTypeShort,
+} from '../../store/gameSettingsReducer'
 
-const cardsSetCollection: { [key: string]: string[] } = {
+export const cardsSetCollection: { [key: string]: string[] } = {
   fibonacci: ['0', '1', '2', '3', '5', '8', '13', '21', '34', '55', '89', 'unknow', 'coffee break'],
   powers2: ['0', '1', '2', '4', '8', '16', '32', '64', 'unknow', 'coffee break'],
   custom: ['unknow', 'coffee break'],
 }
-
 export default function GameSettings(): JSX.Element {
   const shirtsURLs = [sh1URL, sh2URL, sh3URL, sh4URL, sh5URL]
-  const [masterAsPlayer, setMasterAsPlayer] = useState<boolean>(true)
-  const [changingCard, setChangingCard] = useState<boolean>(false)
-  const [isTimerNeeded, setIsTimerNeeded] = useState<boolean>(true)
-  const [scoreType, setScoreType] = useState<string>('story point')
-  const [scoreTypeShort, setScoreTypeShort] = useState<string>('SP')
-  const [automaticallyAdmitNewMember, setAutomaticallyAdmitNewMember] = useState<boolean>(true)
-  const [automaticallyFlipCards, setAutomaticallyFlipCards] = useState<boolean>(false)
-  const [currentShirtCards, setcurrentShirtCards] = useState<string>(sh1URL)
-  const [finishVoiting, setFinishVoiting] = useState<boolean>(false)
-  const [cardSetName, setCardSetName] = useState<string>('fibonacci')
-  const [newCardVaule, setNewCardVaule] = useState<string>('')
-  const [currentCardSet, setCurrentCardSet] = useState<string[]>(cardsSetCollection[cardSetName])
-  console.log(currentCardSet)
-  const handleChangeCardSet = (value: string) => {
-    setCardSetName(value)
-    setCurrentCardSet(cardsSetCollection[value])
-  }
+  const dispatch = useAppDispatch()
+  const {
+    masterAsPlayer,
+    isTimerNeeded,
+    scoreType,
+    scoreTypeShort,
+    automaticallyAdmitNewMember,
+    automaticallyFlipCards,
+    cardSetName,
+    currentShirtCards,
+    changingCard,
+  } = useAppSelector((state) => state.gameSettingsParameters)
 
-  const handleAddNewValue = (value: string) => {
-    setNewCardVaule(value)
+  const [finishVoiting, setFinishVoiting] = useState<boolean>(false)
+  const [newCardVaule, setNewCardVaule] = useState<string>('')
+
+  const handleChangeCardSet = (value: string) => {
+    dispatch(setCardSetName(value))
+    dispatch(setCurrentCardSet(cardsSetCollection[value]))
   }
 
   useEffect(() => {
     if (newCardVaule !== '') {
       cardsSetCollection.custom.push(newCardVaule)
-      setCurrentCardSet(cardsSetCollection.custom)
+      dispatch(setCurrentCardSet(cardsSetCollection.custom))
       setNewCardVaule('')
     }
   }, [newCardVaule])
@@ -90,36 +101,8 @@ export default function GameSettings(): JSX.Element {
     )
   })
 
-  const handleMasterAsPlayer = (value: boolean) => {
-    setMasterAsPlayer(value)
-  }
-
-  const handleChangingCard = (value: boolean) => {
-    setChangingCard(value)
-  }
-
-  const handleIsTimerNeeded = (value: boolean) => {
-    setIsTimerNeeded(value)
-  }
-
-  const handleAutomaticallyAdmitNewMember = (value: boolean) => {
-    setAutomaticallyAdmitNewMember(value)
-  }
-
-  const handleAutomaticallyFlipCards = (value: boolean) => {
-    setAutomaticallyFlipCards(value)
-  }
-
-  const handleChangeScoreType = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setScoreType(event.target.value)
-  }
-
-  const handleChangeScoreTypeShort = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setScoreTypeShort(event.target.value)
-  }
-
   const handleChangeShirt = (value: string) => {
-    setcurrentShirtCards(value)
+    dispatch(setCurrentShirtCards(value))
   }
 
   const shirtCards = shirtsURLs.map((url: string) => (
@@ -133,34 +116,44 @@ export default function GameSettings(): JSX.Element {
         <Switcher
           title="Scram master as player:"
           defaultValue={masterAsPlayer}
-          onChangeToogle={handleMasterAsPlayer}
+          onChangeToogle={(value: boolean) => {
+            dispatch(setMasterAsPlayer(value))
+          }}
           className="switcher-setting"
         />
 
         <Switcher
           title="Changing card in round end:"
           defaultValue={changingCard}
-          onChangeToogle={handleChangingCard}
+          onChangeToogle={(value: boolean) => {
+            dispatch(setChangingCard(value))
+          }}
           className="switcher-setting"
         />
 
         <Switcher
           title="Is timer needed:"
           defaultValue={isTimerNeeded}
-          onChangeToogle={handleIsTimerNeeded}
+          onChangeToogle={(value: boolean) => {
+            dispatch(setIsTimerNeeded(value))
+          }}
           className="switcher-setting"
         />
         <Switcher
           title="Automatically admit all new members"
           defaultValue={automaticallyAdmitNewMember}
-          onChangeToogle={handleAutomaticallyAdmitNewMember}
+          onChangeToogle={(value: boolean) => {
+            dispatch(setAutomaticallyAdmitNewMember(value))
+          }}
           className="switcher-setting"
         />
 
         <Switcher
           title="Automatically flip cards after voting"
           defaultValue={automaticallyFlipCards}
-          onChangeToogle={handleAutomaticallyFlipCards}
+          onChangeToogle={(value: boolean) => {
+            dispatch(setAutomaticallyFlipCards(value))
+          }}
           className="switcher-setting"
         />
 
@@ -171,7 +164,9 @@ export default function GameSettings(): JSX.Element {
             type="text"
             value={scoreType}
             maxLength={20}
-            onChange={handleChangeScoreType}
+            onChange={(event) => {
+              dispatch(setScoreType(event.target.value))
+            }}
           />
         </label>
 
@@ -182,13 +177,15 @@ export default function GameSettings(): JSX.Element {
             type="text"
             value={scoreTypeShort}
             maxLength={20}
-            onChange={handleChangeScoreTypeShort}
+            onChange={(event) => {
+              dispatch(setScoreTypeShort(event.target.value))
+            }}
           />
         </label>
 
         <div className="game-settings__round-time">
           <p className="game-settings__round-time__title">Round time:</p>
-          <Timer mode="setting" initMinutes={0} initSeconds={0} needTimer={isTimerNeeded} />
+          <Timer mode="setting" />
         </div>
 
         <div className="game-settings__select-cover-wrapper">
@@ -235,7 +232,15 @@ export default function GameSettings(): JSX.Element {
           </div>
           <div className="game-settings__game-cards-wrapper">
             {cards}
-            {cardSetName === 'custom' ? <AddGameCard onClick={handleAddNewValue} /> : ''}
+            {cardSetName === 'custom' ? (
+              <AddGameCard
+                onClick={(value: string) => {
+                  setNewCardVaule(value)
+                }}
+              />
+            ) : (
+              ''
+            )}
 
             <button
               type="button"

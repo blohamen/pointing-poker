@@ -1,6 +1,7 @@
 export const CREATE_ROOM = 'createRoom'
 export const JOIN_ROOM = 'joinRoom'
 export const MEMBERS = 'members'
+export const SEND_MEMBERS_TO_CLIENT = 'sendMembersToClient'
 export const NEW_USER = 'newUser'
 export const MODAL_KICK_PLAYER_SERVER = 'modalKickPlayerServer'
 export const MODAL_KICK_PLAYER_CLIENT = 'modalKickPlayerClient'
