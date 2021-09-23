@@ -16,6 +16,7 @@ const ScramMasterMemberBlock: React.FC = (): JSX.Element => {
         title={`${adminMember.firstName} ${adminMember.lastName}`}
         subtitle={adminMember.jobPossition}
         photoURL={adminMember.image}
+        socketId={adminMember.socketId === undefined ? '' : adminMember.socketId}
       />
     </div>
   )

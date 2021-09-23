@@ -6,24 +6,35 @@ import MembersBlock from '../../components/MembersBlock/MembersBlock'
 import ModalKickPlayer from '../../components/ModalKickPlayer/ModalKickPlayer'
 import ObserverMemberBlock from '../../components/ObserverMemberBlock/ObserverMemberBlock'
 import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
-import { useAppSelector } from '../../store/redux'
+import { setSocketId } from '../../store/authReducer'
+import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
+import { JOIN_ROOM, MEMBERS, MODAL_KICK_PLAYER_SERVER, NEW_USER } from '../../utils/socketActions'
 import './lobby-page.sass'
 
 const LobbyPage: React.FC = () => {
-  const { isKick, kickMember } = useAppSelector((state) => state.appParameters)
+  const { isKick, kickMember, kickMemberSocketId } = useAppSelector((state) => state.appParameters)
   const { roomId, userId } = useAppSelector((state) => state.userParameters)
   const { observerMemebers } = useAppSelector((state) => state.membersParameters)
+  const dispatch = useAppDispatch()
+
   useEffect(() => {
-    socket.emit('joinRoom', roomId, userId)
-    socket.emit('members', roomId)
+    dispatch(setSocketId(socket.id))
+    socket.emit(JOIN_ROOM, roomId, userId)
+    socket.emit(MEMBERS, roomId)
   }, [])
 
   useEffect(() => {
     if (userId !== '') {
-      socket.emit('newUser', roomId, userId)
+      socket.emit(NEW_USER, roomId, userId)
     }
   }, [userId])
+
+  useEffect(() => {
+    if (isKick) {
+      socket.emit(MODAL_KICK_PLAYER_SERVER, roomId, isKick, kickMember, kickMemberSocketId)
+    }
+  }, [isKick])
 
   return (
     <GameField>

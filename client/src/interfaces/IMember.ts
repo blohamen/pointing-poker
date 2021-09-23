@@ -9,4 +9,5 @@ export default interface IMember {
   userId: string
   roomId: string
   authentification?: boolean
+  socketId?: string
 }

@@ -18,6 +18,7 @@ const ObserverMemberBlock: React.FC = () => {
             subtitle={item.jobPossition}
             photoURL={item.image}
             key={item.userId}
+            socketId={item.socketId === undefined ? '' : item.socketId}
             isCancel
             isSmall
           />

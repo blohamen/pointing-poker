@@ -4,29 +4,29 @@ const initialStateAppParameters = {
   isKick: false as boolean,
   kickMember: '' as string,
   modalConnectLobby: false as boolean,
-  socket: null as any | null,
+  kickMemberSocketId: '' as string,
 }
 
 const appParameters = createSlice({
   name: 'appParameters',
   initialState: initialStateAppParameters,
   reducers: {
-    isKick(state, action: PayloadAction<boolean>) {
+    setIsKick(state, action: PayloadAction<boolean>) {
       state.isKick = action.payload
     },
-    kickMember(state, action: PayloadAction<string>) {
+    setKickMember(state, action: PayloadAction<string>) {
       state.kickMember = action.payload
     },
     modalConnectToLobby(state, action: PayloadAction<boolean>) {
       state.modalConnectLobby = action.payload
     },
-    setSocket(state, action: PayloadAction<any | null>) {
-      state.socket = action.payload
+    setKickMemberSocketId(state, action: PayloadAction<string>) {
+      state.kickMemberSocketId = action.payload
     },
   },
 })
 
-export const { isKick, kickMember, modalConnectToLobby, setSocket } = appParameters.actions
+export const { setIsKick, setKickMember, modalConnectToLobby, setKickMemberSocketId } = appParameters.actions
 
 const appParametersReducer = appParameters.reducer
 export default appParametersReducer

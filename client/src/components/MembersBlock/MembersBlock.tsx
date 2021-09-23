@@ -40,6 +40,7 @@ const MembersBlock: React.FC = () => {
             key={item.userId}
             isCancel
             isSmall
+            socketId={item.socketId === undefined ? '' : item.socketId}
           />
         ))}
       </div>

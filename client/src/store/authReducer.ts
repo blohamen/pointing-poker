@@ -13,6 +13,7 @@ const initialInitialAythPerson: IUser = {
   userId: '',
   roomId: '',
   authentification: false,
+  socketId: '',
 }
 
 interface IQueryParameters {
@@ -43,6 +44,7 @@ const userParameters = createSlice({
       state.roomId = initialInitialAythPerson.roomId
       state.userId = initialInitialAythPerson.userId
       state.authentification = initialInitialAythPerson.authentification
+      state.socketId = initialInitialAythPerson.socketId
     },
     firstName(state, action: PayloadAction<string>) {
       state.firstName = action.payload
@@ -70,6 +72,9 @@ const userParameters = createSlice({
     },
     setRoomId(state, action: PayloadAction<string>) {
       state.roomId = action.payload
+    },
+    setSocketId(state, action: PayloadAction<string>) {
+      state.socketId = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -99,6 +104,7 @@ export const {
   setUserId,
   setRoomId,
   setInitialUserState,
+  setSocketId,
 } = userParameters.actions
 
 const userParametersReducer = userParameters.reducer
