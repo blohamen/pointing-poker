@@ -1,27 +1,31 @@
 import { useState } from 'react'
-import { setIsAdmin, setIsPlayer } from '../../store/authReducer'
+import { setIsAdmin, setIsPlayer, setRoomId } from '../../store/authReducer'
+import { modalConnectToLobby } from '../../store/reducers'
 import { useAppDispatch } from '../../store/redux'
 import Button from '../Button/Button'
 import FormInputText from '../FormInputText/FormInputText'
 import './Session.sass'
 
-interface ISessionProps {
-  onSubmitStartGame(): void
-}
-
-export default function Session(props: ISessionProps): JSX.Element {
+export default function Session(): JSX.Element {
   const [connectURI, setConnectURI] = useState<string>('')
   const dispatch = useAppDispatch()
+
   const handleChangeConnectURI = (URI: string) => {
     setConnectURI(URI)
   }
 
-  const handlerOnSubmit = (e: React.SyntheticEvent) => {
+  const handlerConnectOnSubmit = (e: React.SyntheticEvent) => {
     if (connectURI.length > 0) {
-      props.onSubmitStartGame()
+      dispatch(modalConnectToLobby(true))
       dispatch(setIsPlayer(true))
+      dispatch(setRoomId(connectURI))
     }
     e.preventDefault()
+  }
+
+  const handleStartOnSubmit = () => {
+    dispatch(modalConnectToLobby(true))
+    dispatch(setIsAdmin(true))
   }
 
   return (
@@ -31,15 +35,7 @@ export default function Session(props: ISessionProps): JSX.Element {
           <h1>Start your planning:</h1>
           <div className="session__create__wrapper">
             <span>Create session:</span>
-            <Button
-              value="Start new game"
-              size="large"
-              theme="dark"
-              onSubmit={() => {
-                props.onSubmitStartGame()
-                dispatch(setIsAdmin(true))
-              }}
-            />
+            <Button value="Start new game" size="large" theme="dark" onSubmit={handleStartOnSubmit} />
           </div>
         </div>
 
@@ -54,7 +50,7 @@ export default function Session(props: ISessionProps): JSX.Element {
             validate={false}
             onValueChange={handleChangeConnectURI}
           />
-          <Button value="Connect" size="large" theme="dark" onSubmit={handlerOnSubmit} />
+          <Button value="Connect" size="large" theme="dark" onSubmit={handlerConnectOnSubmit} />
         </div>
       </div>
     </>

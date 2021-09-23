@@ -3,7 +3,7 @@ import './member-card.sass'
 import Card from '../Card/Card'
 import Avatar from '../Avatar/Avatar'
 import { useAppDispatch } from '../../store/redux'
-import { isKick, kickMember } from '../../store/reducers'
+import { setIsKick, setKickMember, setKickMemberSocketId } from '../../store/reducers'
 
 interface IStatus {
   isCancel?: boolean
@@ -41,8 +41,10 @@ interface IMemberCard {
   title: string
   subtitle: string
   photoURL: string
+  socketId: string
   isCancel?: boolean | undefined
 }
+
 const MemberCard: React.FC<IMemberCard> = ({
   isCurrentPlayer,
   isSmall,
@@ -50,12 +52,14 @@ const MemberCard: React.FC<IMemberCard> = ({
   subtitle,
   photoURL,
   isCancel,
+  socketId,
 }: IMemberCard) => {
   const dispath = useAppDispatch()
 
   const handleKickMember = (value: boolean) => {
-    dispath(isKick(value))
-    dispath(kickMember(title))
+    dispath(setIsKick(value))
+    dispath(setKickMember(title))
+    dispath(setKickMemberSocketId(socketId))
   }
 
   return (

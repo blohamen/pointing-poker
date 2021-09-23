@@ -1,20 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useAppSelector } from '../../store/redux'
 import ConnectToLobby from '../ConnectToLobby/ConnectToLobby'
 import PageLogo from '../PokerPlanning/PokerPlanning'
 import Session from '../Session/Session'
 import './HomePage.sass'
 
 export default function PageProducts(): JSX.Element {
-  const [modalConnect, setModalConnect] = useState<boolean>(false)
-  const handleStartNewGame = () => {
-    setModalConnect(!modalConnect)
-  }
+  const { modalConnectLobby } = useAppSelector((state) => state.appParameters)
+  const [modalConnect, setModalConnect] = useState<boolean>(modalConnectLobby)
 
-  const ConnToLobby = modalConnect ? <ConnectToLobby onCancelForm={(value: boolean) => setModalConnect(value)} /> : ''
+  useEffect(() => {
+    setModalConnect(modalConnectLobby)
+  }, [modalConnectLobby])
+
+  const ConnToLobby = modalConnect ? <ConnectToLobby /> : ''
   return (
     <>
       <PageLogo />
-      <Session onSubmitStartGame={handleStartNewGame} />
+      <Session />
       {ConnToLobby}
     </>
   )

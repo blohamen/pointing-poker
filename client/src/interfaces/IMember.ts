@@ -1,4 +1,4 @@
-export default interface IUser {
+export default interface IMember {
   firstName: string
   lastName: string
   jobPossition: string
