@@ -17,7 +17,8 @@ export const roleSlice = createSlice({
     //   state.roomId = ''
     // },
     membersAction: (state, action: PayloadAction<string>) => {
-      state.membersArray.push(action.payload)
+      const setMembers = new Set<string>([...state.membersArray, action.payload])
+      state.membersArray = [...setMembers]
     },
   },
 })

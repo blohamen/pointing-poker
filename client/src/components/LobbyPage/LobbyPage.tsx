@@ -103,7 +103,7 @@ const LobbyPage: React.FC<ILobbyPage> = ({ location }: ILobbyPage) => {
           </div>
         ))} */}
         <h2>Issues:</h2>
-        <p>[... arrayt of issues get from node]</p>
+        <p>[... array of issues get from node]</p>
       </main>
       <aside className="chat-container">
         <h2>Chat room_id:{roomT}</h2>
