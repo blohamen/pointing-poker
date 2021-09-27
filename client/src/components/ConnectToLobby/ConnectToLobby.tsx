@@ -15,7 +15,6 @@ export default function ConnectToLobby(): JSX.Element {
   const [lastName, setLastName] = useState<string>('')
   const [jobPosition, setJobPosition] = useState<string>('')
   const [srcAva, setSrcAva] = useState<string>('')
-  // const { authentification } = useAppSelector((state) => state.userParameters)
   const { authentification, isAdmin, isObserver, isPlayer, userId, roomId } = useAppSelector(
     (state) => state.userParameters
   )

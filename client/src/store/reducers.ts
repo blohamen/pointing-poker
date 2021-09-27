@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialStateAppParameters = {
-  isKick: false as boolean,
-  kickMember: '' as string,
   modalConnectLobby: false as boolean,
-  kickMemberSocketId: '' as string,
   finishVoiting: false as boolean,
 }
 
