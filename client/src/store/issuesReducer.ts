@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import IIssue from '../interfaces/IIssue'
 
 const initialStateIssuesParameters = {
-  isKick: false as boolean,
+  modalCreateIssues: false as boolean,
+  issues: [] as IIssue[],
 }
 
 const issuesParameters = createSlice({
   name: 'issuesParameters',
   initialState: initialStateIssuesParameters,
   reducers: {
-    setIsKick(state, action: PayloadAction<boolean>) {
-      state.isKick = action.payload
+    setModalCreateIssues(state, action: PayloadAction<boolean>) {
+      state.modalCreateIssues = action.payload
     },
   },
 })
 
-export const {
-  
-} = issuesParameters.actions
+export const { setModalCreateIssues } = issuesParameters.actions
 
 const issuesReducer = issuesParameters.reducer
 export default issuesReducer

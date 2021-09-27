@@ -1,6 +1,8 @@
 import { IconContext } from 'react-icons/lib'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import './issue-card.sass'
+import { useAppDispatch } from '../../store/redux'
+import { setModalCreateIssues } from '../../store/issuesReducer'
 
 const Edit = () => (
   <div className="edit">
@@ -25,8 +27,10 @@ interface IIssueCard {
 }
 
 export default function IssueCard({ issueName, priority, mode }: IIssueCard): JSX.Element {
+  const dispatch = useAppDispatch()
+
   const handleClickAddNewCard = () => {
-    console.log('swdsad')
+    dispatch(setModalCreateIssues(true))
   }
 
   if (mode === 'issueCard') {

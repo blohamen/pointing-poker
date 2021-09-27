@@ -26,6 +26,7 @@ import { setIsKick, setKickMember, setKickMemberSocketId, setYouAreKickFromRoom 
 import ObserverMemberBlock from '../../components/ObserverMemberBlock/ObserverMemberBlock'
 import IKickMeberFromLobby from '../../interfaces/IKickMeberFromLobby'
 import { setMembers, setInitialMembersState } from '../../store/memberRreducer'
+import ModalCreateIssue from '../../components/ModalCreateIssue/ModalCreateIssue'
 
 const SettingPage: React.FC = () => {
   const { isKick, kickMember, kickMemberSocketId, openModalKickPlayer } = useAppSelector(
@@ -35,6 +36,7 @@ const SettingPage: React.FC = () => {
   const dispatch = useAppDispatch()
   const { observerMemebers, members } = useAppSelector((state) => state.membersParameters)
   const { youAreKickFromRoom } = useAppSelector((state) => state.kickMemberParameters)
+  const { modalCreateIssues } = useAppSelector((state) => state.issuesParameters)
   const history = useHistory()
 
   useEffect(() => {
@@ -97,6 +99,7 @@ const SettingPage: React.FC = () => {
         <GameSettings />
       </>
       {isKick && members.length >= 3 ? <ModalKickPlayer fullName={kickMember} /> : ''}
+      {modalCreateIssues ? <ModalCreateIssue /> : ''}
     </GameField>
   )
 }
