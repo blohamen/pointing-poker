@@ -1,8 +1,10 @@
 // import { useEffect } from 'react'
-import { setIsKick, setKickMember, setKickMemberSocketId } from '../../store/reducers'
+import { useEffect } from 'react'
+import { setInitialStateKickMemberParameters, setKickMemberResolution } from '../../store/kickMemberReducer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
-import { DENY_KICK_MEMBER, PERMIT_KICK_MEMBER } from '../../utils/socketActions'
+import { RESOLUTION_KICK_MEMBER } from '../../utils/socketActions'
+
 import Button from '../Button/Button'
 import './modal-kick-player.sass'
 
@@ -12,15 +14,15 @@ interface IModalKickPlayerProps {
 
 export default function ModalKickPlayer(props: IModalKickPlayerProps): JSX.Element {
   const dispatch = useAppDispatch()
-  const { kickMemberSocketId } = useAppSelector((state) => state.appParameters)
+  const { kickMemberSocketId, kickMemberResolution } = useAppSelector((state) => state.kickMemberParameters)
   const { roomId } = useAppSelector((state) => state.userParameters)
 
-  // useEffect(() => {
-  //   if(isKick) {
-  //     socket.emit(KICK_MEMBER, roomId, userId)
-  //   }
-
-  // }, [isKick])
+  useEffect(() => {
+    if (kickMemberResolution !== null) {
+      socket.emit(RESOLUTION_KICK_MEMBER, roomId, kickMemberSocketId, kickMemberResolution)
+      dispatch(setInitialStateKickMemberParameters())
+    }
+  }, [kickMemberResolution])
 
   return (
     <div className="mkp">
@@ -36,8 +38,7 @@ export default function ModalKickPlayer(props: IModalKickPlayerProps): JSX.Eleme
             size="small"
             theme="dark"
             onSubmit={() => {
-              dispatch(setIsKick(false))
-              socket.emit(PERMIT_KICK_MEMBER, roomId, kickMemberSocketId)
+              dispatch(setKickMemberResolution(true))
             }}
           />
           <Button
@@ -45,10 +46,7 @@ export default function ModalKickPlayer(props: IModalKickPlayerProps): JSX.Eleme
             size="small"
             theme="light"
             onSubmit={() => {
-              dispatch(setIsKick(false))
-              dispatch(setKickMember(''))
-              dispatch(setKickMemberSocketId(''))
-              socket.emit(DENY_KICK_MEMBER, roomId, kickMemberSocketId)
+              dispatch(setKickMemberResolution(false))
             }}
           />
         </div>

@@ -1,41 +1,47 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { setTimerMinutes, setTimerSeconds } from '../../store/gameSettingsReducer'
+import { useAppDispatch, useAppSelector } from '../../store/redux'
 import './timer.sass'
 
 interface ITimerProps {
   mode: 'setting' | 'game'
-  initMinutes: number
-  initSeconds: number
-  needTimer: boolean
   timer?: boolean
   onChangeTimerMode?(value: boolean): void
 }
 
 export default function Timer(props: ITimerProps): JSX.Element {
-  const [minutesValue, setMinutesValue] = useState<number>(props.initMinutes)
-  const [secondsValue, setSecondsValue] = useState<number>(props.initSeconds)
+  const { timerMinutes, timerSeconds, isTimerNeeded } = useAppSelector((state) => state.gameSettingsParameters)
+  const dispatch = useAppDispatch()
   const mode = props.mode !== 'setting'
 
   const calculateTimeLeft = () => {
-    const seconds: number = minutesValue * 60 + secondsValue
+    const seconds: number = timerMinutes * 60 + timerSeconds
     const difference = seconds - 1
     if (difference <= 0) {
-      setMinutesValue(0)
-      setSecondsValue(0)
+      dispatch(setTimerMinutes(0))
+      dispatch(setTimerSeconds(0))
       if (props.onChangeTimerMode) props.onChangeTimerMode(false)
       return
     }
     const newMinutes = Math.floor(difference / 60)
     const newSeconds = Math.floor(difference - newMinutes * 60)
-    setMinutesValue(newMinutes)
-    setSecondsValue(newSeconds)
+    dispatch(setTimerMinutes(newMinutes))
+    dispatch(setTimerSeconds(newSeconds))
   }
+
+  useEffect(() => {
+    if (!isTimerNeeded) {
+      dispatch(setTimerMinutes(0))
+      dispatch(setTimerSeconds(0))
+    }
+  }, [isTimerNeeded])
 
   useEffect(() => {
     if (props.timer) {
       const timer = setInterval(() => calculateTimeLeft(), 1000)
       return () => clearInterval(timer)
     }
-  }, [minutesValue, secondsValue, props.timer])
+  }, [timerMinutes, timerSeconds, props.timer])
 
   return (
     <div className="timer">
@@ -45,23 +51,23 @@ export default function Timer(props: ITimerProps): JSX.Element {
           type="number"
           name="minutes"
           className="timer__input"
-          value={minutesValue}
+          value={timerMinutes}
           min={0}
           max={59}
           step={1}
           readOnly={mode}
-          disabled={!props.needTimer}
+          disabled={!isTimerNeeded}
           onKeyDown={(e) => !/^[А-Яа-яA-Za-z ]$/.test(e.key)}
           onChange={(e) => {
             if (+e.target.value > +e.target.max) {
-              setMinutesValue(+e.target.max)
+              dispatch(setTimerMinutes(+e.target.max))
               return
             }
             if (+e.target.value <= +e.target.max && e.target.value.length > 2) {
-              setMinutesValue(+e.target.max)
+              dispatch(setTimerMinutes(+e.target.max))
               return
             }
-            setMinutesValue(+e.target.value)
+            dispatch(setTimerMinutes(+e.target.value))
           }}
         />
       </label>
@@ -72,23 +78,23 @@ export default function Timer(props: ITimerProps): JSX.Element {
           type="number"
           name="seconds"
           className="timer__input"
-          value={secondsValue}
+          value={timerSeconds}
           min={0}
           max={59}
           step={1}
           readOnly={mode}
-          disabled={!props.needTimer}
+          disabled={!isTimerNeeded}
           onKeyDown={(e) => !/^[А-Яа-яA-Za-z ]$/.test(e.key)}
           onChange={(e) => {
             if (+e.target.value > +e.target.max) {
-              setMinutesValue(+e.target.max)
+              dispatch(setTimerSeconds(+e.target.max))
               return
             }
             if (+e.target.value <= +e.target.max && e.target.value.length > 2) {
-              setSecondsValue(+e.target.max)
+              dispatch(setTimerSeconds(+e.target.max))
               return
             }
-            setSecondsValue(+e.target.value)
+            dispatch(setTimerSeconds(+e.target.value))
           }}
         />
       </label>

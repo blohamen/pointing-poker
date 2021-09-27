@@ -3,7 +3,7 @@ import './member-card.sass'
 import Card from '../Card/Card'
 import Avatar from '../Avatar/Avatar'
 import { useAppDispatch } from '../../store/redux'
-import { setIsKick, setKickMember, setKickMemberSocketId } from '../../store/reducers'
+import { setIsKick, setKickMember, setKickMemberSocketId, setOpenModalKickPlayer } from '../../store/kickMemberReducer'
 
 interface IStatus {
   isCancel?: boolean
@@ -57,9 +57,10 @@ const MemberCard: React.FC<IMemberCard> = ({
   const dispath = useAppDispatch()
 
   const handleKickMember = (value: boolean) => {
-    dispath(setIsKick(value))
     dispath(setKickMember(title))
+    dispath(setOpenModalKickPlayer(true))
     dispath(setKickMemberSocketId(socketId))
+    dispath(setIsKick(value))
   }
 
   return (
