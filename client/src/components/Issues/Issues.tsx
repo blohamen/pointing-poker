@@ -1,18 +1,27 @@
+import { useAppSelector } from '../../store/redux'
 import IssueCard from '../Issue-card'
 import './issues.sass'
 
-const Issues: React.FC = (): JSX.Element => (
-  <div className="issues">
-    <p className="issues__title">Issues: </p>
-    <div className="issues__cards-wrapper">
-      <IssueCard mode="issueCard" issueName="Issue 255" priority="hight" />
-      <IssueCard mode="issueCard" issueName="Issue 122" priority="hight" />
-      <IssueCard mode="issueCard" issueName="Issue 223" priority="hight" />
-      <IssueCard mode="issueCard" issueName="Issue 1132" priority="hight" />
-      <IssueCard mode="issueCard" issueName="Issue 232" priority="hight" />
-      <IssueCard mode="addNewIssue" issueName="Issue 55" priority="hight" />
+const Issues: React.FC = (): JSX.Element => {
+  const { issues } = useAppSelector((state) => state.issuesParameters)
+  return (
+    <div className="issues">
+      <p className="issues__title">Issues: </p>
+      <div className="issues__cards-wrapper">
+        {issues.map((issue) => (
+          <IssueCard
+            mode="issueCard"
+            issueName={issue.title}
+            priority={`${issue.priority} priority`}
+            issueId={issue.issueId}
+            key={issue.issueId}
+          />
+        ))}
+
+        <IssueCard mode="addNewIssue" issueName="Issue 55" priority="hight" issueId="1" />
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Issues
