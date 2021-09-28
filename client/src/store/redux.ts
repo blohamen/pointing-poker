@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import userParametersReducer from './authReducer'
+import chatReducer from './chatReducer'
 import gameSettingsParametersReducer from './gameSettingsReducer'
 import issuesReducer from './issuesReducer'
 import kickMemberReducer from './kickMemberReducer'
@@ -15,6 +16,7 @@ const store = configureStore({
     gameSettingsParameters: gameSettingsParametersReducer,
     kickMemberParameters: kickMemberReducer,
     issuesParameters: issuesReducer,
+    chatParameters: chatReducer,
   },
   devTools: true,
 })
