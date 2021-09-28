@@ -3,7 +3,7 @@ import { IconContext } from 'react-icons/lib'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import './issue-card.sass'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
-import { setModalCreateIssues, setModalModifiedIssue } from '../../store/issuesReducer'
+import { setModalCreateIssues, setModalModifiedIssue, setModifiedIssueId } from '../../store/issuesReducer'
 import socket from '../../utils/socket'
 import { DELETE_ISSUE_CARD } from '../../utils/socketActions'
 
@@ -49,10 +49,9 @@ export default function IssueCard({ issueName, priority, issueId, mode }: IIssue
   }
   const handleEditIssueCardData = () => {
     dispatch(setModalModifiedIssue(true))
+    dispatch(setModifiedIssueId(issueId))
   }
   const handleDeleteIssueCard = () => {
-    console.log('delete issue card')
-
     socket.emit(DELETE_ISSUE_CARD, roomId, issueId)
   }
 
