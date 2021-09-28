@@ -1,6 +1,6 @@
-import IUser from "./IUser";
+import IUser from './IUser'
 
 export default interface IKickMeberFromLobby {
-    members: IUser[]
-    kickerMember: string
+  members: IUser[]
+  kickerMember: string
 }
