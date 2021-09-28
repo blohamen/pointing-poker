@@ -13,6 +13,7 @@ import Button from '../../components/Button/Button'
 import socket from '../../utils/socket'
 import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
 import {
+  ISSUES,
   JOIN_ROOM,
   KICK_MEMBER_FROM_LOBBY,
   KICK_ME_FROM_ROOM,
@@ -27,16 +28,19 @@ import ObserverMemberBlock from '../../components/ObserverMemberBlock/ObserverMe
 import IKickMeberFromLobby from '../../interfaces/IKickMeberFromLobby'
 import { setMembers, setInitialMembersState } from '../../store/memberRreducer'
 import ModalCreateIssue from '../../components/ModalCreateIssue/ModalCreateIssue'
+import IIssue from '../../interfaces/IIssue'
+import { setIssues } from '../../store/issuesReducer'
+import ModalModifiedIssue from '../../components/ModalModifiedIssue/ModalModifiedIssue'
 
 const SettingPage: React.FC = () => {
+  const dispatch = useAppDispatch()
   const { isKick, kickMember, kickMemberSocketId, openModalKickPlayer } = useAppSelector(
     (state) => state.kickMemberParameters
   )
   const { roomId, userId, socketId } = useAppSelector((state) => state.userParameters)
-  const dispatch = useAppDispatch()
   const { observerMemebers, members } = useAppSelector((state) => state.membersParameters)
   const { youAreKickFromRoom } = useAppSelector((state) => state.kickMemberParameters)
-  const { modalCreateIssues } = useAppSelector((state) => state.issuesParameters)
+  const { modalCreateIssues, modalModifiedIssue } = useAppSelector((state) => state.issuesParameters)
   const history = useHistory()
 
   useEffect(() => {
@@ -53,8 +57,6 @@ const SettingPage: React.FC = () => {
 
   useEffect(() => {
     const handlerKickMemberFromLobby = (data: IKickMeberFromLobby) => {
-      console.log('kick data: ', data)
-      console.log('data id: ', data.kickerMember, 'my socket: ', socketId)
       dispatch(setYouAreKickFromRoom(data.kickerMember))
       dispatch(setMembers({ members: data.members }))
     }
@@ -64,7 +66,6 @@ const SettingPage: React.FC = () => {
   useEffect(() => {
     if (youAreKickFromRoom !== '' && socketId !== '') {
       if (youAreKickFromRoom === socketId) {
-        console.log('you are must be delete from room')
         socket.emit(KICK_ME_FROM_ROOM, roomId)
         history.push('./')
         dispatch(setInitialUserState())
@@ -81,6 +82,13 @@ const SettingPage: React.FC = () => {
       dispatch(setKickMemberSocketId(data.data.kickMemberSocketId))
     }
     socket.on(MODAL_KICK_PLAYER_CLIENT, handlerOpenModalKickPlayer)
+  }, [])
+
+  useEffect(() => {
+    const handlerIssues = (data: { issues: IIssue[] }) => {
+      dispatch(setIssues(data.issues))
+    }
+    socket.on(ISSUES, handlerIssues)
   }, [])
 
   return (
@@ -100,6 +108,7 @@ const SettingPage: React.FC = () => {
       </>
       {isKick && members.length >= 3 ? <ModalKickPlayer fullName={kickMember} /> : ''}
       {modalCreateIssues ? <ModalCreateIssue /> : ''}
+      {modalModifiedIssue ? <ModalModifiedIssue /> : ''}
     </GameField>
   )
 }

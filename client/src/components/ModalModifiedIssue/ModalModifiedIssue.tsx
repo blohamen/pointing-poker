@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import IIssue from '../../interfaces/IIssue'
-import { setModalCreateIssues } from '../../store/issuesReducer'
-import { useAppDispatch, useAppSelector } from '../../store/redux'
-import socket from '../../utils/socket'
-import { NEW_ISSUE } from '../../utils/socketActions'
+import './modal-midified-issue.sass'
+import React, { useState } from 'react'
+import { setModalModifiedIssue } from '../../store/issuesReducer'
+import { useAppDispatch } from '../../store/redux'
 import Button from '../Button/Button'
-import './modal-create-issue.sass'
 
-export default function ModalCreateIssue(): JSX.Element {
+export default function ModalModifiedIssue(): JSX.Element {
   const [selectValue, setSelectValue] = useState<string>('Low')
   const [titleValue, setTitleValue] = useState<string>('')
   const [linkValue, setLinkValue] = useState<string>('')
-  const { roomId } = useAppSelector((state) => state.userParameters)
   const dispatch = useAppDispatch()
-  let issueInstance: IIssue
 
   const handleChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectValue(event.target.value)
@@ -30,48 +24,39 @@ export default function ModalCreateIssue(): JSX.Element {
 
   const handleFormCreateIssueSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault()
-    socket.emit(NEW_ISSUE, roomId, issueInstance)
-    dispatch(setModalCreateIssues(false))
+    dispatch(setModalModifiedIssue(false))
   }
 
-  useEffect(() => {
-    issueInstance = {
-      title: titleValue,
-      link: linkValue,
-      priority: selectValue,
-      issueId: uuidv4(),
-    }
-  }, [selectValue, titleValue, linkValue])
-
   return (
-    <div className="mci">
-      <div className="mci__form-wrapper">
-        <p className="mci__title">Create Issue</p>
-        <form id="mci-form" onSubmit={handleFormCreateIssueSubmit}>
-          <label htmlFor="mci-title" className="mci__label">
+    <div className="mmi">
+      <div className="mmi__form-wrapper">
+        <p className="mmi__title">Modified Issue</p>
+        <form id="mmi-form" onSubmit={handleFormCreateIssueSubmit}>
+          <label htmlFor="mmi-title" className="mmi__label">
             <span>Title:</span>
             <input
               type="text"
-              name="mci-title"
+              name="mmi-title"
               value={titleValue}
               onChange={handleChangeTitle}
-              className="mci__input"
+              className="mmi__input"
             />
           </label>
 
-          <label htmlFor="mci-link" className="mci__label">
+          <label htmlFor="mmi-link" className="mmi__label">
             <span>link:</span>
-            <input type="text" name="mci-link" value={linkValue} onChange={handleChangeLink} className="mci__input" />
+            <input type="text" name="mmi-link" value={linkValue} onChange={handleChangeLink} className="mmi__input" />
           </label>
 
-          <label className="mci__label">
+          <label className="mmi__label">
             <span>Priority:</span>
-            <select value={selectValue} onChange={handleChangeSelect} className="mci__select">
+            <select value={selectValue} onChange={handleChangeSelect} className="mmi__select">
               <option value="Low">Low</option>
               <option value="Middle">Middle</option>
               <option value="Hight">Hight</option>
             </select>
           </label>
+          <p className="mmi__issue-id">Issue ID: {}</p>
         </form>
         <div className="mci__button-wrapper">
           <Button value="Yes" size="small" theme="dark" form="mci-form" />
@@ -80,7 +65,7 @@ export default function ModalCreateIssue(): JSX.Element {
             size="small"
             theme="light"
             onSubmit={() => {
-              dispatch(setModalCreateIssues(false))
+              dispatch(setModalModifiedIssue(false))
             }}
           />
         </div>

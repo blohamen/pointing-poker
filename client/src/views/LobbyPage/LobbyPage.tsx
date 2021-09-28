@@ -64,8 +64,6 @@ const LobbyPage: React.FC = () => {
 
   useEffect(() => {
     const handlerKickMemberFromLobby = (data: IKickMeberFromLobby) => {
-      console.log('kick data: ', data)
-      console.log('data id: ', data.kickerMember, 'my socket: ', socketId)
       dispatch(setYouAreKickFromRoom(data.kickerMember))
       dispatch(setMembers({ members: data.members }))
     }
