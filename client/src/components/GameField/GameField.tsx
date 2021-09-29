@@ -5,7 +5,6 @@ import Chat from '../Chat'
 
 const GameField: React.FC = ({ children }) => {
   const location = useLocation()
-  console.log(location.pathname)
 
   const isChat: boolean = location.pathname === '/settingScrumMaster' || location.pathname === '/lobby'
   return (

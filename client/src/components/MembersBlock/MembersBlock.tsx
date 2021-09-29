@@ -21,7 +21,6 @@ const MembersBlock: React.FC = () => {
 
   useEffect(() => {
     const newUserHandler = (data: IAddNewUserData) => {
-      console.log('new user: ', data)
       store.dispatch(setNewMember(data))
     }
     socket.on('addNewUser', newUserHandler)
