@@ -12,6 +12,7 @@ import IOpenModalKickPlayer from '../../interfaces/IOpenModalKickPlayer'
 import { setInitialUserState, setSocketId } from '../../store/authReducer'
 import { setIsKick, setKickMember, setKickMemberSocketId, setYouAreKickFromRoom } from '../../store/kickMemberReducer'
 import { setInitialMembersState, setMembers } from '../../store/memberRreducer'
+import { setStartGame } from '../../store/reducers'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
 import {
@@ -22,6 +23,7 @@ import {
   MODAL_KICK_PLAYER_CLIENT,
   MODAL_KICK_PLAYER_SERVER,
   NEW_USER,
+  START_GAME_CLIENT,
 } from '../../utils/socketActions'
 import './lobby-page.sass'
 
@@ -73,7 +75,6 @@ const LobbyPage: React.FC = () => {
   useEffect(() => {
     if (youAreKickFromRoom !== '' && socketId !== '') {
       if (youAreKickFromRoom === socketId) {
-        console.log('you are must be delete from room')
         socket.emit(KICK_ME_FROM_ROOM, roomId)
         history.push('./')
         dispatch(setInitialUserState())
@@ -82,6 +83,14 @@ const LobbyPage: React.FC = () => {
       }
     }
   }, [youAreKickFromRoom, socketId])
+
+  useEffect(() => {
+    const handleStartGame = (data: boolean) => {
+      dispatch(setStartGame(data))
+      if (data) history.push('/game')
+    }
+    socket.on(START_GAME_CLIENT, handleStartGame)
+  }, [])
 
   return (
     <GameField>

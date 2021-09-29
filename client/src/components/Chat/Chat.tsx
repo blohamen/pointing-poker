@@ -1,40 +1,45 @@
 import React, { useState, useEffect } from 'react'
-import { useAppSelector } from '../../store/redux'
+import IChat from '../../interfaces/IChat'
+import { setChatMessages } from '../../store/chatReducer'
+import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
+import { NEW_CHAT_MESSAGE } from '../../utils/socketActions'
 import MemberCard from '../Member-card'
-
 import './chat.sass'
 
 const Chat = () => {
-  const { roomId, firstName } = useAppSelector((state) => state.userParameters)
-  const [messages, setMessages] = useState<string[]>([])
+  const dispatch = useAppDispatch()
+  const { roomId, firstName, lastName, jobPossition, image } = useAppSelector((state) => state.userParameters)
+  const { chatMessages } = useAppSelector((state) => state.chatParameters)
   const [message, setMessage] = useState('')
 
-  const messagesText = messages.map((item) => (
-    <div className="message__block">
-      <div className="message__text"> {item}</div>
+  useEffect(() => {
+    const handlerChatMessage = (data: IChat[]) => {
+      dispatch(setChatMessages(data))
+    }
+    socket.on(NEW_CHAT_MESSAGE, handlerChatMessage)
+  }, [])
+
+  const sendMessage = (event: React.SyntheticEvent) => {
+    event.preventDefault()
+    socket.emit('sendMessage', message, roomId, firstName, lastName, jobPossition, image)
+    setMessage('')
+  }
+
+  const messagesText = chatMessages.map((item) => (
+    <div className="message__block" key={item.messageId}>
+      <div className="message__text"> {item.userText}</div>
       <div className="message__user">
-        <MemberCard socketId="123" title="First Last" subtitle="Position" photoURL="url" isSmall />
+        <MemberCard
+          socketId="123"
+          title={`${item.userName} ${item.userLastName}`}
+          subtitle={item.userJobPosition}
+          photoURL={item.userImageURL}
+          isSmall
+        />
       </div>
     </div>
   ))
-
-  useEffect(() => {
-    socket.on('newMessage', (messageFromSocket) => {
-      // const messagesArray = messages
-      // messagesArray.push(messageFromSocket)
-      // setMessage(messageFromSocket)
-      setMessages([...messages, messageFromSocket])
-    })
-  }, [messages])
-
-  const sendMessage = (event: any) => {
-    event.preventDefault()
-    if (message) {
-      socket.emit('sendMessage', event.target.value, roomId, firstName)
-    }
-    setMessage('')
-  }
 
   return (
     <div className="chat">

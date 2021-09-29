@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import IGameSettings from '../interfaces/IGameSettings'
 
 const initialStateGameSettingsParameters = {
   masterAsPlayer: true as boolean,
@@ -55,6 +56,20 @@ const gameSettingsParameters = createSlice({
     setTimerSeconds(state, action: PayloadAction<number>) {
       state.timerSeconds = action.payload
     },
+    setGameSettings(state, action: PayloadAction<IGameSettings>) {
+      state.masterAsPlayer = action.payload.masterAsPlayer
+      state.changingCard = action.payload.changingCard
+      state.isTimerNeeded = action.payload.isTimerNeeded
+      state.automaticallyAdmitNewMember = action.payload.automaticallyAdmitNewMember
+      state.automaticallyFlipCards = action.payload.automaticallyFlipCards
+      state.scoreType = action.payload.scoreType
+      state.scoreTypeShort = action.payload.scoreTypeShort
+      state.timerMinutes = action.payload.timerMinutes
+      state.timerSeconds = action.payload.timerSeconds
+      state.currentShirtCards = action.payload.currentShirtCards
+      state.cardSetName = action.payload.cardSetName
+      state.currentCardSet = action.payload.currentCardSet
+    },
   },
 })
 
@@ -71,6 +86,7 @@ export const {
   setChangingCard,
   setTimerMinutes,
   setTimerSeconds,
+  setGameSettings,
 } = gameSettingsParameters.actions
 
 const gameSettingsParametersReducer = gameSettingsParameters.reducer

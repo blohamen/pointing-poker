@@ -5,6 +5,7 @@ import GameField from '../../components/GameField/GameField'
 import GameSettings from '../../components/GameSettings/GameSettings'
 import Issues from '../../components/Issues/Issues'
 import IssuesString from '../../components/IssuesString/IssuesString'
+import IGameSettings from '../../interfaces/IGameSettings'
 import MembersBlock from '../../components/MembersBlock/MembersBlock'
 import ModalKickPlayer from '../../components/ModalKickPlayer/ModalKickPlayer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
@@ -20,6 +21,8 @@ import {
   MEMBERS,
   MODAL_KICK_PLAYER_CLIENT,
   MODAL_KICK_PLAYER_SERVER,
+  START_GAME,
+  START_GAME_CLIENT,
 } from '../../utils/socketActions'
 import { setInitialUserState, setSocketId } from '../../store/authReducer'
 import IOpenModalKickPlayer from '../../interfaces/IOpenModalKickPlayer'
@@ -31,6 +34,7 @@ import ModalCreateIssue from '../../components/ModalCreateIssue/ModalCreateIssue
 import IIssue from '../../interfaces/IIssue'
 import { setIssues } from '../../store/issuesReducer'
 import ModalModifiedIssue from '../../components/ModalModifiedIssue/ModalModifiedIssue'
+import { setStartGame } from '../../store/reducers'
 
 const SettingPage: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -41,6 +45,21 @@ const SettingPage: React.FC = () => {
   const { observerMemebers, members } = useAppSelector((state) => state.membersParameters)
   const { youAreKickFromRoom } = useAppSelector((state) => state.kickMemberParameters)
   const { modalCreateIssues, modalModifiedIssue } = useAppSelector((state) => state.issuesParameters)
+  const {
+    masterAsPlayer,
+    changingCard,
+    isTimerNeeded,
+    automaticallyAdmitNewMember,
+    automaticallyFlipCards,
+    scoreType,
+    scoreTypeShort,
+    timerMinutes,
+    timerSeconds,
+    currentShirtCards,
+    cardSetName,
+    currentCardSet,
+  } = useAppSelector((state) => state.gameSettingsParameters)
+
   const history = useHistory()
 
   useEffect(() => {
@@ -91,13 +110,42 @@ const SettingPage: React.FC = () => {
     socket.on(ISSUES, handlerIssues)
   }, [])
 
+  useEffect(() => {
+    const handleStartGame = (data: boolean) => {
+      dispatch(setStartGame(data))
+      if (data) history.push('/game')
+    }
+    socket.on(START_GAME_CLIENT, handleStartGame)
+  }, [])
+
   return (
     <GameField>
       <IssuesString />
       <ScramMasterMemberBlock />
       <LinkToLobby linkLobby="testlink" />
       <div className="setting-page__btns-wrapper">
-        <Button value="Start Game" size="small" theme="dark" />
+        <Button
+          value="Start Game"
+          size="small"
+          theme="dark"
+          onSubmit={() => {
+            const settings: IGameSettings = {
+              masterAsPlayer,
+              changingCard,
+              isTimerNeeded,
+              automaticallyAdmitNewMember,
+              automaticallyFlipCards,
+              scoreType,
+              scoreTypeShort,
+              timerMinutes,
+              timerSeconds,
+              currentShirtCards,
+              cardSetName,
+              currentCardSet,
+            }
+            socket.emit(START_GAME, roomId, true, settings)
+          }}
+        />
         <Button value="Cancel game" size="small" theme="light" />
       </div>
       <>
