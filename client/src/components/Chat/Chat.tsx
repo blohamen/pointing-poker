@@ -35,7 +35,7 @@ const Chat = () => {
           title={`${item.userName} ${item.userLastName}`}
           subtitle={item.userJobPosition}
           photoURL={item.userImageURL}
-          isSmall
+          isChatCard
         />
       </div>
     </div>

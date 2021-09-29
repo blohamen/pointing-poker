@@ -1,5 +1,6 @@
 $k: 1
 $k-small: 1.66
+$k-chat-card: 2
 
 // Card
 @mixin card-large-text
@@ -29,6 +30,7 @@ $k-small: 1.66
   &__its-you
     @include card-small-text
     font-weight: bold
+
 // Small card
 @mixin small-card-large-text
   font-size: calc(48px / #{$k-small})
@@ -53,5 +55,25 @@ $k-small: 1.66
 
 .small-title
   @include small-card-large-text
-.small__subtitle
+.small-subtitle
   @include small-card-small-text
+
+// Chat card
+@mixin chat-card-large-text
+  font-size: calc(48px / #{$k-chat-card})
+  font-weight: 300
+@mixin chat-card-small-text
+  font-size: calc(16px / #{$k-chat-card})
+  font-weight: 300
+
+@mixin chat-card-width-height-margin
+  margin: calc(5px / #{$k-chat-card})
+  width: calc(480px / #{$k-chat-card})
+  height: calc(120px / #{$k-chat-card})
+
+.chat-card
+  @include chat-card-width-height-margin
+.chat-title
+  @include chat-card-large-text
+.chat-subtitle
+  @include chat-card-small-text

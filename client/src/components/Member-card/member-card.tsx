@@ -38,6 +38,7 @@ Status.defaultProps = {
 interface IMemberCard {
   isCurrentPlayer?: boolean
   isSmall?: boolean
+  isChatCard?: boolean
   title: string
   subtitle: string
   photoURL: string
@@ -48,6 +49,7 @@ interface IMemberCard {
 const MemberCard: React.FC<IMemberCard> = ({
   isCurrentPlayer,
   isSmall,
+  isChatCard,
   title,
   subtitle,
   photoURL,
@@ -68,6 +70,7 @@ const MemberCard: React.FC<IMemberCard> = ({
       <Card
         isCurrentPlayer={isCurrentPlayer}
         isSmall={isSmall}
+        isChatCard={isChatCard}
         title={title}
         subtitle={subtitle}
         left={<Avatar name={title.split(' ')[0]} lastName={title.split(' ')[1]} src={photoURL} size="small" />}
