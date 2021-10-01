@@ -24,6 +24,7 @@ export default function GamePage(): JSX.Element {
     }
     socket.on(SET_GAME_SETTINGS, handlerGameSettings)
   }, [])
+
   const state = store.getState()
 
   const nameIssues = state.issuesParameters.issues.map((issue) => issue.title).join(',')
@@ -34,7 +35,11 @@ export default function GamePage(): JSX.Element {
       </li>
     )
   })
+
+  // Admin components
   const admin = state.userParameters.isAdmin
+
+  const timerInIssueBlock = admin ? <p>time</p> : ''
 
   const buttonsInIssueBlock = admin ? (
     <div className="game__issue-buttons">
@@ -46,7 +51,15 @@ export default function GamePage(): JSX.Element {
     ''
   )
 
-  const statisticBlock = admin ? <div>Statistics</div> : ''
+  const statisticBlock = admin ? (
+    <div>
+      <h2>Statistics</h2>
+      <GameCard mode="setting" cardValue="10" cardShirtURL="" storyPointShort="ST" finsishVoiting />
+    </div>
+  ) : (
+    ''
+  )
+  // Admin components
 
   return (
     <GameField>
@@ -62,15 +75,15 @@ export default function GamePage(): JSX.Element {
         <div className="game__issues">
           <ul className="game__issues-cards">{issueCards}</ul>
           <div className="game__issue-timer-buttons">
-            <p>{admin ? 'timer' : ''}</p>
+            {timerInIssueBlock}
             {buttonsInIssueBlock}
           </div>
         </div>
       </div>
 
       <div className="game-statistics">{statisticBlock}</div>
-      <GameCard mode="setting" cardValue="10" cardShirtURL="" storyPointShort="ST" finsishVoiting />
-      <p>{JSON.stringify(state.appParameters)}</p>
+
+      {/* <p>{JSON.stringify(state.appParameters)}</p>
       <br />
       <p>{JSON.stringify(state.gameSettingsParameters)}</p>
       <br />
@@ -82,7 +95,7 @@ export default function GamePage(): JSX.Element {
       <br />
       <p>{JSON.stringify(state.membersParameters)}</p>
       <br />
-      <p>{JSON.stringify(state.userParameters)}</p>
+      <p>{JSON.stringify(state.userParameters)}</p> */}
     </GameField>
   )
 }
