@@ -25,13 +25,21 @@ const MembersBlock: React.FC = () => {
       store.dispatch(setNewMember(data))
     }
     socket.on(ADD_NEW_USER, newUserHandler)
+
+    return () => {
+      socket.off(ADD_NEW_USER, newUserHandler)
+    }
   }, [])
 
   useEffect(() => {
-    socket.on(DELETE_MEMBERS, async (e: any) => {
-      const data = await e
+    const handleMembers = (data: any) => {
       dispatch(setMembers(data))
-    })
+    }
+    socket.on(DELETE_MEMBERS, handleMembers)
+
+    return () => {
+      socket.off(DELETE_MEMBERS, handleMembers)
+    }
   }, [])
 
   return (

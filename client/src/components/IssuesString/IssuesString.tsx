@@ -8,7 +8,7 @@ const IssuesString: React.FC = () => {
 
   return (
     <div className="issues-string">
-      <p className="issues-string__text">Spring 23 planning (issues {limitString(issuesString, 30)})</p>
+      <p className="issues-string__text">Spring planning (issues: {limitString(issuesString, 30)})</p>
     </div>
   )
 }
