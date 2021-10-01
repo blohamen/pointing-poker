@@ -14,6 +14,8 @@ import Button from '../../components/Button/Button'
 import socket from '../../utils/socket'
 import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
 import {
+  CANCEL_GAME_CLIENT,
+  CANCEL_GAME_SERVER,
   ISSUES,
   JOIN_ROOM,
   KICK_MEMBER_FROM_LOBBY,
@@ -118,10 +120,19 @@ const SettingPage: React.FC = () => {
     socket.on(START_GAME_CLIENT, handleStartGame)
   }, [])
 
+  useEffect(() => {
+    const handlerCancelGame = () => {
+      history.push('./')
+      dispatch(setInitialUserState())
+      dispatch(setInitialMembersState())
+      dispatch(setYouAreKickFromRoom(''))
+    }
+    socket.once(CANCEL_GAME_CLIENT, handlerCancelGame)
+  }, [])
+
   return (
     <GameField>
-      {/* <IssuesString /> */}
-      <IssuesString issueValues="1, 2, 3" />
+      <IssuesString />
       <ScramMasterMemberBlock />
       <LinkToLobby linkLobby="testlink" />
       <div className="setting-page__btns-wrapper">
@@ -147,7 +158,14 @@ const SettingPage: React.FC = () => {
             socket.emit(START_GAME, roomId, true, settings)
           }}
         />
-        <Button value="Cancel game" size="small" theme="light" />
+        <Button
+          value="Cancel game"
+          size="small"
+          theme="light"
+          onSubmit={() => {
+            socket.emit(CANCEL_GAME_SERVER, roomId)
+          }}
+        />
       </div>
       <>
         {observerMemebers.length !== 0 ? <ObserverMemberBlock /> : ''}

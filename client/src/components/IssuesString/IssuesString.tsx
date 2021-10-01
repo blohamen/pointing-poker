@@ -1,14 +1,14 @@
+import { useAppSelector } from '../../store/redux'
 import limitString from '../../utils/limitString'
 import './issues-string.sass'
 
-// const IssuesString: React.FC = () => {
-const IssuesString: React.FC<{ issueValues: string }> = ({ issueValues }) => {
+const IssuesString: React.FC = () => {
+  const { issues } = useAppSelector((state) => state.issuesParameters)
+  const issuesString = issues.map((item) => item.title).join(',')
+
   return (
     <div className="issues-string">
-      <p className="issues-string__text">
-        {/* Spring 23 planning (issues {limitString('13, 533, 5623, 3252, 662, 313, 533, 5623, 3252, 6623', 20)}) */}
-        Spring 23 planning (issues {limitString(issueValues, 20)})
-      </p>
+      <p className="issues-string__text">Spring 23 planning (issues {limitString(issuesString, 30)})</p>
     </div>
   )
 }

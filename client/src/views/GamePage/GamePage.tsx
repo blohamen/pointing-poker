@@ -14,8 +14,12 @@ import { GET_GAME_SETTINGS, SET_GAME_SETTINGS } from '../../utils/socketActions'
 import './GamePage.sass'
 
 export default function GamePage(): JSX.Element {
-  const { roomId } = useAppSelector((state) => state.userParameters)
+  const { roomId, isAdmin, isPlayer } = useAppSelector((state) => state.userParameters)
+  const { issues } = useAppSelector((state) => state.issuesParameters)
+  const { currentCardSet } = useAppSelector((state) => state.gameSettingsParameters)
+
   const dispatch = useAppDispatch()
+  const state = store.getState()
 
   useEffect(() => {
     socket.emit(GET_GAME_SETTINGS, roomId)
@@ -25,10 +29,7 @@ export default function GamePage(): JSX.Element {
     socket.on(SET_GAME_SETTINGS, handlerGameSettings)
   }, [])
 
-  const state = store.getState()
-
-  const nameIssues = state.issuesParameters.issues.map((issue) => issue.title).join(',')
-  const issueCards = state.issuesParameters.issues.map((issue) => {
+  const issueCards = issues.map((issue) => {
     return (
       <li className="game__issues-card">
         <IssueCard mode="issueCard" issueName={issue.title} priority={issue.priority} issueId={issue.issueId} />
@@ -36,12 +37,18 @@ export default function GamePage(): JSX.Element {
     )
   })
 
+  const statisticCards = currentCardSet.map((cardValue) => {
+    return <GameCard mode="play" cardValue={cardValue} cardShirtURL="" storyPointShort="ST" finsishVoiting={false} />
+  })
+
+  const gameCards = currentCardSet.map((cardValue) => {
+    return <GameCard mode="play" cardValue={cardValue} cardShirtURL="" storyPointShort="ST" finsishVoiting={false} />
+  })
+
   // Admin components
-  const admin = state.userParameters.isAdmin
+  const timerInIssueBlock = isAdmin ? <p>time</p> : ''
 
-  const timerInIssueBlock = admin ? <p>time</p> : ''
-
-  const buttonsInIssueBlock = admin ? (
+  const buttonsInIssueBlock = isAdmin ? (
     <div className="game__issue-buttons">
       <Button value="Run Round" size="small" theme="dark" />
       <Button value="Reset Round" size="small" theme="dark" />
@@ -51,32 +58,27 @@ export default function GamePage(): JSX.Element {
     ''
   )
 
-  const statisticBlock = admin ? (
+  const statisticBlock = isAdmin ? (
     <div>
       <h2>Statistics</h2>
-      <GameCard mode="play" cardValue="10" cardShirtURL="" storyPointShort="ST" finsishVoiting={false} />
+      <div className="game__statistic-cards">{statisticCards}</div>
     </div>
   ) : (
     ''
   )
   // Admin components
 
-  // Player components
-  const player = state.userParameters.isPlayer
-  // Player components
-
   return (
     <GameField>
-      <IssuesString issueValues={nameIssues} />
-
+      <IssuesString />
       <div className="game__scram-block">
         <ScramMasterMemberBlock />
-        {admin ? <Button value="Start game" size="small" theme="light" /> : ''}
-        {player ? <Button value="Exit" size="small" theme="light" /> : ''}
+        {isAdmin ? <Button value="Start game" size="small" theme="light" /> : ''}
+        {isPlayer ? <Button value="Exit" size="small" theme="light" /> : ''}
       </div>
 
       <div className="game__issues-block">
-        <h2 className="game__issue-title">Issues:</h2>
+        {isAdmin ? <h2 className="game__issue-title">Issues:</h2> : ''}
         <div className="game__issues">
           <ul className="game__issues-cards">{issueCards}</ul>
           <div className="game__issue-timer-buttons">
@@ -86,8 +88,9 @@ export default function GamePage(): JSX.Element {
         </div>
       </div>
 
-      <div className="game-statistics">{statisticBlock}</div>
-
+      <div className="game__statistics">{statisticBlock}</div>
+      <h2>Game</h2>
+      <div className="game__game-cards">{gameCards}</div>
       <p>{JSON.stringify(state.appParameters)}</p>
       <br />
       <p>{JSON.stringify(state.gameSettingsParameters)}</p>
@@ -105,18 +108,18 @@ export default function GamePage(): JSX.Element {
   )
 }
 
-// statistics 
+// statistics
 // from redux
+// timer
 
 // start game
-// cards : 
-// admin  + 
+// cards :
+// admin  +
 // player  +
 // observer +
 
-
 // run round
-// cards : 
-// admin  + 
+// cards :
+// admin  +
 // player  +
 // observer -
