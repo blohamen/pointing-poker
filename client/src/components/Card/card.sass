@@ -60,7 +60,7 @@ $k-chat-card: 2
 
 // Chat card
 @mixin chat-card-large-text
-  font-size: calc(48px / #{$k-chat-card})
+  font-size: calc(40px / #{$k-chat-card})
   font-weight: 300
 @mixin chat-card-small-text
   font-size: calc(16px / #{$k-chat-card})
@@ -68,10 +68,11 @@ $k-chat-card: 2
 
 @mixin chat-card-width-height-margin
   margin: calc(5px / #{$k-chat-card})
-  width: calc(480px / #{$k-chat-card})
+  width: calc(350px / #{$k-chat-card})
   height: calc(120px / #{$k-chat-card})
 
 .chat-card
+  padding: 0
   @include chat-card-width-height-margin
 .chat-title
   @include chat-card-large-text
