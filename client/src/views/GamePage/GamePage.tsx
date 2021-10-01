@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import GameField from '../../components/GameField/GameField'
+import IssuesString from '../../components/IssuesString/IssuesString'
+import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
 import IGameSettings from '../../interfaces/IGameSettings'
 import { setGameSettings } from '../../store/gameSettingsReducer'
 import store, { useAppDispatch, useAppSelector } from '../../store/redux'
@@ -20,6 +22,8 @@ export default function GamePage(): JSX.Element {
   const state = store.getState()
   return (
     <GameField>
+      <IssuesString issueValues={'1, 2, 3'} />
+      <ScramMasterMemberBlock />
       <p>{JSON.stringify(state.appParameters)}</p>
       <br />
       <p>{JSON.stringify(state.gameSettingsParameters)}</p>

@@ -94,7 +94,8 @@ const LobbyPage: React.FC = () => {
 
   return (
     <GameField>
-      <IssuesString />
+      {/* <IssuesString /> */}
+      <IssuesString issueValues="1, 2, 3" />
       <ScramMasterMemberBlock />
       <div className="lobby-page__btn-wrapper">
         <Button value="Exit" size="small" theme="light" />

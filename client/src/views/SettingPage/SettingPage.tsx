@@ -120,7 +120,8 @@ const SettingPage: React.FC = () => {
 
   return (
     <GameField>
-      <IssuesString />
+      {/* <IssuesString /> */}
+      <IssuesString issueValues="1, 2, 3" />
       <ScramMasterMemberBlock />
       <LinkToLobby linkLobby="testlink" />
       <div className="setting-page__btns-wrapper">
