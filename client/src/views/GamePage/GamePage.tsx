@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import Button from '../../components/Button/Button'
+import GameCard from '../../components/GameCard'
 import GameField from '../../components/GameField/GameField'
+import IssueCard from '../../components/Issue-card'
 import IssuesString from '../../components/IssuesString/IssuesString'
 import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
 import IGameSettings from '../../interfaces/IGameSettings'
@@ -25,30 +27,49 @@ export default function GamePage(): JSX.Element {
   const state = store.getState()
 
   const nameIssues = state.issuesParameters.issues.map((issue) => issue.title).join(',')
-  const issueCards = 'issues'
+  const issueCards = state.issuesParameters.issues.map((issue) => {
+    return (
+      <li className="game__issues-card">
+        <IssueCard mode="issueCard" issueName={issue.title} priority={issue.priority} issueId={issue.issueId} />
+      </li>
+    )
+  })
+  const admin = state.userParameters.isAdmin
+
+  const buttonsInIssueBlock = admin ? (
+    <div className="game__issue-buttons">
+      <Button value="Run Round" size="small" theme="dark" />
+      <Button value="Reset Round" size="small" theme="dark" />
+      <Button value="Next ISSUE" size="small" theme="dark" />
+    </div>
+  ) : (
+    ''
+  )
+
+  const statisticBlock = admin ? <div>Statistics</div> : ''
 
   return (
     <GameField>
       <IssuesString issueValues={nameIssues} />
+
       <div className="game__scram-block">
         <ScramMasterMemberBlock />
-        <Button value="Start game" size="small" theme="light" />
+        {admin ? <Button value="Start game" size="small" theme="light" /> : ''}
       </div>
+
       <div className="game__issues-block">
         <h2 className="game__issue-title">Issues:</h2>
         <div className="game__issues">
-          <div className="game__issues-cards">{issueCards}</div>
+          <ul className="game__issues-cards">{issueCards}</ul>
           <div className="game__issue-timer-buttons">
-            <p>Timer</p>
-            <div className="game__issue-buttons">
-              <Button value="Run Round" size="small" theme="dark" />
-              <Button value="Reset Round" size="small" theme="dark" />
-              <Button value="Next ISSUE" size="small" theme="dark" />
-            </div>
+            <p>{admin ? 'timer' : ''}</p>
+            {buttonsInIssueBlock}
           </div>
         </div>
       </div>
 
+      <div className="game-statistics">{statisticBlock}</div>
+      <GameCard mode="setting" cardValue="10" cardShirtURL="" storyPointShort="ST" finsishVoiting />
       <p>{JSON.stringify(state.appParameters)}</p>
       <br />
       <p>{JSON.stringify(state.gameSettingsParameters)}</p>
