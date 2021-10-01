@@ -5,6 +5,7 @@ import GameField from '../../components/GameField/GameField'
 import IssueCard from '../../components/Issue-card'
 import IssuesString from '../../components/IssuesString/IssuesString'
 import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
+import Timer from '../../components/Timer/Timer'
 import IGameSettings from '../../interfaces/IGameSettings'
 import { setGameSettings } from '../../store/gameSettingsReducer'
 import store, { useAppDispatch, useAppSelector } from '../../store/redux'
@@ -46,7 +47,13 @@ export default function GamePage(): JSX.Element {
   })
 
   // Admin components
-  const timerInIssueBlock = isAdmin ? <p>time</p> : ''
+  const timerInIssueBlock = isAdmin ? (
+    <div>
+      <Timer mode="setting" />
+    </div>
+  ) : (
+    ''
+  )
 
   const buttonsInIssueBlock = isAdmin ? (
     <div className="game__issue-buttons">
