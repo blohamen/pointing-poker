@@ -21,7 +21,6 @@ const ScoreSidebar = () => {
         subtitle={item.jobPossition}
         photoURL={item.image}
         key={item.userId}
-        isCancel
         isChatCard
         socketId={item.socketId === undefined ? '' : item.socketId}
       />
