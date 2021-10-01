@@ -17,7 +17,7 @@ import './GamePage.sass'
 export default function GamePage(): JSX.Element {
   const { roomId, isAdmin, isPlayer } = useAppSelector((state) => state.userParameters)
   const { issues } = useAppSelector((state) => state.issuesParameters)
-  const { currentCardSet } = useAppSelector((state) => state.gameSettingsParameters)
+  const { isTimerNeeded, currentCardSet } = useAppSelector((state) => state.gameSettingsParameters)
 
   const dispatch = useAppDispatch()
   const state = store.getState()
@@ -46,15 +46,15 @@ export default function GamePage(): JSX.Element {
     return <GameCard mode="play" cardValue={cardValue} cardShirtURL="" storyPointShort="ST" finsishVoiting={false} />
   })
 
-  // Admin components
-  const timerInIssueBlock = isAdmin ? (
-    <div>
+  const timerInIssueBlock = isTimerNeeded ? (
+    <div className="game__timer">
       <Timer mode="setting" />
     </div>
   ) : (
     ''
   )
 
+  // Admin components
   const buttonsInIssueBlock = isAdmin ? (
     <div className="game__issue-buttons">
       <Button value="Run Round" size="small" theme="dark" />
