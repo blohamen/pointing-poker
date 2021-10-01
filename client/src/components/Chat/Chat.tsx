@@ -3,13 +3,13 @@ import IChat from '../../interfaces/IChat'
 import { setChatMessages } from '../../store/chatReducer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
-import { CHAT_MESSAGES, GET_CHAT_MESSAGES, NEW_CHAT_MESSAGE } from '../../utils/socketActions'
+import { CHAT_MESSAGES, NEW_CHAT_MESSAGE } from '../../utils/socketActions'
 import MemberCard from '../Member-card'
 import './chat.sass'
 
 const Chat = () => {
   const dispatch = useAppDispatch()
-  const { roomId, firstName, lastName, jobPossition, image } = useAppSelector((state) => state.userParameters)
+  const { roomId, firstName, lastName, jobPossition, image, userId } = useAppSelector((state) => state.userParameters)
   const { chatMessages } = useAppSelector((state) => state.chatParameters)
   const [message, setMessage] = useState('')
 
@@ -18,9 +18,7 @@ const Chat = () => {
       dispatch(setChatMessages(data))
     })
   }, [])
-
   useEffect(() => {
-    socket.emit(GET_CHAT_MESSAGES, message, roomId, firstName, lastName, jobPossition, image)
     const handlerChatMessage = (data: IChat[]) => {
       dispatch(setChatMessages(data))
     }
@@ -29,7 +27,7 @@ const Chat = () => {
 
   const sendMessage = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    socket.emit('sendMessage', message, roomId, firstName, lastName, jobPossition, image)
+    socket.emit('sendMessage', message, roomId, firstName, lastName, jobPossition, image, userId)
     setMessage('')
   }
 
@@ -38,7 +36,8 @@ const Chat = () => {
       <div className="message__text"> {item.userText}</div>
       <div className="message__user">
         <MemberCard
-          socketId="123"
+          socketId={item.messageId}
+          isCurrentPlayer={userId === item.userId}
           title={`${item.userName} ${item.userLastName}`}
           subtitle={item.userJobPosition}
           photoURL={item.userImageURL}

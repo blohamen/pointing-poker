@@ -16,6 +16,7 @@ import { setStartGame } from '../../store/reducers'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
 import {
+  GET_CHAT_MESSAGES,
   JOIN_ROOM,
   KICK_MEMBER_FROM_LOBBY,
   KICK_ME_FROM_ROOM,
@@ -41,6 +42,7 @@ const LobbyPage: React.FC = () => {
     dispatch(setSocketId(socket.id))
     socket.emit(JOIN_ROOM, roomId, userId)
     socket.emit(MEMBERS, roomId)
+    socket.emit(GET_CHAT_MESSAGES, roomId)
   }, [])
 
   useEffect(() => {
