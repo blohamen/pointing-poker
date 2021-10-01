@@ -54,12 +54,16 @@ export default function GamePage(): JSX.Element {
   const statisticBlock = admin ? (
     <div>
       <h2>Statistics</h2>
-      <GameCard mode="setting" cardValue="10" cardShirtURL="" storyPointShort="ST" finsishVoiting />
+      <GameCard mode="play" cardValue="10" cardShirtURL="" storyPointShort="ST" finsishVoiting={false} />
     </div>
   ) : (
     ''
   )
   // Admin components
+
+  // Player components
+  const player = state.userParameters.isPlayer
+  // Player components
 
   return (
     <GameField>
@@ -68,6 +72,7 @@ export default function GamePage(): JSX.Element {
       <div className="game__scram-block">
         <ScramMasterMemberBlock />
         {admin ? <Button value="Start game" size="small" theme="light" /> : ''}
+        {player ? <Button value="Exit" size="small" theme="light" /> : ''}
       </div>
 
       <div className="game__issues-block">
