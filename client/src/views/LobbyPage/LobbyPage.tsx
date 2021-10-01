@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import Button from '../../components/Button/Button'
 import GameField from '../../components/GameField/GameField'
@@ -16,6 +16,10 @@ import { setStartGame } from '../../store/reducers'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
 import {
+  CANCEL_GAME_CLIENT,
+  EXIT_GAME_CLIENT,
+  EXIT_GAME_SERVER,
+  GET_CHAT_MESSAGES,
   JOIN_ROOM,
   KICK_MEMBER_FROM_LOBBY,
   KICK_ME_FROM_ROOM,
@@ -28,6 +32,12 @@ import {
 import './lobby-page.sass'
 
 const LobbyPage: React.FC = () => {
+  const exitGame = useCallback(() => {
+    history.push('./')
+    dispatch(setInitialUserState())
+    dispatch(setInitialMembersState())
+    dispatch(setYouAreKickFromRoom(''))
+  }, [])
   const { isKick, kickMember, kickMemberSocketId, openModalKickPlayer } = useAppSelector(
     (state) => state.kickMemberParameters
   )
@@ -41,6 +51,15 @@ const LobbyPage: React.FC = () => {
     dispatch(setSocketId(socket.id))
     socket.emit(JOIN_ROOM, roomId, userId)
     socket.emit(MEMBERS, roomId)
+    socket.emit(GET_CHAT_MESSAGES, roomId)
+  }, [])
+
+  useEffect(() => {
+    const handlerCancelGameClient = () => {
+      socket.emit(KICK_ME_FROM_ROOM, roomId)
+      exitGame()
+    }
+    socket.once(CANCEL_GAME_CLIENT, handlerCancelGameClient)
   }, [])
 
   useEffect(() => {
@@ -76,10 +95,7 @@ const LobbyPage: React.FC = () => {
     if (youAreKickFromRoom !== '' && socketId !== '') {
       if (youAreKickFromRoom === socketId) {
         socket.emit(KICK_ME_FROM_ROOM, roomId)
-        history.push('./')
-        dispatch(setInitialUserState())
-        dispatch(setInitialMembersState())
-        dispatch(setYouAreKickFromRoom(''))
+        exitGame()
       }
     }
   }, [youAreKickFromRoom, socketId])
@@ -92,12 +108,25 @@ const LobbyPage: React.FC = () => {
     socket.on(START_GAME_CLIENT, handleStartGame)
   }, [])
 
+  useEffect(() => {
+    socket.on(EXIT_GAME_CLIENT, (data: { exit: boolean; socketId: string }) => {
+      if (data.exit && data.socketId === socketId) exitGame()
+    })
+  }, [])
+
   return (
     <GameField>
       <IssuesString />
       <ScramMasterMemberBlock />
       <div className="lobby-page__btn-wrapper">
-        <Button value="Exit" size="small" theme="light" />
+        <Button
+          value="Exit"
+          size="small"
+          theme="light"
+          onSubmit={() => {
+            socket.emit(EXIT_GAME_SERVER, roomId)
+          }}
+        />
       </div>
       {observerMemebers.length !== 0 ? <ObserverMemberBlock /> : ''}
       <MembersBlock />
