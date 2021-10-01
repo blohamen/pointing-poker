@@ -3,11 +3,10 @@ $margin-10px: 10px
     margin-top: 40px
     padding-left: 30px
     min-width: 500px
-
-// .header-scram
-//     margin-bottom: $margin-10px
-//     font-size: 12px
-//     color: rgba(0, 0, 0, 0.6)
+    &__btn-wrapper
+        position: relative
+        width: 187px
+        height: 47px
 
 .header-lobby
     margin-top: $margin-10px
@@ -33,7 +32,6 @@ $margin-10px: 10px
     justify-content: space-between
 
 .tooltiptext
-    // visibility: hidden
     width: 140px
     background-color: #555
     color: #fff
@@ -58,12 +56,5 @@ $margin-10px: 10px
         border-style: solid
         border-color: #555 transparent transparent transparent
 
-#link-form
-    &:nth-child(1)
-        background-color: red
-
-// .button__dark:hover
-//     width: 500px
-    // .tooltiptext
-    //     visibility: visible
-    //     opacity: 1
+.scram__btn-wrapper:hover .tooltiptext
+    opacity: 1
