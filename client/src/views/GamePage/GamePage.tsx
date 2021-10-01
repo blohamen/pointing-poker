@@ -88,7 +88,7 @@ export default function GamePage(): JSX.Element {
 
       <div className="game-statistics">{statisticBlock}</div>
 
-      {/* <p>{JSON.stringify(state.appParameters)}</p>
+      <p>{JSON.stringify(state.appParameters)}</p>
       <br />
       <p>{JSON.stringify(state.gameSettingsParameters)}</p>
       <br />
@@ -100,7 +100,23 @@ export default function GamePage(): JSX.Element {
       <br />
       <p>{JSON.stringify(state.membersParameters)}</p>
       <br />
-      <p>{JSON.stringify(state.userParameters)}</p> */}
+      <p>{JSON.stringify(state.userParameters)}</p>
     </GameField>
   )
 }
+
+// statistics 
+// from redux
+
+// start game
+// cards : 
+// admin  + 
+// player  +
+// observer +
+
+
+// run round
+// cards : 
+// admin  + 
+// player  +
+// observer -
