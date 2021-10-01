@@ -3,7 +3,7 @@ import IChat from '../../interfaces/IChat'
 import { setChatMessages } from '../../store/chatReducer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
-import { NEW_CHAT_MESSAGE } from '../../utils/socketActions'
+import { CHAT_MESSAGES, GET_CHAT_MESSAGES, NEW_CHAT_MESSAGE } from '../../utils/socketActions'
 import MemberCard from '../Member-card'
 import './chat.sass'
 
@@ -14,6 +14,13 @@ const Chat = () => {
   const [message, setMessage] = useState('')
 
   useEffect(() => {
+    socket.once(CHAT_MESSAGES, (data: IChat[]) => {
+      dispatch(setChatMessages(data))
+    })
+  }, [])
+
+  useEffect(() => {
+    socket.emit(GET_CHAT_MESSAGES, message, roomId, firstName, lastName, jobPossition, image)
     const handlerChatMessage = (data: IChat[]) => {
       dispatch(setChatMessages(data))
     }

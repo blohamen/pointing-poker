@@ -4,6 +4,7 @@ import IUser from '../../interfaces/IUser'
 import { setMembers, setNewMember } from '../../store/memberRreducer'
 import store, { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
+import { ADD_NEW_USER, DELETE_MEMBERS, SEND_MEMBERS_TO_CLIENT } from '../../utils/socketActions'
 import MemberCard from '../Member-card'
 import './members-block.sass'
 
@@ -13,7 +14,7 @@ const MembersBlock: React.FC = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    socket.once('sendMembersToClient', async (e: any) => {
+    socket.once(SEND_MEMBERS_TO_CLIENT, async (e: any) => {
       const data = await e
       dispatch(setMembers(data))
     })
@@ -23,7 +24,14 @@ const MembersBlock: React.FC = () => {
     const newUserHandler = (data: IAddNewUserData) => {
       store.dispatch(setNewMember(data))
     }
-    socket.on('addNewUser', newUserHandler)
+    socket.on(ADD_NEW_USER, newUserHandler)
+  }, [])
+
+  useEffect(() => {
+    socket.on(DELETE_MEMBERS, async (e: any) => {
+      const data = await e
+      dispatch(setMembers(data))
+    })
   }, [])
 
   return (
