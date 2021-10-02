@@ -32,7 +32,7 @@ export default function GamePage(): JSX.Element {
 
   const issueCards = issues.map((issue) => {
     return (
-      <li className="game__issues-card">
+      <li key={issue.issueId} className="game__issues-card">
         <IssueCard mode="issueCard" issueName={issue.title} priority={issue.priority} issueId={issue.issueId} />
       </li>
     )
@@ -48,7 +48,7 @@ export default function GamePage(): JSX.Element {
 
   const timerInIssueBlock = isTimerNeeded ? (
     <div className="game__timer">
-      <Timer mode="setting" />
+      <Timer mode="game" />
     </div>
   ) : (
     ''
@@ -114,19 +114,3 @@ export default function GamePage(): JSX.Element {
     </GameField>
   )
 }
-
-// statistics
-// from redux
-// timer
-
-// start game
-// cards :
-// admin  +
-// player  +
-// observer +
-
-// run round
-// cards :
-// admin  +
-// player  +
-// observer -
