@@ -1,4 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import classNames from 'classnames'
+
 import Button from '../../components/Button/Button'
 import GameCard from '../../components/GameCard'
 import GameField from '../../components/GameField/GameField'
@@ -20,6 +22,11 @@ export default function GamePage(): JSX.Element {
   const { isTimerNeeded, currentCardSet, scoreTypeShort, currentShirtCards } = useAppSelector(
     (state) => state.gameSettingsParameters
   )
+  const [currentIssue, setCurrentIssue] = useState<number>(1)
+
+  const handleNextIssue = () => {
+    setCurrentIssue(currentIssue + 1)
+  }
 
   const dispatch = useAppDispatch()
 
@@ -34,9 +41,16 @@ export default function GamePage(): JSX.Element {
     }
   }, [])
 
-  const issueCards = issues.map((issue) => {
+  // const currentIssueClassname = classNames('game__issues-card',
+  //   'game__issues-card': currentIssue
+  // )
+  const issueCards = issues.map((issue, index) => {
     return (
-      <li key={issue.issueId} className="game__issues-card">
+      // <li key={issue.issueId} className="game__issues-card" className={this.props.active === currentIssue ? 'active' : ''}>
+      <li
+        key={issue.issueId}
+        className={classNames('game__issues-card', { 'game__issues-card-active': currentIssue === index })}
+      >
         <IssueCard mode="issueCard" issueName={issue.title} priority={issue.priority} issueId={issue.issueId} />
       </li>
     )
@@ -80,6 +94,9 @@ export default function GamePage(): JSX.Element {
       <Button value="Run Round" size="small" theme="dark" />
       <Button value="Reset Round" size="small" theme="dark" />
       <Button value="Next ISSUE" size="small" theme="dark" />
+      <button type="button" onClick={handleNextIssue}>
+        Next Issue
+      </button>
     </div>
   ) : (
     ''
