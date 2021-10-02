@@ -7,9 +7,11 @@ import MembersBlock from '../../components/MembersBlock/MembersBlock'
 import ModalKickPlayer from '../../components/ModalKickPlayer/ModalKickPlayer'
 import ObserverMemberBlock from '../../components/ObserverMemberBlock/ObserverMemberBlock'
 import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
+import IIssue from '../../interfaces/IIssue'
 import IKickMeberFromLobby from '../../interfaces/IKickMeberFromLobby'
 import IOpenModalKickPlayer from '../../interfaces/IOpenModalKickPlayer'
 import { setInitialUserState, setSocketId } from '../../store/authReducer'
+import { setIssues } from '../../store/issuesReducer'
 import { setIsKick, setKickMember, setKickMemberSocketId, setYouAreKickFromRoom } from '../../store/kickMemberReducer'
 import { setInitialMembersState, setMembers } from '../../store/memberRreducer'
 import { setStartGame } from '../../store/reducers'
@@ -20,6 +22,7 @@ import {
   EXIT_GAME_CLIENT,
   EXIT_GAME_SERVER,
   GET_CHAT_MESSAGES,
+  ISSUES,
   JOIN_ROOM,
   KICK_MEMBER_FROM_LOBBY,
   KICK_ME_FROM_ROOM,
@@ -112,6 +115,13 @@ const LobbyPage: React.FC = () => {
     socket.on(EXIT_GAME_CLIENT, (data: { exit: boolean; socketId: string }) => {
       if (data.exit && data.socketId === socketId) exitGame()
     })
+  }, [])
+
+  useEffect(() => {
+    const handlerIssues = (data: { issues: IIssue[] }) => {
+      dispatch(setIssues(data.issues))
+    }
+    socket.on(ISSUES, handlerIssues)
   }, [])
 
   return (

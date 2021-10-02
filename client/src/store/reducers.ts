@@ -20,6 +20,9 @@ const appParameters = createSlice({
     setExitGame(state, action: PayloadAction<boolean>) {
       state.exitGame = action.payload
     },
+    setFinishVoiting(state, action: PayloadAction<boolean>) {
+      state.finishVoiting = action.payload
+    },
     setInitialStateAppParameters(state) {
       state.modalConnectLobby = initialStateAppParameters.modalConnectLobby
       state.finishVoiting = initialStateAppParameters.finishVoiting
@@ -29,7 +32,8 @@ const appParameters = createSlice({
   },
 })
 
-export const { modalConnectToLobby, setStartGame, setExitGame, setInitialStateAppParameters } = appParameters.actions
+export const { modalConnectToLobby, setStartGame, setExitGame, setInitialStateAppParameters, setFinishVoiting } =
+  appParameters.actions
 
 const appParametersReducer = appParameters.reducer
 export default appParametersReducer

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 
+import { v4 as uuidv4 } from 'uuid'
 import Button from '../../components/Button/Button'
 import GameCard from '../../components/GameCard'
 import GameField from '../../components/GameField/GameField'
@@ -22,8 +23,8 @@ export default function GamePage(): JSX.Element {
   const { isTimerNeeded, currentCardSet, scoreTypeShort, currentShirtCards } = useAppSelector(
     (state) => state.gameSettingsParameters
   )
+  const { finishVoiting } = useAppSelector((state) => state.appParameters)
   const [currentIssue, setCurrentIssue] = useState<number>(0)
-
   const handleNextIssue = () => {
     setCurrentIssue(currentIssue + 1)
   }
@@ -52,26 +53,82 @@ export default function GamePage(): JSX.Element {
     )
   })
 
-  const statisticCards = currentCardSet.map((cardValue) => {
+  const statisticCards = currentCardSet.map((item) => {
+    if (item === 'unknow') {
+      return (
+        <GameCard
+          mode="play"
+          cardType="unknow"
+          cardValue={item}
+          cardShirtURL={currentShirtCards}
+          storyPointShort={scoreTypeShort}
+          finsishVoiting={finishVoiting}
+          key={uuidv4()}
+        />
+      )
+    }
+    if (item === 'coffee break') {
+      return (
+        <GameCard
+          mode="play"
+          cardType="coffee break"
+          cardValue={item}
+          cardShirtURL={currentShirtCards}
+          storyPointShort={scoreTypeShort}
+          finsishVoiting={finishVoiting}
+          key={uuidv4()}
+        />
+      )
+    }
     return (
       <GameCard
         mode="play"
-        cardValue={cardValue}
+        cardType="value"
+        cardValue={item}
         cardShirtURL={currentShirtCards}
         storyPointShort={scoreTypeShort}
-        finsishVoiting={false}
+        finsishVoiting={finishVoiting}
+        key={uuidv4()}
       />
     )
   })
 
   const gameCards = currentCardSet.map((cardValue) => {
+    if (cardValue === 'unknow') {
+      return (
+        <GameCard
+          mode="playerСhoice"
+          cardType="unknow"
+          cardValue={cardValue}
+          cardShirtURL={currentShirtCards}
+          storyPointShort={scoreTypeShort}
+          finsishVoiting={finishVoiting}
+          key={uuidv4()}
+        />
+      )
+    }
+    if (cardValue === 'coffee break') {
+      return (
+        <GameCard
+          mode="playerСhoice"
+          cardType="coffee break"
+          cardValue={cardValue}
+          cardShirtURL={currentShirtCards}
+          storyPointShort={scoreTypeShort}
+          finsishVoiting={finishVoiting}
+          key={uuidv4()}
+        />
+      )
+    }
     return (
       <GameCard
         mode="playerСhoice"
+        cardType="value"
         cardValue={cardValue}
         cardShirtURL={currentShirtCards}
         storyPointShort={scoreTypeShort}
-        finsishVoiting={false}
+        finsishVoiting={finishVoiting}
+        key={uuidv4()}
       />
     )
   })
