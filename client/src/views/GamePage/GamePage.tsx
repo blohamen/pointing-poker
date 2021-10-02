@@ -17,7 +17,9 @@ import './GamePage.sass'
 export default function GamePage(): JSX.Element {
   const { roomId, isAdmin, isPlayer } = useAppSelector((state) => state.userParameters)
   const { issues } = useAppSelector((state) => state.issuesParameters)
-  const { isTimerNeeded, currentCardSet } = useAppSelector((state) => state.gameSettingsParameters)
+  const { isTimerNeeded, currentCardSet, scoreTypeShort, currentShirtCards } = useAppSelector(
+    (state) => state.gameSettingsParameters
+  )
 
   const dispatch = useAppDispatch()
 
@@ -27,6 +29,9 @@ export default function GamePage(): JSX.Element {
       dispatch(setGameSettings(data))
     }
     socket.on(SET_GAME_SETTINGS, handlerGameSettings)
+    return () => {
+      socket.off(SET_GAME_SETTINGS, handlerGameSettings)
+    }
   }, [])
 
   const issueCards = issues.map((issue) => {
@@ -38,11 +43,27 @@ export default function GamePage(): JSX.Element {
   })
 
   const statisticCards = currentCardSet.map((cardValue) => {
-    return <GameCard mode="play" cardValue={cardValue} cardShirtURL="" storyPointShort="ST" finsishVoiting={false} />
+    return (
+      <GameCard
+        mode="setting"
+        cardValue={cardValue}
+        cardShirtURL={currentShirtCards}
+        storyPointShort={scoreTypeShort}
+        finsishVoiting={false}
+      />
+    )
   })
 
   const gameCards = currentCardSet.map((cardValue) => {
-    return <GameCard mode="play" cardValue={cardValue} cardShirtURL="" storyPointShort="ST" finsishVoiting={false} />
+    return (
+      <GameCard
+        mode="play"
+        cardValue={cardValue}
+        cardShirtURL={currentShirtCards}
+        storyPointShort={scoreTypeShort}
+        finsishVoiting={false}
+      />
+    )
   })
 
   const timerInIssueBlock = isTimerNeeded ? (
