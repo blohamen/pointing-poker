@@ -22,7 +22,7 @@ export default function GamePage(): JSX.Element {
   const { isTimerNeeded, currentCardSet, scoreTypeShort, currentShirtCards } = useAppSelector(
     (state) => state.gameSettingsParameters
   )
-  const [currentIssue, setCurrentIssue] = useState<number>(1)
+  const [currentIssue, setCurrentIssue] = useState<number>(0)
 
   const handleNextIssue = () => {
     setCurrentIssue(currentIssue + 1)
@@ -59,7 +59,7 @@ export default function GamePage(): JSX.Element {
   const statisticCards = currentCardSet.map((cardValue) => {
     return (
       <GameCard
-        mode="setting"
+        mode="play"
         cardValue={cardValue}
         cardShirtURL={currentShirtCards}
         storyPointShort={scoreTypeShort}
