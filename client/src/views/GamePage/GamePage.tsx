@@ -8,7 +8,7 @@ import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/Scra
 import Timer from '../../components/Timer/Timer'
 import IGameSettings from '../../interfaces/IGameSettings'
 import { setGameSettings } from '../../store/gameSettingsReducer'
-import store, { useAppDispatch, useAppSelector } from '../../store/redux'
+import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
 import { GET_GAME_SETTINGS, SET_GAME_SETTINGS } from '../../utils/socketActions'
 
@@ -20,7 +20,6 @@ export default function GamePage(): JSX.Element {
   const { isTimerNeeded, currentCardSet } = useAppSelector((state) => state.gameSettingsParameters)
 
   const dispatch = useAppDispatch()
-  const state = store.getState()
 
   useEffect(() => {
     socket.emit(GET_GAME_SETTINGS, roomId)
@@ -96,21 +95,9 @@ export default function GamePage(): JSX.Element {
       </div>
 
       <div className="game__statistics">{statisticBlock}</div>
+
       <h2>Game</h2>
       <div className="game__game-cards">{gameCards}</div>
-      <p>{JSON.stringify(state.appParameters)}</p>
-      <br />
-      <p>{JSON.stringify(state.gameSettingsParameters)}</p>
-      <br />
-      <p>{JSON.stringify(state.chatParameters)}</p>
-      <br />
-      <p>{JSON.stringify(state.issuesParameters)}</p>
-      <br />
-      <p>{JSON.stringify(state.kickMemberParameters)}</p>
-      <br />
-      <p>{JSON.stringify(state.membersParameters)}</p>
-      <br />
-      <p>{JSON.stringify(state.userParameters)}</p>
     </GameField>
   )
 }
