@@ -20,7 +20,7 @@ import './GamePage.sass'
 export default function GamePage(): JSX.Element {
   const { roomId, isAdmin, isPlayer } = useAppSelector((state) => state.userParameters)
   const { issues } = useAppSelector((state) => state.issuesParameters)
-  const { isTimerNeeded, currentCardSet, scoreTypeShort, currentShirtCards } = useAppSelector(
+  const { isTimerNeeded, currentCardSet, scoreTypeShort, currentShirtCards, masterAsPlayer } = useAppSelector(
     (state) => state.gameSettingsParameters
   )
   const { finishVoiting } = useAppSelector((state) => state.appParameters)
@@ -187,8 +187,9 @@ export default function GamePage(): JSX.Element {
 
       <div className="game__statistics">{statisticBlock}</div>
 
-      <h2>Game</h2>
-      <div className="game__game-cards">{gameCards}</div>
+      <h2>Game: </h2>
+      <div className="game__game-cards">{isPlayer ? gameCards : ''}</div>
+      {isAdmin ? <div className="game__game-cards">{masterAsPlayer ? gameCards : 'Master is not in game'}</div> : ''}
     </GameField>
   )
 }
