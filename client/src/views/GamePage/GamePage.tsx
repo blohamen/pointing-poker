@@ -67,7 +67,7 @@ export default function GamePage(): JSX.Element {
   const gameCards = currentCardSet.map((cardValue) => {
     return (
       <GameCard
-        mode="play"
+        mode="playerСhoice"
         cardValue={cardValue}
         cardShirtURL={currentShirtCards}
         storyPointShort={scoreTypeShort}
