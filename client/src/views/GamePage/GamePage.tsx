@@ -48,7 +48,7 @@ export default function GamePage(): JSX.Element {
         key={issue.issueId}
         className={classNames('game__issues-card', { 'game__issues-card-active': currentIssue === index })}
       >
-        <IssueCard mode="issueCard" issueName={issue.title} priority={issue.priority} issueId={issue.issueId} />
+        <IssueCard mode="game-issue-card" issueName={issue.title} priority={issue.priority} issueId={issue.issueId} />
       </li>
     )
   })
