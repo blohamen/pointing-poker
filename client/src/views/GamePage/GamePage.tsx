@@ -41,12 +41,8 @@ export default function GamePage(): JSX.Element {
     }
   }, [])
 
-  // const currentIssueClassname = classNames('game__issues-card',
-  //   'game__issues-card': currentIssue
-  // )
   const issueCards = issues.map((issue, index) => {
     return (
-      // <li key={issue.issueId} className="game__issues-card" className={this.props.active === currentIssue ? 'active' : ''}>
       <li
         key={issue.issueId}
         className={classNames('game__issues-card', { 'game__issues-card-active': currentIssue === index })}
