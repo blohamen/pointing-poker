@@ -41,6 +41,7 @@ const LobbyPage: React.FC = () => {
     dispatch(setInitialMembersState())
     dispatch(setYouAreKickFromRoom(''))
   }, [])
+
   const { isKick, kickMember, kickMemberSocketId, openModalKickPlayer } = useAppSelector(
     (state) => state.kickMemberParameters
   )
@@ -84,6 +85,10 @@ const LobbyPage: React.FC = () => {
       dispatch(setKickMemberSocketId(data.data.kickMemberSocketId))
     }
     socket.on(MODAL_KICK_PLAYER_CLIENT, handlerOpenModalKickPlayer)
+
+    return () => {
+      socket.off(MODAL_KICK_PLAYER_CLIENT, handlerOpenModalKickPlayer)
+    }
   }, [])
 
   useEffect(() => {
@@ -92,6 +97,10 @@ const LobbyPage: React.FC = () => {
       dispatch(setMembers({ members: data.members }))
     }
     socket.on(KICK_MEMBER_FROM_LOBBY, handlerKickMemberFromLobby)
+
+    return () => {
+      socket.off(KICK_MEMBER_FROM_LOBBY, handlerKickMemberFromLobby)
+    }
   }, [])
 
   useEffect(() => {
@@ -109,12 +118,21 @@ const LobbyPage: React.FC = () => {
       if (data) history.push('/game')
     }
     socket.on(START_GAME_CLIENT, handleStartGame)
+
+    return () => {
+      socket.off(START_GAME_CLIENT, handleStartGame)
+    }
   }, [])
 
   useEffect(() => {
-    socket.on(EXIT_GAME_CLIENT, (data: { exit: boolean; socketId: string }) => {
+    const handleEitGameClient = (data: { exit: boolean; socketId: string }) => {
       if (data.exit && data.socketId === socketId) exitGame()
-    })
+    }
+    socket.on(EXIT_GAME_CLIENT, handleEitGameClient)
+
+    return () => {
+      socket.off(EXIT_GAME_CLIENT, handleEitGameClient)
+    }
   }, [])
 
   useEffect(() => {

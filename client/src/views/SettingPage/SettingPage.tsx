@@ -82,6 +82,10 @@ const SettingPage: React.FC = () => {
       dispatch(setMembers({ members: data.members }))
     }
     socket.on(KICK_MEMBER_FROM_LOBBY, handlerKickMemberFromLobby)
+
+    return () => {
+      socket.off(KICK_MEMBER_FROM_LOBBY, handlerKickMemberFromLobby)
+    }
   }, [])
 
   useEffect(() => {
@@ -103,6 +107,10 @@ const SettingPage: React.FC = () => {
       dispatch(setKickMemberSocketId(data.data.kickMemberSocketId))
     }
     socket.on(MODAL_KICK_PLAYER_CLIENT, handlerOpenModalKickPlayer)
+
+    return () => {
+      socket.off(MODAL_KICK_PLAYER_CLIENT, handlerOpenModalKickPlayer)
+    }
   }, [])
 
   useEffect(() => {
@@ -110,6 +118,9 @@ const SettingPage: React.FC = () => {
       dispatch(setIssues(data.issues))
     }
     socket.on(ISSUES, handlerIssues)
+    return () => {
+      socket.off(ISSUES, handlerIssues)
+    }
   }, [])
 
   useEffect(() => {
@@ -118,6 +129,10 @@ const SettingPage: React.FC = () => {
       if (data) history.push('/game')
     }
     socket.on(START_GAME_CLIENT, handleStartGame)
+
+    return () => {
+      socket.off(START_GAME_CLIENT, handleStartGame)
+    }
   }, [])
 
   useEffect(() => {
