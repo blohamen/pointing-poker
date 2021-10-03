@@ -34,7 +34,7 @@ const Delete = ({ onDelete }: IDelete) => {
 }
 
 interface IIssueCard {
-  mode: 'issueCard' | 'addNewIssue'
+  mode: 'issueCard' | 'addNewIssue' | 'game-issue-card'
   issueName: string
   priority: string
   issueId: string
@@ -70,6 +70,18 @@ export default function IssueCard({ issueName, priority, issueId, mode }: IIssue
       </div>
     )
   }
+
+  if (mode === 'game-issue-card') {
+    return (
+      <div className="issue-card">
+        <div className="issue-card__text-field-wrapper">
+          <p className="issue-card__title">{issueName}</p>
+          <p className="issue-card__subtitle">{priority}</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       className="issue-card add-issue-card"
