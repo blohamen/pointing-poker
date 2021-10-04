@@ -26,8 +26,13 @@ export default function GamePage(): JSX.Element {
   const { finishVoiting } = useAppSelector((state) => state.appParameters)
   const [currentIssue, setCurrentIssue] = useState<number>(0)
   const handleNextIssue = () => {
-    setCurrentIssue(currentIssue + 1)
+    if (currentIssue < issues.length - 1) {
+      setCurrentIssue(currentIssue + 1)
+    }
+    setRunRound(false)
   }
+  const [roundRun, setRunRound] = useState<boolean>(false)
+  const adminIsNotInGame = <h2 className="game__admin-not-in-game">Admin is not in game</h2>
 
   const dispatch = useAppDispatch()
 
@@ -141,15 +146,23 @@ export default function GamePage(): JSX.Element {
     ''
   )
 
+  const round = (
+    <>
+      <div className="game__game-cards">{isPlayer ? gameCards : ''}</div>
+      {isAdmin ? <div className="game__game-cards">{masterAsPlayer ? gameCards : adminIsNotInGame}</div> : ''}
+    </>
+  )
+
+  const handleRunRound = () => {
+    setRunRound(true)
+  }
+
   // Admin components
   const buttonsInIssueBlock = isAdmin ? (
     <div className="game__issue-buttons">
-      <Button value="Run Round" size="small" theme="dark" />
+      <Button value="Run Round" size="small" theme="dark" onSubmit={handleRunRound} />
       <Button value="Reset Round" size="small" theme="dark" />
-      <Button value="Next ISSUE" size="small" theme="dark" />
-      <button type="button" onClick={handleNextIssue}>
-        Next Issue
-      </button>
+      <Button value="Next ISSUE" size="small" theme="dark" onSubmit={handleNextIssue} />
     </div>
   ) : (
     ''
@@ -170,7 +183,7 @@ export default function GamePage(): JSX.Element {
       <IssuesString />
       <div className="game__scram-block">
         <ScramMasterMemberBlock />
-        {isAdmin ? <Button value="Start game" size="small" theme="light" /> : ''}
+        {isAdmin ? <Button value="Stop game" size="small" theme="light" /> : ''}
         {isPlayer ? <Button value="Exit" size="small" theme="light" /> : ''}
       </div>
 
@@ -188,8 +201,7 @@ export default function GamePage(): JSX.Element {
       <div className="game__statistics">{statisticBlock}</div>
 
       <h2>Game: </h2>
-      <div className="game__game-cards">{isPlayer ? gameCards : ''}</div>
-      {isAdmin ? <div className="game__game-cards">{masterAsPlayer ? gameCards : 'Master is not in game'}</div> : ''}
+      {roundRun ? round : ''}
     </GameField>
   )
 }
