@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import classNames from 'classnames'
+import { useHistory } from 'react-router'
 
 import { v4 as uuidv4 } from 'uuid'
 import Button from '../../components/Button/Button'
@@ -10,10 +11,11 @@ import IssuesString from '../../components/IssuesString/IssuesString'
 import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
 import Timer from '../../components/Timer/Timer'
 import IGameSettings from '../../interfaces/IGameSettings'
+import { setStatisticGame } from '../../store/reducers'
 import { setGameSettings } from '../../store/gameSettingsReducer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
-import { GET_GAME_SETTINGS, SET_GAME_SETTINGS } from '../../utils/socketActions'
+import { GET_GAME_SETTINGS, SET_GAME_SETTINGS, STATISTIC_GAME } from '../../utils/socketActions'
 
 import './GamePage.sass'
 
@@ -30,6 +32,21 @@ export default function GamePage(): JSX.Element {
   }
 
   const dispatch = useAppDispatch()
+
+  const history = useHistory()
+
+  useEffect(() => {
+    const handleStatisticGame = (data: boolean) => {
+      dispatch(setStatisticGame(data))
+      if (data) history.push('/statistic')
+    }
+
+    socket.on(STATISTIC_GAME, handleStatisticGame)
+
+    // return () => {
+    //   socket.off(START_GAME_CLIENT, handleStartGame)
+    // }
+  }, [])
 
   useEffect(() => {
     socket.emit(GET_GAME_SETTINGS, roomId)
@@ -170,7 +187,18 @@ export default function GamePage(): JSX.Element {
       <IssuesString />
       <div className="game__scram-block">
         <ScramMasterMemberBlock />
-        {isAdmin ? <Button value="Start game" size="small" theme="light" /> : ''}
+        {isAdmin ? (
+          <Button
+            value="Stop game"
+            size="small"
+            theme="light"
+            onSubmit={() => {
+              dispatch(setStatisticGame(true))
+            }}
+          />
+        ) : (
+          ''
+        )}
         {isPlayer ? <Button value="Exit" size="small" theme="light" /> : ''}
       </div>
 
