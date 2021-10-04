@@ -8,13 +8,15 @@ const GameField: React.FC = ({ children }) => {
   const location = useLocation()
 
   const isChat: boolean = location.pathname === '/settingScrumMaster' || location.pathname === '/lobby'
+  const isScoreSidebar = location.pathname === '/game'
+
   return (
     <main className="game-field">
       <div className="game-field__wrapper">
         <div className="game-field__main">{children}</div>
         <aside className="game-field__aside">
           {isChat ? <Chat /> : ''}
-          <ScoreSidebar />
+          {isScoreSidebar ? <ScoreSidebar /> : ''}
         </aside>
       </div>
     </main>

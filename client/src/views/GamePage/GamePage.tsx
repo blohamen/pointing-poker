@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import classNames from 'classnames'
-import { useHistory } from 'react-router'
-
+import { useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import Button from '../../components/Button/Button'
 import GameCard from '../../components/GameCard'
@@ -18,6 +17,7 @@ import socket from '../../utils/socket'
 import { GET_GAME_SETTINGS, SET_GAME_SETTINGS } from '../../utils/socketActions'
 
 import './GamePage.sass'
+import { setInitialUserState } from '../../store/authReducer'
 
 export default function GamePage(): JSX.Element {
   const { roomId, isAdmin, isPlayer } = useAppSelector((state) => state.userParameters)
@@ -48,10 +48,9 @@ export default function GamePage(): JSX.Element {
   // }, [])
 
   useEffect(() => {
-    console.log('redirect', stopGame)
     if (stopGame) {
       console.log('redirect')
-      history.push('/statistic')
+      // history.push('/statistic')
       // необходимые стэйты в редакс выставить в дефолтные положения
     }
   }, [stopGame])
@@ -210,7 +209,10 @@ export default function GamePage(): JSX.Element {
             theme="light"
             onSubmit={() => {
               dispatch(setStartGame(false))
+              dispatch(setInitialUserState())
               dispatch(setStopGame(true))
+              history.push('/statistic')
+              console.log('stop game')
             }}
           />
         ) : (

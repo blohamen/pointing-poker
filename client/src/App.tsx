@@ -21,8 +21,8 @@ export default function App(): JSX.Element {
   const realRout = () => {
     if (isAdminUser) return <Route exact path="/settingScrumMaster" component={SettingPage} />
     if (isPlayerUser) return <Route exact path="/lobby" component={LobbyPage} />
-    if (startGame && !stopGame) return <Route exact path="/game" component={GamePage} />
-    if (!startGame && stopGame) return <Route exact path="/statistic" component={StatisticPage} />
+    if (startGame) return <Route exact path="/game" component={GamePage} />
+    if (stopGame) return <Route exact path="/statistic" component={StatisticPage} />
     return <Redirect to="/error404" />
   }
 
