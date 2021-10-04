@@ -37,6 +37,7 @@ Status.defaultProps = {
 
 interface IMemberCard {
   isCurrentPlayer?: boolean
+  isAdmin?: boolean
   isSmall?: boolean
   isChatCard?: boolean
   title: string
@@ -47,6 +48,7 @@ interface IMemberCard {
 }
 
 const MemberCard: React.FC<IMemberCard> = ({
+  isAdmin,
   isCurrentPlayer,
   isSmall,
   isChatCard,
@@ -68,6 +70,7 @@ const MemberCard: React.FC<IMemberCard> = ({
   return (
     <div>
       <Card
+        isAdmin={isAdmin}
         isCurrentPlayer={isCurrentPlayer}
         isSmall={isSmall}
         isChatCard={isChatCard}
