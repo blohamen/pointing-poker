@@ -26,7 +26,9 @@ export default function GamePage(): JSX.Element {
   const { finishVoiting } = useAppSelector((state) => state.appParameters)
   const [currentIssue, setCurrentIssue] = useState<number>(0)
   const handleNextIssue = () => {
-    setCurrentIssue(currentIssue + 1)
+    if (currentIssue < issues.length - 1) {
+      setCurrentIssue(currentIssue + 1)
+    }
     setRunRound(false)
   }
   const [roundRun, setRunRound] = useState<boolean>(false)
