@@ -181,7 +181,7 @@ export default function GamePage(): JSX.Element {
       <IssuesString />
       <div className="game__scram-block">
         <ScramMasterMemberBlock />
-        {isAdmin ? <Button value="Start game" size="small" theme="light" /> : ''}
+        {isAdmin ? <Button value="Stop game" size="small" theme="light" /> : ''}
         {isPlayer ? <Button value="Exit" size="small" theme="light" /> : ''}
       </div>
 
