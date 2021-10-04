@@ -11,11 +11,11 @@ import IssuesString from '../../components/IssuesString/IssuesString'
 import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
 import Timer from '../../components/Timer/Timer'
 import IGameSettings from '../../interfaces/IGameSettings'
-import { setStatisticGame } from '../../store/reducers'
+import { setStartGame, setStopGame } from '../../store/reducers'
 import { setGameSettings } from '../../store/gameSettingsReducer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
-import { GET_GAME_SETTINGS, SET_GAME_SETTINGS, STATISTIC_GAME } from '../../utils/socketActions'
+import { GET_GAME_SETTINGS, SET_GAME_SETTINGS } from '../../utils/socketActions'
 
 import './GamePage.sass'
 
@@ -25,7 +25,7 @@ export default function GamePage(): JSX.Element {
   const { isTimerNeeded, currentCardSet, scoreTypeShort, currentShirtCards, masterAsPlayer } = useAppSelector(
     (state) => state.gameSettingsParameters
   )
-  const { finishVoiting } = useAppSelector((state) => state.appParameters)
+  const { finishVoiting, stopGame } = useAppSelector((state) => state.appParameters)
   const [currentIssue, setCurrentIssue] = useState<number>(0)
   const handleNextIssue = () => {
     if (currentIssue < issues.length - 1) {
@@ -40,18 +40,21 @@ export default function GamePage(): JSX.Element {
 
   const history = useHistory()
 
+  // useEffect(() => {
+  //   const handleStopGame = (data: boolean) => {
+  //     dispatch(setStopGame(data))
+  //   }
+  //   socket.once(STATISTIC_GAME, handleStopGame)
+  // }, [])
+
   useEffect(() => {
-    const handleStatisticGame = (data: boolean) => {
-      dispatch(setStatisticGame(data))
-      if (data) history.push('/statistic')
+    console.log('redirect', stopGame)
+    if (stopGame) {
+      console.log('redirect')
+      history.push('/statistic')
+      // необходимые стэйты в редакс выставить в дефолтные положения
     }
-
-    socket.on(STATISTIC_GAME, handleStatisticGame)
-
-    // return () => {
-    //   socket.off(START_GAME_CLIENT, handleStartGame)
-    // }
-  }, [])
+  }, [stopGame])
 
   useEffect(() => {
     socket.emit(GET_GAME_SETTINGS, roomId)
@@ -200,7 +203,19 @@ export default function GamePage(): JSX.Element {
       <IssuesString />
       <div className="game__scram-block">
         <ScramMasterMemberBlock />
-        {isAdmin ? <Button value="Stop game" size="small" theme="light" /> : ''}
+        {isAdmin ? (
+          <Button
+            value="Stop game"
+            size="small"
+            theme="light"
+            onSubmit={() => {
+              dispatch(setStartGame(false))
+              dispatch(setStopGame(true))
+            }}
+          />
+        ) : (
+          ''
+        )}
         {isPlayer ? <Button value="Exit" size="small" theme="light" /> : ''}
       </div>
 

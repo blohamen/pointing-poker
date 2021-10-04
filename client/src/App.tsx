@@ -13,16 +13,16 @@ import StatisticPage from './views/StatisticPage'
 
 export default function App(): JSX.Element {
   const location = useLocation()
-  const { startGame, statisticGame } = useAppSelector((state) => state.appParameters)
+  const { startGame, stopGame } = useAppSelector((state) => state.appParameters)
   const { authentification, isAdmin, isPlayer } = useAppSelector((state) => state.userParameters)
-  const isAdminUser = authentification && isAdmin && !startGame
-  const isPlayerUser = authentification && isPlayer && !startGame
+  const isAdminUser = authentification && isAdmin && !startGame && !stopGame
+  const isPlayerUser = authentification && isPlayer && !startGame && !stopGame
 
   const realRout = () => {
     if (isAdminUser) return <Route exact path="/settingScrumMaster" component={SettingPage} />
     if (isPlayerUser) return <Route exact path="/lobby" component={LobbyPage} />
-    if (startGame) return <Route exact path="/game" component={GamePage} />
-    if (statisticGame) return <Route exact path="/statistic" component={StatisticPage} />
+    if (startGame && !stopGame) return <Route exact path="/game" component={GamePage} />
+    if (!startGame && stopGame) return <Route exact path="/statistic" component={StatisticPage} />
     return <Redirect to="/error404" />
   }
 
