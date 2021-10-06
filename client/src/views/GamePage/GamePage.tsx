@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import classNames from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
@@ -10,7 +10,8 @@ import IssuesString from '../../components/IssuesString/IssuesString'
 import ScramMasterMemberBlock from '../../components/ScramMasterMemberBlock/ScramMasterMemberBlock'
 import Timer from '../../components/Timer/Timer'
 import IGameSettings from '../../interfaces/IGameSettings'
-import { setStartGame, setStopGame } from '../../store/reducers'
+import { setStartGame, setStopGame, setRunRound } from '../../store/reducers'
+import { setCurrentIssue } from '../../store/issuesReducer'
 import { setGameSettings } from '../../store/gameSettingsReducer'
 import { useAppDispatch, useAppSelector } from '../../store/redux'
 import socket from '../../utils/socket'
@@ -20,23 +21,20 @@ import './GamePage.sass'
 import { setInitialUserState } from '../../store/authReducer'
 
 export default function GamePage(): JSX.Element {
+  const dispatch = useAppDispatch()
   const { roomId, isAdmin, isPlayer } = useAppSelector((state) => state.userParameters)
-  const { issues } = useAppSelector((state) => state.issuesParameters)
+  const { issues, currentIssue } = useAppSelector((state) => state.issuesParameters)
   const { isTimerNeeded, currentCardSet, scoreTypeShort, currentShirtCards, masterAsPlayer } = useAppSelector(
     (state) => state.gameSettingsParameters
   )
-  const { finishVoiting, stopGame } = useAppSelector((state) => state.appParameters)
-  const [currentIssue, setCurrentIssue] = useState<number>(0)
+  const { finishVoiting, stopGame, runRound } = useAppSelector((state) => state.appParameters)
   const handleNextIssue = () => {
     if (currentIssue < issues.length - 1) {
-      setCurrentIssue(currentIssue + 1)
+      dispatch(setCurrentIssue(currentIssue + 1))
     }
-    setRunRound(false)
+    dispatch(setRunRound(false))
   }
-  const [roundRun, setRunRound] = useState<boolean>(false)
   const adminIsNotInGame = <h2 className="game__admin-not-in-game">Admin is not in game</h2>
-
-  const dispatch = useAppDispatch()
 
   const history = useHistory()
 
@@ -173,7 +171,7 @@ export default function GamePage(): JSX.Element {
   )
 
   const handleRunRound = () => {
-    setRunRound(true)
+    dispatch(setRunRound(true))
   }
 
   // Admin components
@@ -235,7 +233,7 @@ export default function GamePage(): JSX.Element {
       <div className="game__statistics">{statisticBlock}</div>
 
       <h2>Game: </h2>
-      {roundRun ? round : ''}
+      {runRound ? round : ''}
     </GameField>
   )
 }

@@ -6,6 +6,7 @@ const initialStateIssuesParameters = {
   modalModifiedIssue: false as boolean,
   issues: [] as IIssue[],
   modifiedIssueId: '' as string,
+  currentIssue: 0 as number,
 }
 
 const issuesParameters = createSlice({
@@ -24,6 +25,9 @@ const issuesParameters = createSlice({
     setModifiedIssueId(state, action: PayloadAction<string>) {
       state.modifiedIssueId = action.payload
     },
+    setCurrentIssue(state, action: PayloadAction<number>) {
+      state.currentIssue = action.payload
+    },
     setInitialStateIssuesParameters(state) {
       state.issues = initialStateIssuesParameters.issues
       state.modalCreateIssues = initialStateIssuesParameters.modalCreateIssues
@@ -39,6 +43,7 @@ export const {
   setModalModifiedIssue,
   setInitialStateIssuesParameters,
   setModifiedIssueId,
+  setCurrentIssue,
 } = issuesParameters.actions
 
 const issuesReducer = issuesParameters.reducer

@@ -6,6 +6,7 @@ const initialStateAppParameters = {
   startGame: false as boolean,
   exitGame: false as boolean,
   stopGame: false as boolean,
+  runRound: false as boolean,
 }
 
 const appParameters = createSlice({
@@ -24,6 +25,9 @@ const appParameters = createSlice({
     setStopGame(state, action: PayloadAction<boolean>) {
       state.stopGame = action.payload
     },
+    setRunRound(state, action: PayloadAction<boolean>) {
+      state.runRound = action.payload
+    },
     setFinishVoiting(state, action: PayloadAction<boolean>) {
       state.finishVoiting = action.payload
     },
@@ -33,6 +37,7 @@ const appParameters = createSlice({
       state.startGame = initialStateAppParameters.startGame
       state.exitGame = initialStateAppParameters.exitGame
       state.stopGame = initialStateAppParameters.stopGame
+      state.runRound = initialStateAppParameters.runRound
     },
   },
 })
@@ -43,6 +48,7 @@ export const {
   setExitGame,
   setInitialStateAppParameters,
   setStopGame,
+  setRunRound,
   setFinishVoiting,
 } = appParameters.actions
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import classNames from 'classnames'
-
+import socket from '../../utils/socket'
 import './game-card.sass'
 import cupURL from '../../assets/img/cup.png'
 import questionURL from '../../assets/img/question.png'
+import { useAppSelector } from '../../store/redux'
 
 interface IImageCardsProps {
   url: string
@@ -31,8 +32,13 @@ interface ICard {
 }
 
 const GameCard: React.FC<ICard> = (props: ICard) => {
+  const { roomId, userId } = useAppSelector((state) => state.userParameters)
+  const { issues, currentIssue } = useAppSelector((state) => state.issuesParameters)
   const [isFlip, setFlip] = useState(props.finsishVoiting)
-
+  const handelClick = (value: string | number) => {
+    const issueId = issues[currentIssue]
+    socket.emit('voitingValueIssue', issueId, roomId, currentIssue, userId, value)
+  }
   useEffect(() => {
     setFlip(!isFlip)
   }, [props.finsishVoiting])
@@ -52,7 +58,17 @@ const GameCard: React.FC<ICard> = (props: ICard) => {
   return (
     <div className={classNames('game-card__container', !isFlip && 'flip')}>
       <div className={classNames('game-card__card', cardSize)}>
-        <div className="game-card__front">
+        <div
+          className="game-card__front"
+          onClick={() => {
+            handelClick(props.cardValue)
+          }}
+          onKeyDown={() => {
+            console.log('Hello from here')
+          }}
+          role="button"
+          tabIndex={0}
+        >
           <span className="game-card__value-up">{props.cardValue}</span>
           {(() => {
             if (props.cardType === 'value') {
