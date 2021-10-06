@@ -171,8 +171,18 @@ export default function GamePage(): JSX.Element {
   )
 
   const handleRunRound = () => {
-    dispatch(setRunRound(true))
+    // dispatch(setRunRound(true))
+    const flag = true
+    socket.emit('runRoundServer', roomId, flag)
   }
+
+  useEffect(() => {
+    const handleRunRoundClinet = (flagRunRound: boolean) => {
+      console.log(`flagRunround :${flagRunRound}`)
+      dispatch(setRunRound(flagRunRound))
+    }
+    socket.on('runRoundClient', handleRunRoundClinet)
+  }, [])
 
   // Admin components
   const buttonsInIssueBlock = isAdmin ? (
