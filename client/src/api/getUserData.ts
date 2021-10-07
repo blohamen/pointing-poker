@@ -19,6 +19,7 @@ const userApi = {
         userId: '',
         roomId: '',
         authentification: false,
+        score: 'In progress',
       }
     const result = await response.json()
     return result

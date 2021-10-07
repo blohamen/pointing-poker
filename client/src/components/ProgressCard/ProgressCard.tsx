@@ -3,7 +3,7 @@ import Card from '../Card'
 import './ProgressCard.sass'
 
 interface IProgressCard {
-  progress: string
+  progress: string | number | undefined
 }
 
 const ProgressCard = ({ progress }: IProgressCard): JSX.Element => {

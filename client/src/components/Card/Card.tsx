@@ -5,7 +5,7 @@ const ItsYou = () => <div className="card__its-you">It&apos;s you</div>
 const ItsAdmin = () => <div className="card__its-you">Admin</div>
 
 interface ICard {
-  title: string
+  title: string | number | undefined
   subtitle: string
   isSmall?: boolean
   isChatCard?: boolean

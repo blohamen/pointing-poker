@@ -184,6 +184,13 @@ export default function GamePage(): JSX.Element {
     socket.on('runRoundClient', handleRunRoundClinet)
   }, [])
 
+  useEffect(() => {
+    const handleResultVoiting = (data: any) => {
+      console.log(`Rounds :${data}`)
+    }
+    socket.on('resultVoiting', handleResultVoiting)
+  }, [])
+
   // Admin components
   const buttonsInIssueBlock = isAdmin ? (
     <div className="game__issue-buttons">

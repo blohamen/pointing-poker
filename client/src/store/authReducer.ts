@@ -14,6 +14,7 @@ const initialInitialAythPerson: IUser = {
   roomId: '',
   authentification: false,
   socketId: '',
+  score: 'In progress',
 }
 
 interface IQueryParameters {
@@ -45,6 +46,7 @@ const userParameters = createSlice({
       state.userId = initialInitialAythPerson.userId
       state.authentification = initialInitialAythPerson.authentification
       state.socketId = initialInitialAythPerson.socketId
+      state.score = initialInitialAythPerson.score
     },
     firstName(state, action: PayloadAction<string>) {
       state.firstName = action.payload
@@ -76,6 +78,9 @@ const userParameters = createSlice({
     setSocketId(state, action: PayloadAction<string>) {
       state.socketId = action.payload
     },
+    setScore(state, action: PayloadAction<number | string>) {
+      state.score = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(sendPersonData.fulfilled, (state, action) => {
@@ -89,6 +94,7 @@ const userParameters = createSlice({
       state.roomId = action.payload.roomId
       state.userId = action.payload.userId
       state.authentification = action.payload.authentification
+      state.score = action.payload.score
     })
   },
 })
@@ -105,6 +111,7 @@ export const {
   setRoomId,
   setInitialUserState,
   setSocketId,
+  setScore,
 } = userParameters.actions
 
 const userParametersReducer = userParameters.reducer

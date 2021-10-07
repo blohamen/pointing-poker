@@ -10,4 +10,5 @@ export default interface IUser {
   roomId: string
   authentification?: boolean
   socketId?: string
+  score?: number | string
 }
