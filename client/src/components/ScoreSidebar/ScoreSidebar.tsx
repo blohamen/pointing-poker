@@ -8,6 +8,7 @@ import socket from '../../utils/socket'
 
 import './ScoreSidebar.sass'
 import { setScore } from '../../store/authReducer'
+import { setRounds } from '../../store/memberRreducer'
 
 const ScoreSidebar = () => {
   const { members } = useAppSelector((state) => state.membersParameters)
@@ -23,7 +24,7 @@ const ScoreSidebar = () => {
 
   useEffect(() => {
     const handlerScore = (dataRounds: IDataRounds[]) => {
-      console.log(dataRounds)
+      dispatch(setRounds(dataRounds))
       dataRounds.forEach((element: { userId: string; score: string | number }) => {
         if (userId === element.userId) {
           console.log(element.score)

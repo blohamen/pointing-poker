@@ -1,11 +1,24 @@
+import { useAppSelector } from '../../store/redux'
 import './StatisticPage.sass'
 import GameField from '../../components/GameField/GameField'
 
 const StatisticPage = () => {
+  const { rounds } = useAppSelector((state) => state.membersParameters)
+  // const testRound = rounds.map((item) => {
+  //   return item.score
+  // })
+  const testRound = rounds.map((item) => (
+    <div>
+      SCore : {item.score}
+      UserId : {item.userId}
+    </div>
+  ))
+
   return (
     <GameField>
       <>
         <h2>StatisticPage</h2>
+        {testRound}
       </>
     </GameField>
   )
