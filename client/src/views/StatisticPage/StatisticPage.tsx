@@ -4,9 +4,6 @@ import GameField from '../../components/GameField/GameField'
 
 const StatisticPage = () => {
   const { rounds } = useAppSelector((state) => state.membersParameters)
-  // const testRound = rounds.map((item) => {
-  //   return item.score
-  // })
   const testRound = rounds.map((item) => (
     <div>
       SCore : {item.score}
