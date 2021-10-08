@@ -178,7 +178,6 @@ export default function GamePage(): JSX.Element {
 
   useEffect(() => {
     const handleRunRoundClinet = (flagRunRound: boolean) => {
-      console.log(`flagRunround :${flagRunRound}`)
       dispatch(setRunRound(flagRunRound))
     }
     socket.on('runRoundClient', handleRunRoundClinet)
